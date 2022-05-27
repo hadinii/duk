@@ -26,9 +26,9 @@ class Email extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $data['sidebar'] = "#mn1";
-            $this->load->view('header');
-            $this->load->view('mail', $data);
-            $this->load->view('footer', $data);
+            $this->load->view('layouts/header/admin');
+            $this->load->view('admin/mail/mail', $data);
+            $this->load->view('layouts/footer', $data);
         } else {
 
             $data = [
@@ -86,9 +86,9 @@ class Email extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $data['sidebar'] = "#mn1";
-            $this->load->view('header');
-            $this->load->view('mail1', $data);
-            $this->load->view('footer', $data);
+            $this->load->view('layouts/header/admin');
+            $this->load->view('admin/mail/mail1', $data);
+            $this->load->view('layouts/footer', $data);
         } else {
 
             $data = [

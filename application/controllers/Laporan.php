@@ -61,9 +61,9 @@ class Laporan extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $data['nosk'] = $this->M_duk->getNoSK($nip);
             $data['sidebar'] = "#mn1";
-            $this->load->view('header');
-            $this->load->view('check', $data);
-            $this->load->view('footer', $data);
+            $this->load->view('layouts/header/admin');
+            $this->load->view('admin/laporan/check', $data);
+            $this->load->view('layouts/footer', $data);
         } else {
             $data = [
                 'tgl1' => $this->input->post('tgl1', true),
@@ -94,7 +94,7 @@ class Laporan extends CI_Controller
             ];
             $this->M_duk->updateDataKGB($this->input->post('id'));
             $this->load->library('Pdf');
-            $this->load->view('laporan', $data);
+            $this->load->view('admin/laporan/print/laporan', $data);
         }
     }
 
@@ -145,9 +145,9 @@ class Laporan extends CI_Controller
         $this->form_validation->set_rules('direkturpembina', 'Direktur Pembina', 'xss_clean|required');
         if ($this->form_validation->run() == FALSE) {
             $data['sidebar'] = "#mn1";
-            $this->load->view('header');
-            $this->load->view('cek', $data);
-            $this->load->view('footer', $data);
+            $this->load->view('layouts/header/admin');
+            $this->load->view('admin/laporan/cek', $data);
+            $this->load->view('layouts/footer', $data);
         } else {
             $data = [
                 'no' => $this->input->post('no', true),
@@ -175,7 +175,7 @@ class Laporan extends CI_Controller
             ];
             $this->M_duk->updateDataPangkat($id);
             $this->load->library('Pdf');
-            $this->load->view('laporan2', $data);
+            $this->load->view('admin/laporan/print/laporan2', $data);
         }
     }
 

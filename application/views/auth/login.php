@@ -42,7 +42,7 @@
 				</span>
 			</div>
 			<h5 style="color: #3CB371;">
-				<center><br> <b>SELAMAT DATANG</b> </center>
+				<center><br> <b>SELAMAT </b> </center>
 			</h5>
 			<form class="login100-form validate-form" action="login/auth" method="post">
 				<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">

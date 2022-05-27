@@ -17,9 +17,9 @@ class Duk extends CI_Controller
 	{
 		$data['duk'] = $this->M_duk->getAllDataDuk();
 		$data['sidebar'] = "#mn4";
-		$this->load->view('header');
-		$this->load->view('data_duk', $data);
-		$this->load->view('footer', $data);
+		$this->load->view('layouts/header/admin');
+		$this->load->view('admin/duk/index', $data);
+		$this->load->view('layouts/footer', $data);
 	}
 
 	public function data_duk($id)
@@ -55,9 +55,9 @@ class Duk extends CI_Controller
 		$data['duk'] = $this->M_duk->getDataDukById($id);
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn4";
-			$this->load->view('header');
-			$this->load->view('duk', $data);
-			$this->load->view('footer', $data);
+			$this->load->view('layouts/header/admin');
+			$this->load->view('admin/duk/show', $data);
+			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_duk->updateDataDuk();
 			$this->session->set_flashdata('duk', 'Diperbarui');

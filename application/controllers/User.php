@@ -23,9 +23,9 @@ class User extends CI_Controller
 		$data['gaji'] = $this->M_user->dataGaji();
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
 		$data['sidebar'] = "#mn1";
-		$this->load->view('user_header', $data);
-		$this->load->view('user_home', $data);
-		$this->load->view('footer', $data);
+		$this->load->view('layouts/header/user', $data);
+		$this->load->view('user/dashboard', $data);
+		$this->load->view('layouts/footer', $data);
 	}
 
 	public function data()
@@ -51,9 +51,9 @@ class User extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn2";
-			$this->load->view('user_header', $data);
-			$this->load->view('user_data', $data);
-			$this->load->view('footer', $data);
+			$this->load->view('layouts/header/user', $data);
+			$this->load->view('user/pegawai/show', $data);
+			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_user->ubahDataPegawai();
 			$this->session->set_flashdata('pegawai', 'Diubah');
@@ -72,9 +72,9 @@ class User extends CI_Controller
 		$this->form_validation->set_rules('kpb', 'Konfirmasi Password', 'required|xss_clean|matches[pb]');
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn3";
-			$this->load->view('user_header', $data);
-			$this->load->view('setting_user', $data);
-			$this->load->view('footer', $data);
+			$this->load->view('layouts/header/user', $data);
+			$this->load->view('auth/setting/user', $data);
+			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_user->ubahPasswordUser();
 			$this->session->set_flashdata('pegawai', 'Diubah');
@@ -93,9 +93,9 @@ class User extends CI_Controller
 		$data['pengajuan'] = $this->M_user->getAllPengajuan();
 
 		$data['sidebar'] = "#mn4";
-		$this->load->view('user_header', $data);
-		$this->load->view('pengajuan_user', $data);
-		$this->load->view('footer', $data);
+		$this->load->view('layouts/header/user', $data);
+		$this->load->view('user/pengajuan/index', $data);
+		$this->load->view('layouts/footer', $data);
 	}
 
 	public function pengajuan_reguler()
@@ -105,9 +105,9 @@ class User extends CI_Controller
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
 
 		$data['sidebar'] = "#mn4";
-		$this->load->view('user_header', $data);
-		$this->load->view('pengajuan_reguler', $data);
-		$this->load->view('footer', $data);
+		$this->load->view('layouts/header/user', $data);
+		$this->load->view('user/pengajuan/reguler', $data);
+		$this->load->view('layouts/footer', $data);
 	}
 
 	public function insert_reguler()
@@ -255,9 +255,9 @@ class User extends CI_Controller
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
 
 		$data['sidebar'] = "#mn4";
-		$this->load->view('user_header', $data);
-		$this->load->view('pengajuan_fungsional', $data);
-		$this->load->view('footer', $data);
+		$this->load->view('layouts/header/user', $data);
+		$this->load->view('user/pengajuan/fungsional', $data);
+		$this->load->view('layouts/footer', $data);
 	}
 
 	public function insert_fungsional()
@@ -423,9 +423,9 @@ class User extends CI_Controller
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
 
 		$data['sidebar'] = "#mn4";
-		$this->load->view('user_header', $data);
-		$this->load->view('pengajuan_structural', $data);
-		$this->load->view('footer', $data);
+		$this->load->view('layouts/header/user', $data);
+		$this->load->view('user/pengajuan/structural', $data);
+		$this->load->view('layouts/footer', $data);
 	}
 
 	public function insert_structural()
@@ -590,9 +590,9 @@ class User extends CI_Controller
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
 
 		$data['sidebar'] = "#mn4";
-		$this->load->view('user_header', $data);
-		$this->load->view('pengajuan_gaji', $data);
-		$this->load->view('footer', $data);
+		$this->load->view('layouts/header/user', $data);
+		$this->load->view('user/pengajuan/gaji', $data);
+		$this->load->view('layouts/footer', $data);
 	}
 
 	public function insert_gaji()

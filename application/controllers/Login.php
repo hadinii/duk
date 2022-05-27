@@ -10,7 +10,7 @@ class Login extends CI_Controller {
     
     public function index()
 	{
-        $this->load->view('login');
+        $this->load->view('auth/login');
     }
     
     public function auth(){
@@ -30,7 +30,7 @@ class Login extends CI_Controller {
                     'logged_in_admin' => TRUE,
                 );
                 $this->session->set_userdata($sesdata);
-                redirect('home');
+                redirect('dashboard');
             }elseif($account === 'pegawai'){
                 $sesdata = array(
                     'id' => $id,

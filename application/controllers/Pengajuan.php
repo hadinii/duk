@@ -18,9 +18,9 @@ class Pengajuan extends CI_Controller
     {
         $data['sidebar'] = "#mn6";
         $data['pengajuan'] = $this->M_pengajuan->getAllPengajuan();
-        $this->load->view('header');
-        $this->load->view('pengajuan', $data);
-        $this->load->view('footer', $data);
+        $this->load->view('layouts/header/admin');
+        $this->load->view('admin/pengajuan/index', $data);
+        $this->load->view('layouts/footer', $data);
     }
 
     public function hapusDataPengajuan($id)
@@ -34,8 +34,8 @@ class Pengajuan extends CI_Controller
     {
         $data['pengajuan'] = $this->M_pengajuan->getPengajuanById($id);
         $data['sidebar'] = "#mn6";
-        $this->load->view('header');
-        $this->load->view('data_pengajuan', $data);
-        $this->load->view('footer', $data);
+        $this->load->view('layouts/header/admin');
+        $this->load->view('admin/pengajuan/show', $data);
+        $this->load->view('layouts/footer', $data);
     }
 }

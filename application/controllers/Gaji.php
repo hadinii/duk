@@ -17,9 +17,9 @@ class Gaji extends CI_Controller
     {
         $data['gaji'] = $this->M_gaji->getAllDataGaji();
         $data['sidebar'] = "#mn3";
-        $this->load->view('header');
-        $this->load->view('gaji', $data);
-        $this->load->view('footer', $data);
+        $this->load->view('layouts/header/admin');
+        $this->load->view('admin/gaji/index', $data);
+        $this->load->view('layouts/footer', $data);
     }
 
     public function tambah()
@@ -36,9 +36,9 @@ class Gaji extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $data['sidebar'] = "#mn3";
-            $this->load->view('header');
-            $this->load->view('tambah-gaji', $data);
-            $this->load->view('footer', $data);
+            $this->load->view('layouts/header/admin');
+            $this->load->view('admin/gaji/create', $data);
+            $this->load->view('layouts/footer', $data);
         } else {
             $this->M_gaji->tambahDataGaji();
             $this->session->set_flashdata('gaji', 'Ditambah');
@@ -60,9 +60,9 @@ class Gaji extends CI_Controller
         $data['gaji'] = $this->M_gaji->getDataGajiById($id);
         if ($this->form_validation->run() == FALSE) {
             $data['sidebar'] = "#mn3";
-            $this->load->view('header');
-            $this->load->view('edit-gaji', $data);
-            $this->load->view('footer', $data);
+            $this->load->view('layouts/header/admin');
+            $this->load->view('admin/gaji/edit', $data);
+            $this->load->view('layouts/footer', $data);
         } else {
             $this->M_gaji->updateDataGaji();
             $this->session->set_flashdata('gaji', 'Diperbarui');

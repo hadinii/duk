@@ -15,9 +15,9 @@ class Pegawai extends CI_Controller
 	{
 		$data['sidebar'] = "#mn2";
 		$data['pegawai'] = $this->M_pegawai->getAllPegawai();
-		$this->load->view('header');
-		$this->load->view('pegawai', $data);
-		$this->load->view('footer', $data);
+		$this->load->view('layouts/header/admin');
+		$this->load->view('pegawai/index', $data);
+		$this->load->view('layouts/footer', $data);
 	}
 
 	public function tambah()
@@ -36,9 +36,9 @@ class Pegawai extends CI_Controller
 		$this->form_validation->set_rules('ket', 'Keterangan', 'xss_clean');
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn2";
-			$this->load->view('header');
-			$this->load->view('tambah');
-			$this->load->view('footer', $data);
+			$this->load->view('layouts/header/admin');
+			$this->load->view('pegawai/create');
+			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_pegawai->tambahDataPegawai();
 			$this->session->set_flashdata('pegawai', 'Ditambahkan');
@@ -67,9 +67,9 @@ class Pegawai extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn2";
-			$this->load->view('header');
-			$this->load->view('profil', $data);
-			$this->load->view('footer', $data);
+			$this->load->view('layouts/header/admin');
+			$this->load->view('pegawai/show/admin', $data);
+			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_pegawai->ubahDataPegawai();
 			$this->session->set_flashdata('pegawai', 'Diubah');
@@ -104,9 +104,9 @@ class Pegawai extends CI_Controller
 		$this->form_validation->set_rules('kpb', 'Konfirmasi Password', 'required|xss_clean|matches[pb]');
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn5";
-			$this->load->view('header');
-			$this->load->view('setting', $data);
-			$this->load->view('footer', $data);
+			$this->load->view('layouts/header/admin');
+			$this->load->view('auth/setting/admin', $data);
+			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_pegawai->ubahPassword();
 			$this->session->set_flashdata('pegawai', 'Diubah');
@@ -121,9 +121,9 @@ class Pegawai extends CI_Controller
 		$this->form_validation->set_rules('nipK', 'NIP Admin', 'required|xss_clean|max_length[18]');
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn5";
-			$this->load->view('header');
-			$this->load->view('setting', $data);
-			$this->load->view('footer', $data);
+			$this->load->view('layouts/header/admin');
+			$this->load->view('auth/setting/admin', $data);
+			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_pegawai->resetKetua();
 			$this->session->set_flashdata('ketua', 'Diubah');

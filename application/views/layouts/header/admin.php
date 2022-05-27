@@ -96,7 +96,7 @@
                 <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="pull-right">
-                    <a href="<?= base_url(); ?>login/logout" onclick="return confirm('Apakah Anda yakin ingin keluar?')" class="btn btn-success btn-flat">Keluar</a>
+                    <a href="<?= base_url(); ?>logout" onclick="return confirm('Apakah Anda yakin ingin keluar?')" class="btn btn-success btn-flat">Keluar</a>
                   </div>
                 </li>
               </ul>
