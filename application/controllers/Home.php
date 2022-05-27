@@ -20,8 +20,8 @@ class Home extends CI_Controller
         $data['tot_p'] = $this->db->count_all_results('pengajuan');
         $data['duk'] = $this->M_duk->getAllDataDuk();
         $data['sidebar'] = "#mn1";
-        $this->load->view('header');
+        $this->load->view('layouts/partials/header');
         $this->load->view('home', $data);
-        $this->load->view('footer', $data);
+        $this->load->view('layouts/partials/footer', $data);
     }
 }
