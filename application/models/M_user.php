@@ -11,7 +11,12 @@ class M_user extends CI_Model
 
     public function getPegawaiById($id)
     {
-        return $this->db->get_where('pegawai', ['nip' => $id])->row_array();
+		$this->db->select('*, pegawai.nama as pnama, jabatan.nama as jnama');
+		$this->db->from('pegawai');
+		$this->db->join('jabatan', 'jabatan.id_jabatan = pegawai.jabatan_id');
+		$this->db->where('pegawai.user_id', $id);
+		return $this->db->get()->row_array();
+		// return $this->db->get_where('pegawai', ['user_id' => $id])->row_array();
     }
 
     public function getAllPengajuan()
@@ -29,8 +34,8 @@ class M_user extends CI_Model
 
     public function dataGaji()
     {
-        $nip = $this->session->userdata('username');
-        $query = $this->db->query('SELECT gaji_pokok FROM gaji WHERE golongan = (SELECT golongan FROM duk WHERE nip = ' . $nip . ') AND masa_kerja = (SELECT masa_kerja_golongan FROM duk WHERE nip = ' . $nip . ' )');
+        $nik = $this->session->userdata('username');
+        $query = $this->db->query('SELECT gaji_pokok FROM gaji WHERE golongan = (SELECT golongan FROM duk WHERE nip = ' . $nik . ') AND masa_kerja = (SELECT masa_kerja_golongan FROM duk WHERE nip = ' . $nik . ' )');
         return $query->row_array();
     }
 

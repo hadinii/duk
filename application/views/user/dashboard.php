@@ -25,7 +25,7 @@
           <!-- Add the bg color to the header using any of the bg-* classes -->
           <div class="widget-user-header bg-green-active">
             <center>
-              <h3 class="widget-user-username" style="margin-top: -15px;"><?= $client['nama']; ?></h3>
+              <h3 class="widget-user-username" style="margin-top: -15px;"><?= $pegawai['pnama']; ?></h3>
             </center>
           </div>
           <div class="widget-user-image">
@@ -33,51 +33,48 @@
           </div>
           <div class="box-footer">
             <div class="row">
-              <div class="col-sm-4 border-right">
+              <!-- <div class="col-sm-4 border-right">
                 <div class="description-block">
                   <span class="description-header">Pangkat</span>
-                  <h5 class="description-text"><?= $client['pangkat']; ?></h5>
+                  <h5 class="description-text"><?= $pegawai['pangkat']; ?></h5>
                 </div>
-                <!-- /.description-block -->
-              </div>
+              </div> -->
               <!-- /.col -->
-              <div class="col-sm-4 border-right">
+              <!-- <div class="col-sm-4 border-right">
                 <div class="description-block">
                   <span class="description-header">Golongan</span>
                   <h5 class="description-text"><?= $client['golongan']; ?></h5>
                 </div>
-                <!-- /.description-block -->
-              </div>
+              </div> -->
               <!-- /.col -->
-              <div class="col-sm-4">
+              <!-- <div class="col-sm-4">
                 <div class="description-block">
                   <h5 class="description-header">Gaji</h5>
                   <span class="description-text">Rp. <?= nominal($gaji['gaji_pokok']); ?>,00</span>
                 </div>
-                <!-- /.description-block -->
-              </div>
+              </div> -->
               <!-- /.col -->
             </div>
             <!-- /.row -->
             <div class="row">
               <div class="col-sm-7 border-right">
                 <div class="description-block">
-                  <span class="description-header">Kenaikan Pangkat Berikutnya</span>
-                  <h5 class="description-text"><?= date_indo($client['naik_pangkat_yad']); ?></h5>
+                  <span class="description-header">Terhitung Mulai Tanggal (TMT) Kerja</span>
+                  <h5 class="description-text"><?= date_indo($pegawai['mulai_kerja']); ?></h5>
                 </div>
                 <!-- /.description-block -->
               </div>
               <!-- /.col -->
               <div class="col-sm-3 border-right">
                 <div class="description-block">
-                  <span class="description-header">Kenaikan Gaji Berkala Berikutnya</span>
-                  <h5 class="description-text"><?= date_indo($client['naik_gaji_yad']); ?></h5>
+                  <span class="description-header">Jabatan</span>
+                  <h5 class="description-text"><?= $pegawai['jnama']; ?></h5>
                 </div>
                 <!-- /.description-block -->
               </div>
-              <!-- /.col -->
+              
             </div>
-            <!-- /.row -->
+            
           </div>
         </div>
         <!-- /.widget-user -->

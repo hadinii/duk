@@ -89,7 +89,7 @@
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <img src="<?= base_url(); ?>assets/dist/img/<?= $jk1 ?>.png" class="user-image" alt=".">
-                <span class="hidden-xs"><?= $client['nama']; ?></span>
+                <span class="hidden-xs"><?= $pegawai['pnama']; ?></span>
               </a>
               <ul class="dropdown-menu">
 
@@ -97,7 +97,7 @@
                 <li class="user-header">
                   <img src="<?= base_url(); ?>assets/dist/img/<?= $jk1 ?>.png" class="img-circle" alt="User Image">
                   <p>
-                    <?= $client['nama']; ?>
+                    <?= $pegawai['pnama']; ?>
                     <small><?= $pegawai['email']; ?></small>
                   </p>
                 </li>
@@ -128,8 +128,8 @@
             <img src="<?= base_url(); ?>assets/dist/img/<?= $jk1 ?>.png" class="img-circle" alt="User Image">
           </div>
           <div class="pull-left info">
-            <p><?= $client['nama']; ?></p>
-            <a href="#">NIP : <?= $client['nip']; ?></a>
+            <p><?= $pegawai['pnama']; ?></p>
+            <a href="#">NIP : <?= $nik; ?></a>
           </div>
         </div>
 

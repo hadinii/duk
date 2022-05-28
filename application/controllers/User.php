@@ -6,7 +6,7 @@ class User extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		if ($this->session->userdata('logged_in_user') !== TRUE) {
+		if ($this->session->userdata('is_admin')) {
 			redirect('login');
 		}
 		$this->load->model('M_user');
@@ -18,9 +18,11 @@ class User extends CI_Controller
 
 	public function index()
 	{
-		$id = $this->session->userdata('username');
-		$data['client'] = $this->M_user->dataClient();
-		$data['gaji'] = $this->M_user->dataGaji();
+		$id = $this->session->userdata('id');
+		$data['nik'] = $this->session->userdata('username');
+		$data['client'] = [];
+		$data['gaji'] = [];
+		// $this->M_user->dataGaji();
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
 		$data['sidebar'] = "#mn1";
 		$this->load->view('layouts/header/user', $data);
@@ -30,14 +32,15 @@ class User extends CI_Controller
 
 	public function data()
 	{
-		$id = $this->session->userdata('username');
-		$data['client'] = $this->M_user->dataClient();
+		$id = $this->session->userdata('id');
+		$data['nik'] = $this->session->userdata('username');
+		$data['client'] = [];
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
 		$data['gol_darah'] = ['-', 'A', 'B', 'AB', 'O'];
 		$data['jk'] = ['Laki-laki', 'Perempuan'];
 		$data['agama'] = ['Islam', 'Protestan', 'Katholik', 'Hindu', 'Budha'];
 
-		$this->form_validation->set_rules('nip', 'NIP', 'required|xss_clean|numeric|max_length[18]');
+		$this->form_validation->set_rules('nik', 'NIK', 'required|xss_clean|numeric|max_length[18]');
 		$this->form_validation->set_rules('nama', 'Nama', 'required|xss_clean');
 		$this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required|xss_clean');
 		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required|xss_clean');
@@ -63,9 +66,10 @@ class User extends CI_Controller
 
 	public function setting_user()
 	{
-		$id = $this->session->userdata('username');
-		$data['client'] = $this->M_user->dataClient();
-		$data['gaji'] = $this->M_user->dataGaji();
+		$id = $this->session->userdata('id');
+		$data['nik'] = $this->session->userdata('username');
+		$data['client'] = [];
+		$data['gaji'] = [];
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
 
 		$this->form_validation->set_rules('pb', 'Password Baru', 'required|xss_clean');
@@ -84,8 +88,9 @@ class User extends CI_Controller
 
 	public function pengajuan_user()
 	{
-		$id = $this->session->userdata('username');
-		$data['client'] = $this->M_user->dataClient();
+		$id = $this->session->userdata('id');
+		$data['nik'] = $this->session->userdata('username');
+		$data['client'] = [];
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
 
 		// $data['pengajuan'] = $this->M_user->dataPengajuanUser($id);
@@ -100,8 +105,9 @@ class User extends CI_Controller
 
 	public function pengajuan_reguler()
 	{
-		$id = $this->session->userdata('username');
-		$data['client'] = $this->M_user->dataClient();
+		$id = $this->session->userdata('id');
+		$data['nik'] = $this->session->userdata('username');
+		$data['client'] = [];
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
 
 		$data['sidebar'] = "#mn4";
@@ -250,8 +256,9 @@ class User extends CI_Controller
 
 	public function pengajuan_fungsional()
 	{
-		$id = $this->session->userdata('username');
-		$data['client'] = $this->M_user->dataClient();
+		$id = $this->session->userdata('id');
+		$data['nik'] = $this->session->userdata('username');
+		$data['client'] = [];
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
 
 		$data['sidebar'] = "#mn4";
@@ -418,8 +425,9 @@ class User extends CI_Controller
 
 	public function pengajuan_structural()
 	{
-		$id = $this->session->userdata('username');
-		$data['client'] = $this->M_user->dataClient();
+		$id = $this->session->userdata('id');
+		$data['nik'] = $this->session->userdata('username');
+		$data['client'] = [];
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
 
 		$data['sidebar'] = "#mn4";
@@ -585,8 +593,9 @@ class User extends CI_Controller
 
 	public function pengajuan_gaji()
 	{
-		$id = $this->session->userdata('username');
-		$data['client'] = $this->M_user->dataClient();
+		$id = $this->session->userdata('id');
+		$data['nik'] = $this->session->userdata('username');
+		$data['client'] = [];
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
 
 		$data['sidebar'] = "#mn4";

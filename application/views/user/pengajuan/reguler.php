@@ -37,14 +37,14 @@
                         <div class="form-group">
                             <label class="col-md-2 control-label">NIP</label>
                             <div class="col-md-8">
-                                <input type="text" name="nip" value="<?= $pegawai['nip']; ?>" class="form-control" readonly required="">
+                                <input type="text" name="nip" value="<?= $nik; ?>" class="form-control" readonly required="">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-2 control-label">Nama</label>
                             <div class="col-md-8">
-                                <input type="text" name="nama" value="<?= $pegawai['nama']; ?>" class="form-control" readonly required="">
+                                <input type="text" name="nama" value="<?= $pegawai['pnama']; ?>" class="form-control" readonly required="">
                             </div>
                         </div>
 
