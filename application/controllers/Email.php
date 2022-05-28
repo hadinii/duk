@@ -7,7 +7,7 @@ class Email extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if ($this->session->userdata('logged_in_admin') !== TRUE) {
+        if (!$this->session->userdata('is_admin')) {
             redirect('login');
         }
         $this->load->model('M_duk');

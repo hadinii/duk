@@ -44,7 +44,7 @@
 			<h5 style="color: #3CB371;">
 				<center><br> <b>SELAMAT </b> </center>
 			</h5>
-			<form class="login100-form validate-form" action="login/auth" method="post">
+			<form class="login100-form validate-form" action="<?= base_url('login/auth') ?>" method="post">
 				<div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
 					<span class="label-input100">Username</span>
 					<input class="input100" type="text" name="username" placeholder="Enter Username">

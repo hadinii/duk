@@ -7,7 +7,7 @@ class Dashboard extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if ($this->session->userdata('logged_in_admin') !== TRUE) {
+        if (!$this->session->userdata('is_admin')) {
             redirect('login');
         }
 
@@ -18,7 +18,7 @@ class Dashboard extends CI_Controller
         // $data['tot_pgw'] = $this->db->count_all_results('pegawai');
         // $data['tot_usr'] = $this->M_duk->getAllAdmin();
         $data['tot_p'] = $this->db->count_all_results('pengajuan');
-        $data['duk'] = $this->M_duk->getAllDataDuk();
+        $data['duk'] = [];
         $data['sidebar'] = "#mn1";
         $this->load->view('layouts/header/admin');
         $this->load->view('admin/dashboard', $data);

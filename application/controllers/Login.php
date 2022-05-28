@@ -15,33 +15,23 @@ class Login extends CI_Controller {
     
     public function auth(){
         $user =  $this->input->post('username', true);
-        $password = md5($this->input->post('pass', true));
+        $password = $this->input->post('pass', true);
         $valid = $this->M_login->usercheck($user, $password);
         if($valid->num_rows()>0){
-            $data = $valid->row_array();
-            $id = $data['id'];
-            $user = $data['username'];
-            $account = $data['account'];
-            if($account === 'admin'){
-                $sesdata = array(
-                    'id' => $id,
-                    'username' => $user,
-                    'account' => $account,
-                    'logged_in_admin' => TRUE,
-                );
-                $this->session->set_userdata($sesdata);
+			$data = $valid->row_array();
+			// var_dump($data['is_admin']);
+			// die();
+			$sesdata = [
+				'id' => $data['id'],
+				'username' => $data['nik'],
+				'is_admin' => $data['is_admin'],
+			];
+			$this->session->set_userdata($sesdata);
+			
+            if($data['is_admin']){
                 redirect('dashboard');
-            }elseif($account === 'pegawai'){
-                $sesdata = array(
-                    'id' => $id,
-                    'username' => $user,
-                    'account' => $account,
-                    'logged_in_user' => TRUE,
-                );
-                $this->session->set_userdata($sesdata);
+			}else{
                 redirect('user');
-            }else{
-                redirect('login');
             }
         }else{
             echo $this->session->set_flashdata('msg','Username or Password is Wrong');
