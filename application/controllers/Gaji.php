@@ -43,18 +43,13 @@ class Gaji extends CI_Controller
 
     public function detailDataGaji($id)
     {
-        $data['gol'] = [
-            'IV/e', 'IV/d', 'IV/c', 'IV/b', 'IV/a',
-            'III/d', 'III/c', 'III/b', 'III/a',
-            'II/d', 'II/c', 'II/b', 'II/a',
-            'I/d', 'I/c', 'I/b', 'I/a'
-        ];
-        $this->form_validation->set_rules('gol', 'Golongan', 'required|xss_clean');
-        $this->form_validation->set_rules('masa_kerja', 'Masa Kerja', 'required|xss_clean');
-        $this->form_validation->set_rules('gaji_pokok', 'Golongan', 'required|xss_clean|numeric');
-        $data['gaji'] = $this->M_gaji->getDataGajiById($id);
+        $this->form_validation->set_rules('nama', 'Nama', 'required|xss_clean');
+        $this->form_validation->set_rules('keterangan', 'Keterangan', 'xss_clean');
+        $this->form_validation->set_rules('gaji_default', 'Gaji Default', 'required|xss_clean|numeric');
+        $this->form_validation->set_rules('is_increment', 'required|xss_clean');
         if ($this->form_validation->run() == FALSE) {
-            $data['sidebar'] = "#mn3";
+			$data['sidebar'] = "#mn3";
+			$data['gaji'] = $this->M_gaji->getDataGajiById($id);
             $this->load->view('layouts/header/admin');
             $this->load->view('admin/gaji/edit', $data);
             $this->load->view('layouts/footer', $data);

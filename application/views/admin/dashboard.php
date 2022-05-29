@@ -40,25 +40,11 @@
 
       <?php endforeach; ?>
 
-      <div class="col-lg-4 col-xs-6">
+      <div class="col-xs-6">
         <!-- small box -->
         <div class="small-box bg-green">
           <div class="inner">
             <h3><?= $i; ?></h3>
-            <p>Naik Pangkat Tahun <?= date("Y"); ?></p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-calendar-check-o"></i>
-          </div>
-        </div>
-      </div>
-      <!-- ./col -->
-
-      <div class="col-lg-4 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-green">
-          <div class="inner">
-            <h3><?= $i1; ?></h3>
             <p>Naik Gaji Tahun <?= date("Y"); ?></p>
           </div>
           <div class="icon">
@@ -68,7 +54,7 @@
       </div>
       <!-- ./col -->
 
-      <div class="col-lg-4 col-xs-6">
+      <div class="col-xs-6">
         <!-- small box -->
         <div class="small-box bg-green">
           <div class="inner">
@@ -86,60 +72,6 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <div class="box box-success">
-          <div class="box-header">
-            <h3 class="box-title">Pegawai Yang Akan Naik Pangkat Tahun <?= date("Y"); ?></h3>
-          </div>
-          <div class="box-body" style="overflow: auto;">
-            <table id="example1" class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th width="10">#</th>
-                  <th style="text-align: center;">NIP</th>
-                  <th style="text-align: center;">Nama</th>
-                  <th style="text-align: center;">Pangkat/Golongan</th>
-                  <th style="text-align: center;">Tanggal Naik</th>
-                  <th class="text-center" width="90">Menu</th>
-                </tr>
-              </thead>
-              <tbody>
-
-                <?php $i = 1; ?>
-                <?php foreach ($duk as $d) : ?>
-                  <?php
-                  $tanggal4 = explode('-', $d['naik_pangkat_yad']);
-                  $y4 = $thn - $tanggal4[0];
-                  $m4 = $bln - $tanggal4[1];
-                  ?>
-                  <?php if ($y4 == 0 && $m4 <= 0) : ?>
-
-                    <tr>
-                      <td><?= $i; ?></td>
-                      <td><?= $d['nip']; ?></td>
-                      <td><?= $d['nama']; ?></td>
-                      <td><?= $d['pangkat']; ?> (<?= $d['golongan']; ?>)</td>
-                      <td><?= mediumdate_indo($d['naik_pangkat_yad']); ?></td>
-                      <td style="text-align: center;">
-                        <a href="<?= base_url(); ?>data_duk/<?= $d['id_duk']; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                        <a href="<?= base_url(); ?>email/mail1/<?= $d['id_duk']; ?>/<?= $d['nip'] ?>" class="btn btn-warning"><i class="fa fa-paper-plane"></i></a>
-                      </td>
-                    </tr>
-                    <?php $i++; ?>
-                  <?php endif; ?>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-          </div>
-          <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
-      </div>
-      <!-- /.col -->
-    </div>
-    <!-- /.row -->
-
-    <div class="row">
-      <div class="col-xs-12">
         <div class="box box-succes">
           <div class="box-header">
             <h3 class="box-title">Pegawai Yang Akan Naik Gaji Tahun <?= date("Y"); ?></h3>
@@ -149,9 +81,9 @@
               <thead>
                 <tr>
                   <th width="10">#</th>
-                  <th style="text-align: center;">NIP</th>
+                  <th style="text-align: center;">NIK</th>
                   <th style="text-align: center;">Nama</th>
-                  <th style="text-align: center;">Pangkat/Golongan</th>
+                  <th style="text-align: center;">Jabatan</th>
                   <th style="text-align: center;">Tanggal Naik</th>
                   <th class="text-center" width="90">Menu</th>
                 </tr>
