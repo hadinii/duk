@@ -15,10 +15,10 @@
     <div class="row mt-3">
       <div class="col-xs-12">
 
-        <?php if ($this->session->flashdata('pegawai')) : ?>
-          <div class="alert alert-success alert-dismissible" role="alert">
+        <?php if ($this->session->flashdata('pegawai')) : ?>	
+          <div class="alert alert-<?= $this->session->flashdata('pegawai')['status'] ?> alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            Data pegawai <strong>berhasil</strong> <?= $this->session->flashdata('pegawai'); ?>
+            <?= $this->session->flashdata('pegawai')['message']; ?>
           </div>
         <?php endif; ?>
 
