@@ -40,9 +40,9 @@
                 <table class="table table-hover">
                   <tbody>
                     <tr>
-                      <td width="100">NIP</td>
+                      <td width="100">NIK</td>
                       <td width="7">:</td>
-                      <td><?= $pegawai['nip']; ?></td>
+                      <td><?= $nik; ?></td>
                     </tr>
 
                     <tr>
@@ -129,9 +129,9 @@
                 <form class="form-horizontal" method="post" action="">
                   <input type="hidden" value="<?= $pegawai['id_pegawai']; ?>" name="id">
                   <div class="form-group">
-                    <label class="col-md-2 control-label">NIP</label>
+                    <label class="col-md-2 control-label">NIK</label>
                     <div class="col-md-8">
-                      <input type="text" readonly name="nip" value="<?= $pegawai['nip']; ?>" class="form-control" required>
+                      <input type="text" readonly name="nik" value="<?= $nik; ?>" class="form-control" required>
                     </div>
                   </div>
 
