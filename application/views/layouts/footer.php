@@ -49,6 +49,11 @@
 <!-- AdminLTE App -->
 <script src="<?= base_url(); ?>assets/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
+<?php if (isset($scripts)) : ?>
+	<?php foreach($scripts as $script) : ?>
+		<script type="text/javascript" src="<?= base_url('assets/js/'.$script); ?>">
+	<?php endforeach ?>
+<?php endif; ?>
 <script>
   function myFunction() {
     var y = document.getElementById("password1");

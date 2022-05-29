@@ -15,7 +15,7 @@ class Gaji extends CI_Controller
     }
     public function index()
     {
-        $data['gaji'] = $this->M_gaji->getAllDataGaji();
+        $data['jabatan'] = $this->M_gaji->getAllDataGaji();
         $data['sidebar'] = "#mn3";
         $this->load->view('layouts/header/admin');
         $this->load->view('admin/gaji/index', $data);
@@ -24,23 +24,18 @@ class Gaji extends CI_Controller
 
     public function tambah()
     {
-        $data['gol'] = [
-            'IV/a', 'IV/b', 'IV/c', 'IV/d', 'IV/e',
-            'III/a', 'III/b', 'III/c', 'III/d',
-            'II/a', 'II/b', 'II/c', 'II/d',
-            'I/a', 'I/b', 'I/c', 'I/d'
-        ];
-        $this->form_validation->set_rules('gol', 'Golongan', 'required|xss_clean');
-        $this->form_validation->set_rules('masa_kerja', 'Masa Kerja', 'required|xss_clean');
-        $this->form_validation->set_rules('gaji_pokok', 'Golongan', 'required|xss_clean|numeric');
-
+		$this->form_validation->set_rules('nama', 'Nama', 'required|xss_clean');
+        $this->form_validation->set_rules('keterangan', 'Keterangan', 'xss_clean');
+        $this->form_validation->set_rules('gaji_default', 'Gaji Default', 'required|xss_clean|numeric');
+        $this->form_validation->set_rules('is_increment', 'required|xss_clean');
         if ($this->form_validation->run() == FALSE) {
+			$data['scripts'] = ['jabatan-create.js'];
             $data['sidebar'] = "#mn3";
             $this->load->view('layouts/header/admin');
             $this->load->view('admin/gaji/create', $data);
             $this->load->view('layouts/footer', $data);
         } else {
-            $this->M_gaji->tambahDataGaji();
+			$this->M_gaji->tambahDataGaji();
             $this->session->set_flashdata('gaji', 'Ditambah');
             redirect('gaji');
         }

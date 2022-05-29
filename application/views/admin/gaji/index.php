@@ -29,23 +29,37 @@
             <table id="example1" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th style="text-align: center;">Golongan</th>
+                  <th style="text-align: center;">Jabatan</th>
                   <th style="text-align: center;">Masa Kerja</th>
                   <th style="text-align: center;">Gaji Pokok</th>
                   <th class="text-center" width="90">Menu</th>
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($gaji as $g) : ?>
-                  <tr>
-                    <td><?= $g['golongan']; ?><?= $g['masa_kerja']; ?></td>
-                    <td><?= $g['masa_kerja']; ?></td>
-                    <td>Rp <?= nominal($g['gaji_pokok']); ?></td>
-                    <td style="text-align: center;">
-                      <a href="<?= base_url(); ?>detailGaji/<?= $g['id_gaji']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                      <a href="<?= base_url(); ?>hapusGaji/<?= $g['id_gaji']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                    </td>
-                  </tr>
+                <?php foreach ($jabatan as $row) : ?>
+									<?php if($row['is_increment']) : ?>
+										<?php foreach($row['gaji'] as $rows) : ?>
+											<tr>
+												<td><?= $rows['nama']; ?></td>
+												<td><?= "{$rows['condition']} {$rows['masa_kerja']} Tahun" ?></td>
+												<td>Rp <?= nominal($rows['gaji_pokok']) ?></td>
+												<td style="text-align: center;">
+													<a href="<?= base_url(); ?>detailGaji/<?= $rows['id_jabatan']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+													<a href="<?= base_url(); ?>hapusGaji/<?= $rows['id_jabatan']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+												</td>
+											</tr>
+										<?php endforeach; ?>
+									<?php else : ?>
+										<tr>
+											<td><?= $row['nama']; ?></td>
+											<td><?= $row['is_increment'] ? var_dump($row['gaji']) : '-' ?></td>
+											<td>Rp <?= nominal($row['gaji_default']) ?></td>
+											<td style="text-align: center;">
+												<a href="<?= base_url(); ?>detailGaji/<?= $row['id_jabatan']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+												<a href="<?= base_url(); ?>hapusGaji/<?= $row['id_jabatan']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+											</td>
+										</tr>
+									<?php endif; ?>
                 <?php endforeach; ?>
               </tbody>
             </table>

@@ -4,17 +4,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_Gaji extends CI_Model {
     public function tambahDataGaji(){
         $data=[
-            'golongan' => $this->input->post('gol',true),
-            'masa_kerja' => $this->input->post('masa_kerja',true),
-            'gaji_pokok' => $this->input->post('gaji_pokok',true)
+            'nama' => $this->input->post('nama',true),
+            'keterangan' => $this->input->post('keterangan',true),
+            'gaji_default' => $this->input->post('gaji_default',true),
+            'is_increment' => $this->input->post('is_increment',true) == "on",
         ];
-        $this->db->insert('gaji', $data);
-        
+        $this->db->insert('jabatan', $data);
+		$insert_id = $this->db->insert_id();
+		
+		$condition = $this->input->post('condition',true);
+		$masa_kerja = $this->input->post('masa_kerja',true);
+		$gaji_pokok = $this->input->post('gaji_pokok',true);
+		foreach($condition as $i => $row) {
+			$data = [
+				'jabatan_id' => $insert_id,
+				'condition' => $row,
+				'masa_kerja' => $masa_kerja[$i],
+				'gaji_pokok' => $gaji_pokok[$i]
+			];
+			$this->db->insert('gaji', $data);
+		}
     }
 
     public function getAllDataGaji(){
-        $this->db->order_by('gaji_pokok', 'ASC');
-        return $this->db->get('gaji')->result_array();
+        $result = $this->db->get('jabatan')->result_array();
+		foreach ($result as $i => $row) {
+			$this->db->select('*');
+			$this->db->from('gaji g');
+			$this->db->join('jabatan j', 'g.jabatan_id = j.id_jabatan', 'LEFT');
+			$this->db->where('g.jabatan_id', $row['id_jabatan']);
+			$result[$i]['gaji'] = $this->db->get()->result_array();
+		}
+		return $result;
     }
     
     public function getDataGajiById($id){

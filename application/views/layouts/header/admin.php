@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="<?= base_url(); ?>assets/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?= base_url(); ?>assets/dist/css/skins/_all-skins.min.css">
-
+	<link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/admin/css/util.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="<?= base_url(); ?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 

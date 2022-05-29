@@ -6,7 +6,12 @@ class M_Pegawai extends CI_Model
 
     public function getAllPegawai()
     {
-        return $this->db->get('pegawai')->result_array();
+		return $this->db->select('p.*, u.nik, j.nama AS jabatan, j.gaji_default, g.gaji_pokok')
+        ->from('pegawai p')
+        ->join('user u', 'p.user_id = u.id', 'LEFT')
+		->join('jabatan j', 'p.jabatan_id = j.id_jabatan', 'LEFT')
+		->join('gaji g', 'j.id_jabatan = g.jabatan_id', 'LEFT')
+        ->get()->result_array();
     }
 
     public function tambahDataPegawai()

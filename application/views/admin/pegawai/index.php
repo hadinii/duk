@@ -32,29 +32,27 @@
               <thead>
                 <tr>
                   <th width="10">#</th>
-                  <th style="text-align: center;">NIP</th>
+                  <th style="text-align: center;">NIK</th>
                   <th style="text-align: center;">Nama</th>
+                  <th style="text-align: center;">Jabatan</th>
                   <th style="text-align: center;">Jenis Kelamin</th>
-                  <th style="text-align: center;">Tempat Lahir</th>
-                  <th style="text-align: center;">Tanggal Lahir</th>
-                  <th style="text-align: center;">Email</th>
+                  <th style="text-align: center;">Gaji</th>
                   <th class="text-center" width="90">Menu</th>
                 </tr>
               </thead>
               <tbody>
                 <?php $i = 1; ?>
-                <?php foreach ($pegawai as $pgw) : ?>
+                <?php foreach ($pegawai as $row) : ?>
                   <tr>
                     <td><?= $i; ?></td>
-                    <td><?= $pgw['nip']; ?></td>
-                    <td><?= $pgw['nama']; ?></td>
-                    <td><?= $pgw['jenis_kelamin']; ?></td>
-                    <td><?= $pgw['tempat_lahir']; ?></td>
-                    <td><?= mediumdate_indo($pgw['tgl_lahir']); ?></td>
-                    <td><?= $pgw['email']; ?></td>
+                    <td><?= $row['nik']; ?></td>
+                    <td><?= $row['nama']; ?></td>
+                    <td><?= $row['jabatan']; ?></td>
+                    <td><?= $row['jenis_kelamin']; ?></td>
+                    <td><?= $row['gaji_id'] ? nominal($row['gaji_pokok']) : nominal($row['gaji_default']); ?></td>
                     <td style="text-align: center;">
-                      <a href="<?= base_url(); ?>detailPegawai/<?= $pgw['id_pegawai']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                      <a href="<?= base_url(); ?>hapusPegawai/<?= $pgw['nip']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                      <a href="<?= base_url(); ?>detailPegawai/<?= $row['id_pegawai']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                      <a href="<?= base_url(); ?>hapusPegawai/<?= $row['id_pegawai']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                     </td>
                   </tr>
                   <?php $i++; ?>

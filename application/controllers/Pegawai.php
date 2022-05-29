@@ -16,7 +16,7 @@ class Pegawai extends CI_Controller
 		$data['sidebar'] = "#mn2";
 		$data['pegawai'] = $this->M_pegawai->getAllPegawai();
 		$this->load->view('layouts/header/admin');
-		$this->load->view('pegawai/index', $data);
+		$this->load->view('admin/pegawai/index', $data);
 		$this->load->view('layouts/footer', $data);
 	}
 
@@ -37,7 +37,7 @@ class Pegawai extends CI_Controller
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn2";
 			$this->load->view('layouts/header/admin');
-			$this->load->view('pegawai/create');
+			$this->load->view('admin/pegawai/create');
 			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_pegawai->tambahDataPegawai();
