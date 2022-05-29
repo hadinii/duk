@@ -36,6 +36,7 @@
                   <th style="text-align: center;">Nama</th>
                   <th style="text-align: center;">Jabatan</th>
                   <th style="text-align: center;">Jenis Kelamin</th>
+                  <th style="text-align: center;">Masa Kerja</th>
                   <th style="text-align: center;">Gaji</th>
                   <th class="text-center" width="90">Menu</th>
                 </tr>
@@ -49,6 +50,7 @@
                     <td><?= $row['nama']; ?></td>
                     <td><?= $row['jabatan']; ?></td>
                     <td><?= $row['jenis_kelamin']; ?></td>
+                    <td><?= getMasaKerja($row['mulai_kerja']); ?></td>
                     <td><?= $row['gaji_id'] ? nominal($row['gaji_pokok']) : nominal($row['gaji_default']); ?></td>
                     <td style="text-align: center;">
                       <a href="<?= base_url(); ?>detailPegawai/<?= $row['id_pegawai']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>

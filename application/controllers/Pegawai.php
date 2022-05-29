@@ -10,6 +10,8 @@ class Pegawai extends CI_Controller
 			redirect('login');
 		}
 		$this->load->model('M_pegawai');
+		$this->load->model('M_jabatan');
+		$this->load->helper('masa_kerja');
 	}
 	public function index()
 	{
@@ -28,7 +30,6 @@ class Pegawai extends CI_Controller
 		$this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required|xss_clean');
 		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'xss_clean');
 		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'xss_clean');
-		// $this->form_validation->set_rules('gol_darah', 'Golongan Darah', 'required|xss_clean');
 		$this->form_validation->set_rules('agama', 'Agama', 'required|xss_clean');
 		$this->form_validation->set_rules('no_telp', 'No Telp', 'xss_clean');
 		$this->form_validation->set_rules('email', 'Email', 'xss_clean|valid_email');
@@ -36,8 +37,9 @@ class Pegawai extends CI_Controller
 		$this->form_validation->set_rules('ket', 'Keterangan', 'xss_clean');
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn2";
+			$data['jabatan'] = $this->M_jabatan->getAll();
 			$this->load->view('layouts/header/admin');
-			$this->load->view('admin/pegawai/create');
+			$this->load->view('admin/pegawai/create', $data);
 			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_pegawai->tambahDataPegawai();
@@ -68,7 +70,7 @@ class Pegawai extends CI_Controller
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn2";
 			$this->load->view('layouts/header/admin');
-			$this->load->view('pegawai/show/admin', $data);
+			$this->load->view('admin/pegawai/show', $data);
 			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_pegawai->ubahDataPegawai();

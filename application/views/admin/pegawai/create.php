@@ -28,17 +28,10 @@
             <form class="form-horizontal" method="post" action="">
 
               <div class="form-group">
-                <label class="col-md-2 control-label">NIP</label>
+                <label class="col-md-2 control-label">NIK</label>
                 <div class="col-md-8">
-                  <input type="text" name="nip" class="form-control" required>
+                  <input type="text" name="nik" class="form-control" required>
                 </div>
-              </div>
-
-              <div class="form-group">
-                  <label class="col-md-2 control-label">Kartu Pegawai</label>
-                  <div class="col-md-8">
-                    <input type="text" name="kartu_pegawai" class="form-control" required>
-                  </div>
               </div>
 
               <div class="form-group">
@@ -47,6 +40,28 @@
                   <input type="text" name="nama" class="form-control" required>
                 </div>
               </div>
+
+							<div class="form-group">
+								<label class="col-md-2 control-label">Tanggal Masuk</label>
+								<div class="col-md-8">
+									<div class="input-group date">
+										<div class="input-group-addon">
+											<i class="fa fa-calendar"></i>
+										</div>
+										<input type="text" name="mulai_kerja" class="form-control pull-right" id="datepicker" required>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label">Jabatan</label>
+								<div class="col-md-8">
+									<select class="form-control" name="jabatan_id" required>
+										<?php foreach($jabatan as $row) : ?>
+											<option value="<?= $row['id_jabatan'] ?>"><?= $row['nama'] ?></option>
+										<?php endforeach; ?>
+									</select>
+								</div>
+							</div>
 
               <div class="form-group">
                 <label class="col-md-2 control-label">Jenis Kelamin</label>
@@ -120,14 +135,7 @@
               <div class="form-group">
                 <label class="col-md-2 control-label">Alamat</label>
                 <div class="col-md-8">
-                  <input type="text" name="alamat" class="form-control" required>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-md-2 control-label">Keterangan</label>
-                <div class="col-md-8">
-                  <input type="text" name="ket" class="form-control">
+                  <textarea name="alamat" class="form-control" required></textarea>
                 </div>
               </div>
 

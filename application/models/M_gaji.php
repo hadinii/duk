@@ -29,10 +29,10 @@ class M_Gaji extends CI_Model {
     public function getAllDataGaji(){
         $result = $this->db->get('jabatan')->result_array();
 		foreach ($result as $i => $row) {
-			$this->db->select('*');
-			$this->db->from('gaji g');
-			$this->db->join('jabatan j', 'g.jabatan_id = j.id_jabatan', 'LEFT');
-			$this->db->where('g.jabatan_id', $row['id_jabatan']);
+			$this->db->select('*')
+				->from('gaji g')
+				->join('jabatan j', 'g.jabatan_id = j.id_jabatan', 'LEFT')
+				->where('g.jabatan_id', $row['id_jabatan']);
 			$result[$i]['gaji'] = $this->db->get()->result_array();
 		}
 		return $result;

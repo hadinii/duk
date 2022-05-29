@@ -27,7 +27,6 @@ class M_Pegawai extends CI_Model
             'no_telp' => $this->input->post('no_telp', true),
             'email' => $this->input->post('email', true),
             'alamat' => $this->input->post('alamat', true),
-            'keterangan' => $this->input->post('ket', true)
         ];
         $this->db->insert('pegawai', $dataPegawai);
 
