@@ -43,7 +43,10 @@ class Pegawai extends CI_Controller
 			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_pegawai->tambahDataPegawai();
-			$this->session->set_flashdata('pegawai', 'Ditambahkan');
+			$this->session->set_flashdata('pegawai', [
+				'status' => 'success',
+				'message' => 'Berhasil menambah data pegawai'
+			]);
 			redirect('pegawai');
 		}
 	}
@@ -72,15 +75,21 @@ class Pegawai extends CI_Controller
 			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_pegawai->ubahDataPegawai();
-			$this->session->set_flashdata('pegawai', 'Diubah');
+			$this->session->set_flashdata('pegawai', [
+				'status' => 'success',
+				'message' => 'Berhasil mengubah data pegawai'
+			]);
 			redirect('pegawai');
 		}
 	}
 
-	public function hapusPegawai($nip)
+	public function hapusPegawai($id)
 	{
-		$this->M_pegawai->hapusDataPegawai($nip);
-		$this->session->set_flashdata('pegawai', 'Dihapus');
+		$this->M_pegawai->hapusDataPegawai($id);
+		$this->session->set_flashdata('pegawai', [
+			'status' => 'success',
+			'message' => 'Berhasil menghapus data pegawai'
+		]);
 		redirect('pegawai');
 	}
 
@@ -88,11 +97,17 @@ class Pegawai extends CI_Controller
 	{
 		$this->form_validation->set_rules('nik', 'NIK', 'required|xss_clean|numeric');
 		if ($this->form_validation->run() == FALSE) {
-			//redirect('pegawai',refresh);
-			echo "gagal!";
+			$this->session->set_flashdata('pegawai', [
+				'status' => 'danger',
+				'message' => 'Gagal mereset password'
+			]);
+			redirect('pegawai');
 		} else {
 			$this->M_pegawai->resetPass();
-			$this->session->set_flashdata('pegawai', 'Direset (Password)');
+			$this->session->set_flashdata('pegawai', [
+				'status' => 'success',
+				'message' => 'Berhasil mereset password'
+			]);
 			redirect('pegawai');
 		}
 	}

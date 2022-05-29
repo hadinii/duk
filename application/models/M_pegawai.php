@@ -40,14 +40,16 @@ class M_Pegawai extends CI_Model
 	
     }
 
-    public function hapusDataPegawai($nip)
+    public function hapusDataPegawai($id)
     {
-        $this->db->where('nip', $nip);
-        $this->db->delete('pegawai');
-        $this->db->where('username', $nip);
+        $pegawai = $this->db->where('id_pegawai', $id)->get('pegawai')->row_array();
+        $this->db->where('id_pegawai', $id)->delete('pegawai');
+
+        $this->db->where('id', $pegawai->user_id);
         $this->db->delete('user');
-        $this->db->where('nip', $nip);
-        $this->db->delete('duk');
+
+		
+	
         // $this->db->where('nip', $nip);
         // $this->db->delete('sk');
     }
