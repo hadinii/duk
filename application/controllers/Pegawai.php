@@ -24,9 +24,10 @@ class Pegawai extends CI_Controller
 
 	public function tambah()
 	{
-		$this->form_validation->set_rules('nip', 'NIP', 'required|xss_clean|numeric|max_length[18]|is_unique[pegawai.nip]');
-		$this->form_validation->set_rules('kartu_pegawai', 'Kartu Pegawai', 'required|xss_clean');
+		$this->form_validation->set_rules('nik', 'NIK', 'required|xss_clean|numeric|exact_length[16]|is_unique[user.nik]');
 		$this->form_validation->set_rules('nama', 'Nama', 'required|xss_clean');
+		$this->form_validation->set_rules('mulai_kerja', 'Mulai Kerja', 'xss_clean');
+		$this->form_validation->set_rules('jabatan_id', 'Jabatan', 'required|xss_clean');
 		$this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required|xss_clean');
 		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'xss_clean');
 		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'xss_clean');
@@ -34,7 +35,6 @@ class Pegawai extends CI_Controller
 		$this->form_validation->set_rules('no_telp', 'No Telp', 'xss_clean');
 		$this->form_validation->set_rules('email', 'Email', 'xss_clean|valid_email');
 		$this->form_validation->set_rules('alamat', 'Alamat', 'xss_clean');
-		$this->form_validation->set_rules('ket', 'Keterangan', 'xss_clean');
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn2";
 			$data['jabatan'] = $this->M_jabatan->getAll();
@@ -55,20 +55,18 @@ class Pegawai extends CI_Controller
 		$data['jk'] = ['Laki-laki', 'Perempuan'];
 		$data['agama'] = ['Islam', 'Protestan', 'Katholik', 'Hindu', 'Budha'];
 
-		$this->form_validation->set_rules('nip', 'NIP', 'required|xss_clean|numeric|max_length[18]');
 		$this->form_validation->set_rules('nama', 'Nama', 'required|xss_clean');
 		$this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required|xss_clean');
 		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required|xss_clean');
 		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'required|xss_clean');
-		// $this->form_validation->set_rules('gol_darah', 'Golongan Darah', 'required|xss_clean');
 		$this->form_validation->set_rules('agama', 'Agama', 'required|xss_clean');
 		$this->form_validation->set_rules('no_telp', 'No Telp', 'required|xss_clean');
 		$this->form_validation->set_rules('email', 'Email', 'required|xss_clean|valid_email');
 		$this->form_validation->set_rules('alamat', 'Alamat', 'required|xss_clean');
-		$this->form_validation->set_rules('ket', 'Keterangan', 'xss_clean');
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn2";
+			$data['jabatan'] = $this->M_jabatan->getAll();
 			$this->load->view('layouts/header/admin');
 			$this->load->view('admin/pegawai/show', $data);
 			$this->load->view('layouts/footer', $data);
@@ -88,7 +86,7 @@ class Pegawai extends CI_Controller
 
 	public function resetPassword()
 	{
-		$this->form_validation->set_rules('nip', 'NIP', 'required|xss_clean|numeric');
+		$this->form_validation->set_rules('nik', 'NIK', 'required|xss_clean|numeric');
 		if ($this->form_validation->run() == FALSE) {
 			//redirect('pegawai',refresh);
 			echo "gagal!";
