@@ -34,21 +34,22 @@
                 <table class="table table-hover">
                   <tbody>
                     <tr>
-                      <td width="140">NIP</td>
+                      <td width="140">NIK</td>
                       <td width="7">:</td>
-                      <td><?= $pegawai['nip']; ?></td>
-                    </tr>
-
-                    <tr>
-                      <td>Kartu Pegawai</td>
-                      <td>:</td>
-                      <td><?= $pegawai['kartu_pegawai']; ?></td>
+                      <td><?= $pegawai['nik']; ?></td>
                     </tr>
 
                     <tr>
                       <td>Nama</td>
                       <td>:</td>
                       <td><?= $pegawai['nama']; ?></td>
+                    </tr>
+                    </tr>
+
+                    <tr>
+                      <td>Jabatan</td>
+                      <td>:</td>
+                      <td><?= $pegawai['jabatan']; ?></td>
                     </tr>
 
                     <tr>
@@ -68,22 +69,10 @@
                       <td>:</td>
                       <td><?= date_indo($pegawai['tgl_lahir']); ?></td>
                     </tr>
-                    <?php
-                    // tanggal lahir
-                    $tanggal = new DateTime($pegawai['tgl_lahir']);
-                    // tanggal hari ini
-                    $today = new DateTime('today');
-                    // tahun
-                    $y = $today->diff($tanggal)->y;
-                    // bulan
-                    $m = $today->diff($tanggal)->m;
-                    // hari
-                    $d = $today->diff($tanggal)->d;
-                    ?>
                     <tr>
-                      <td>Umur</td>
+                      <td>Masa Kerja</td>
                       <td>:</td>
-                      <td><?= $y . " tahun " . $m . " bulan " . $d . " hari"; ?></td>
+                      <td><?= getMasaKerja($pegawai['mulai_kerja']) ?></td>
                     </tr>
 
                     <!-- <tr>
@@ -116,11 +105,6 @@
                       <td><?= $pegawai['alamat']; ?></td>
                     </tr>
 
-                    <tr>
-                      <td>Keterangan</td>
-                      <td>:</td>
-                      <td><?= $pegawai['keterangan']; ?></td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -128,11 +112,10 @@
               <div class="tab-pane" id="edit">
                 <form class="form-horizontal" method="post" action="">
                   <input type="hidden" value="<?= $pegawai['id_pegawai']; ?>" name="id">
-                  <input type="hidden" value="<?= $pegawai['nip']; ?>" name="nip1">
                   <div class="form-group">
-                    <label class="col-md-2 control-label">NIP</label>
+                    <label class="col-md-2 control-label">NIK</label>
                     <div class="col-md-8">
-                      <input type="text" name="nip" value="<?= $pegawai['nip']; ?>" class="form-control" required readonly>
+                      <input type="text" name="nik" value="<?= $pegawai['nik']; ?>" class="form-control" required readonly>
                     </div>
                   </div>
 
@@ -142,6 +125,17 @@
                       <input type="text" name="nama" value="<?= $pegawai['nama']; ?>" class="form-control" required>
                     </div>
                   </div>
+
+									<div class="form-group">
+										<label class="col-md-2 control-label">Jabatan</label>
+										<div class="col-md-8">
+											<select class="form-control" name="jabatan_id" required>
+												<?php foreach($jabatan as $row) : ?>
+													<option value="<?= $row['id_jabatan'] ?>" <?= $row['id_jabatan'] == $pegawai['jabatan_id'] ? 'selected' : '' ?>><?= $row['nama'] ?></option>
+												<?php endforeach; ?>
+											</select>
+										</div>
+									</div>
 
                   <div class="form-group">
                     <label class="col-md-2 control-label">Jenis Kelamin</label>
@@ -176,21 +170,6 @@
                       </div>
                     </div>
                   </div>
-
-                  <!-- <div class="form-group">
-                    <label class="col-md-2 control-label">Golongan Darah</label>
-                    <div class="col-md-8">
-                      <select class="form-control" name="gol_darah" required>
-                        <?php foreach ($gol_darah as $gd) : ?>
-                          <?php if ($gd == $pegawai['golongan_darah']) : ?>
-                            <option value="<?= $gd; ?>" selected><?= $gd; ?></option>
-                          <?php else : ?>
-                            <option value="<?= $gd; ?>"><?= $gd; ?></option>
-                          <?php endif; ?>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
-                  </div> -->
 
                   <div class="form-group">
                     <label class="col-md-2 control-label">Agama</label>
@@ -229,12 +208,6 @@
                   </div>
 
                   <div class="form-group">
-                    <label class="col-md-2 control-label">Keterangan</label>
-                    <div class="col-md-8">
-                      <input type="text" name="ket" value="<?= $pegawai['keterangan']; ?>" class="form-control">
-                    </div>
-                  </div>
-                  <div class="form-group">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">
                       <button type="submit" class="btn btn-success" style="float: right;"> <i class="fa fa-save"></i> Simpan Perubahan</button>
@@ -247,7 +220,7 @@
                 <form method="post" action="<?= base_url(); ?>pegawai/resetPassword">
                   <div class="form-group">
                     <label>Reset Password</label>
-                    <input type="hidden" value="<?= $pegawai['nip'] ?>" name="nip">
+                    <input type="hidden" value="<?= $pegawai['nik'] ?>" name="nik">
                     <br>
                     <button class="btn btn-success" type="submit"><i class="fa fa-key"></i> Reset</button>
                     <span class="help-block">Reset Password menjadi NIP pegawai</span>

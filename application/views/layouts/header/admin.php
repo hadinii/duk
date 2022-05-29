@@ -125,13 +125,13 @@
           <li class="header"></li>
 
           <li id="mn1">
-            <a href="<?= base_url(); ?>home">
+            <a href="<?= base_url(); ?>">
               <i class="fa fa-dashboard"></i> <span>Beranda</span>
             </a>
           </li>
 
           <li id="mn2">
-            <a href="<?= base_url(); ?>pegawai">
+            <a href="<?= base_url('pegawai'); ?>">
               <i class="fa fa-user"></i> <span>Data Pegawai</span>
             </a>
           </li>
@@ -143,19 +143,19 @@
           </li> -->
 
           <li id="mn6">
-            <a href="<?= base_url(); ?>pengajuan">
+            <a href="<?= base_url('pengajuan'); ?>">
               <i class="fa fa-file"></i> <span>Data Pengajuan</span>
             </a>
           </li>
 
           <li id="mn3">
-            <a href="<?= base_url(); ?>gaji">
+            <a href="<?= base_url('gaji'); ?>">
               <i class="fa fa-money"></i> <span>Data Gaji</span>
             </a>
           </li>
 
           <li id="mn5">
-            <a href="<?= base_url(); ?>setting">
+            <a href="<?= base_url('setting'); ?>">
               <i class="fa fa-cogs"></i> <span>Pengaturan</span>
             </a>
           </li>
