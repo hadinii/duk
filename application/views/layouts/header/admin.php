@@ -136,11 +136,11 @@
             </a>
           </li>
 
-          <li id="mn4">
+          <!-- <li id="mn4">
             <a href="<?= base_url(); ?>duk">
               <i class="fa fa-credit-card"></i> <span>Data DUK Pegawai</span>
             </a>
-          </li>
+          </li> -->
 
           <li id="mn6">
             <a href="<?= base_url(); ?>pengajuan">

@@ -68,7 +68,7 @@
                       <td>:</td>
                       <td><?= date_indo($pegawai['tgl_lahir']); ?></td>
                     </tr>
-                    <?php
+                    <!-- <?php
                     // tanggal lahir
                     $tanggal = new DateTime($pegawai['tgl_lahir']);
                     // tanggal hari ini
@@ -79,7 +79,7 @@
                     $m = $today->diff($tanggal)->m;
                     // hari
                     $d = $today->diff($tanggal)->d;
-                    ?>
+                    ?> -->
                     <tr>
                       <td>Umur</td>
                       <td>:</td>

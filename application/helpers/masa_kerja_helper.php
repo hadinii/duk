@@ -12,6 +12,16 @@ if (!function_exists('getMasaKerja')) {
 		$m = $today->diff($tanggal)->m;
 		// hari
 		$d = $today->diff($tanggal)->d;
-		return "{$y} tahun {$m} bulan {$d} hari";
+
+		if($y == 0 && $m == 0){
+			return "{$d} hari";
+		} elseif($y == 0){
+			return "{$m} bulan {$d} hari";
+		} elseif($m == 0){
+			return "{$y} tahun {$d} hari";
+		} else{
+			return "{$y} tahun {$m} bulan {$d} hari";
+		}
+		//  return "{$y} tahun {$m} bulan {$d} hari;
 	}
 }

@@ -11,6 +11,7 @@ class User extends CI_Controller
 		}
 		$this->load->model('M_user');
 		$this->load->helper('nominal');
+		$this->load->helper('masa_kerja');
 		$this->load->library('upload');
 
 		$this->load->helper(['url', 'form']);

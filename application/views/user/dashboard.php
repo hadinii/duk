@@ -60,7 +60,9 @@
               <div class="col-sm-7 border-right">
                 <div class="description-block">
                   <span class="description-header">Terhitung Mulai Tanggal (TMT) Kerja</span>
-                  <h5 class="description-text"><?= date_indo($pegawai['mulai_kerja']); ?></h5>
+                  <h5 class="description-text">
+										<?= date_indo($pegawai['mulai_kerja']);?> ( <?=getMasaKerja($pegawai['mulai_kerja']);?> )
+									</h5>
                 </div>
                 <!-- /.description-block -->
               </div>
