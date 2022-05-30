@@ -388,7 +388,7 @@ class CI_Upload {
 				if (($field = trim($matches[0][$i], '[]')) === '' OR ! isset($_file[$field]))
 				{
 					$_file = NULL;
-					break;
+					break;	
 				}
 
 				$_file = $_file[$field];
