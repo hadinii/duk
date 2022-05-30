@@ -11,14 +11,12 @@ class Dashboard extends CI_Controller
             redirect('login');
         }
 
-        $this->load->model('M_duk');
+        $this->load->model('M_gaji');
     }
     public function index()
     {
-        // $data['tot_pgw'] = $this->db->count_all_results('pegawai');
-        // $data['tot_usr'] = $this->M_duk->getAllAdmin();
         $data['tot_p'] = $this->db->count_all_results('pengajuan');
-        $data['duk'] = [];
+        $data['naiK_gaji'] = $this->M_gaji->getNaikGaji();
         $data['sidebar'] = "#mn1";
         $this->load->view('layouts/header/admin');
         $this->load->view('admin/dashboard', $data);

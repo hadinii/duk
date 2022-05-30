@@ -31,7 +31,6 @@ class M_Gaji extends CI_Model {
 		foreach ($result as $i => $row) {
 			$this->db->select('*')
 				->from('gaji g')
-				->join('jabatan j', 'g.jabatan_id = j.id_jabatan', 'LEFT')
 				->where('g.jabatan_id', $row['id_jabatan']);
 			$result[$i]['gaji'] = $this->db->get()->result_array();
 		}
@@ -39,21 +38,60 @@ class M_Gaji extends CI_Model {
     }
     
     public function getDataGajiById($id){
-        return $this->db->get_where('gaji', ['id_gaji'=>$id])->row_array();
+		$result = $this->db->get_where('jabatan', ['id_jabatan' => $id])->row_array();
+		$this->db->select('*')
+			->from('gaji g')
+			->where('g.jabatan_id', $id);
+		$result['gaji'] = $this->db->get()->result_array();
+		return $result;
     }
 
     public function updateDataGaji(){
         $data=[
-            'golongan' => $this->input->post('gol',true),
-            'masa_kerja' => $this->input->post('masa_kerja',true),
-            'gaji_pokok' => $this->input->post('gaji_pokok',true)
+            'nama' => $this->input->post('nama',true),
+            'keterangan' => $this->input->post('keterangan',true),
+            'gaji_default' => $this->input->post('gaji_default',true),
+            'is_increment' => $this->input->post('is_increment',true) == "on",
         ];
-        $this->db->where('id_gaji', $this->input->post('id'), true);
-        $this->db->update('gaji',$data);
+        $this->db->where('id_jabatan', $this->input->post('id_jabatan' ,true));
+        $this->db->update('jabatan',$data);
+
+		$id_gaji = $this->input->post('id_gaji',true);
+		$condition = $this->input->post('condition',true);
+		$masa_kerja = $this->input->post('masa_kerja',true);
+		$gaji_pokok = $this->input->post('gaji_pokok',true);
+		foreach($id_gaji as $i => $row) {
+			$data = [
+				'jabatan_id' => $this->input->post('id_jabatan'),
+				'condition' => $condition[$i],
+				'masa_kerja' => $masa_kerja[$i],
+				'gaji_pokok' => $gaji_pokok[$i]
+			];
+			$this->db->where('id_gaji', $row);
+			$this->db->update('gaji',$data);
+		}
     }
 
     public function hapusGajiPegawai($id){
         $this->db->where('id_gaji', $id);
         $this->db->delete('gaji');
     }
+
+	public function getNaikGaji()
+	{
+		$gaji = $this->getAllDataGaji();
+		$is_increment = array_filter($gaji, function($row){
+			return $row['is_increment'];
+		});
+		foreach($is_increment as $row){
+
+		}
+		$this->db->select("p.*, u.nik, j.nama as jabatan, j.is_increment, YEAR(NOW()) - YEAR(`p`.`mulai_kerja`)
+		- (DATE_FORMAT(NOW(), '%m%d') < DATE_FORMAT(`p`.`mulai_kerja`, '%m%d')) as masa_kerja")
+			->from('pegawai p')
+			->where('j.is_increment', 1)
+			->join('user us', 'p.user_id = u.id', 'LEFT')
+			->join('jabatan j', 'p.jabatan_id = j.id_jabatan')
+			->get()->result_array();
+	}
 }

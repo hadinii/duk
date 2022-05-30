@@ -40,12 +40,12 @@
 									<?php if($row['is_increment']) : ?>
 										<?php foreach($row['gaji'] as $rows) : ?>
 											<tr>
-												<td><?= $rows['nama']; ?></td>
+												<td><?= $row['nama']; ?></td>
 												<td><?= "{$rows['condition']} {$rows['masa_kerja']} Tahun" ?></td>
 												<td>Rp <?= nominal($rows['gaji_pokok']) ?></td>
 												<td style="text-align: center;">
-													<a href="<?= base_url(); ?>detailGaji/<?= $rows['id_jabatan']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-													<a href="<?= base_url(); ?>hapusGaji/<?= $rows['id_jabatan']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+													<a href="<?= base_url(); ?>detailGaji/<?= $row['id_jabatan']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+													<a href="<?= base_url(); ?>hapusGaji/<?= $row['id_jabatan']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn btn-danger"><i class="fa fa-trash"></i></a>
 												</td>
 											</tr>
 										<?php endforeach; ?>
