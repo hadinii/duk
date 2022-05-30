@@ -10,6 +10,7 @@ class User extends CI_Controller
 			redirect('login');
 		}
 		$this->load->model('M_user');
+		$this->load->model('M_jabatan');
 		$this->load->helper('nominal');
 		$this->load->helper('masa_kerja');
 		$this->load->library('upload');
@@ -19,13 +20,13 @@ class User extends CI_Controller
 
 	public function index()
 	{
-		$id = $this->session->userdata('id');
-		$data['nik'] = $this->session->userdata('username');
-		$data['client'] = [];
-		$data['gaji'] = [];
+		// $id = $this->session->userdata('id');
+		// $data['nik'] = $this->session->userdata('username');
+		// $data['client'] = [];
+		// $data['gaji'] = [];
 		// $this->M_user->dataGaji();
-		$data['pegawai'] = $this->M_user->getPegawaiById($id);
 		$data['sidebar'] = "#mn1";
+		$data['pegawai'] = $this->M_user->getAllPegawai();
 		$this->load->view('layouts/header/user', $data);
 		$this->load->view('user/dashboard', $data);
 		$this->load->view('layouts/footer', $data);
@@ -34,15 +35,16 @@ class User extends CI_Controller
 	public function data()
 	{
 		$id = $this->session->userdata('id');
-		$data['nik'] = $this->session->userdata('username');
-		$data['client'] = [];
-		$data['pegawai'] = $this->M_user->getPegawaiById($id);
+		// $data['nik'] = $this->session->userdata('username');
+		// $data['client'] = [];
+		$data['pegawai'] = $this->M_user->getAllPegawai($id);
 		$data['gol_darah'] = ['-', 'A', 'B', 'AB', 'O'];
 		$data['jk'] = ['Laki-laki', 'Perempuan'];
 		$data['agama'] = ['Islam', 'Protestan', 'Katholik', 'Hindu', 'Budha'];
 
-		$this->form_validation->set_rules('nik', 'NIK', 'required|xss_clean|numeric|max_length[18]');
-		$this->form_validation->set_rules('nama', 'Nama', 'required|xss_clean');
+		// $this->form_validation->set_rules('nik', 'NIK', 'required|xss_clean|numeric|max_length[18]');
+		// $this->form_validation->set_rules('nama', 'Nama', 'required|xss_clean');
+		$this->form_validation->set_rules('jabatan_id', 'Jabatan', 'required|xss_clean');
 		$this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required|xss_clean');
 		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required|xss_clean');
 		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'required|xss_clean');
@@ -51,10 +53,11 @@ class User extends CI_Controller
 		$this->form_validation->set_rules('no_telp', 'No Telp', 'required|xss_clean');
 		$this->form_validation->set_rules('email', 'Email', 'required|xss_clean|valid_email');
 		$this->form_validation->set_rules('alamat', 'Alamat', 'required|xss_clean');
-		$this->form_validation->set_rules('ket', 'Keterangan', 'xss_clean');
+		// $this->form_validation->set_rules('ket', 'Keterangan', 'xss_clean');
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn2";
+			$data['jabatan'] = $this->M_jabatan->getAll();
 			$this->load->view('layouts/header/user', $data);
 			$this->load->view('user/pegawai/show', $data);
 			$this->load->view('layouts/footer', $data);

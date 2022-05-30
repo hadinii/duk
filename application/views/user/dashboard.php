@@ -25,7 +25,7 @@
           <!-- Add the bg color to the header using any of the bg-* classes -->
           <div class="widget-user-header bg-green-active">
             <center>
-              <h3 class="widget-user-username" style="margin-top: -15px;"><?= $pegawai['pnama']; ?></h3>
+              <h3 class="widget-user-username" style="margin-top: -15px;"><?= $pegawai['nama']; ?></h3>
             </center>
           </div>
           <div class="widget-user-image">
@@ -70,7 +70,7 @@
               <div class="col-sm-3 border-right">
                 <div class="description-block">
                   <span class="description-header">Jabatan</span>
-                  <h5 class="description-text"><?= $pegawai['jnama']; ?></h5>
+                  <h5 class="description-text"><?= $pegawai['jabatan']; ?></h5>
                 </div>
                 <!-- /.description-block -->
               </div>
