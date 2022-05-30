@@ -45,7 +45,13 @@ class M_user extends CI_Model
         return $this->db->get_where('pengajuan', ['id_pengajuan' => $id])->row_array();
     }
 
-
+	public function getPengajuanByNIK($id)
+	{
+		return $this->db->select('agreement')
+		->from('pengajuan p')
+		->where('p.nik', $id)
+		->get()->row_array();
+	}
 
 
     public function dataGaji()

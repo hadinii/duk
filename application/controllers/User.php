@@ -87,9 +87,7 @@ class User extends CI_Controller
 	{
 		$id = $this->session->userdata('id');
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
-
 		// $data['pengajuan'] = $this->M_user->dataPengajuanUser($id);
-
 		$data['pengajuan'] = $this->M_user->getAllPengajuan();
 
 		$data['sidebar'] = "#mn4";
@@ -116,52 +114,58 @@ class User extends CI_Controller
 		// $this->form_validation->set_rules('jenis_pengajuan', 'Jenis Pengajuan', 'required|xss_clean');
 		$this->form_validation->set_rules('sk_terakhir', 'SK Terakhir', 'required|xss_clean');
 		$this->form_validation->set_rules('sk_kgb', 'SK Kenaikan Gaji Berkala', 'required|xss_clean');
+		$id = $this->session->userdata('username');
+		$pengajuan = $this->M_user->getPengajuanByNIK($id);
+		if ($pengajuan['agreement'] === 'Diproses') {
+			$this->session->set_flashdata('error', 'Sudah Diajukan ');
+			redirect("User/pengajuan_user");
+		} else {
+			if ($_FILES['sk_terakhir']['name'] != "") {
 
-		if ($_FILES['sk_terakhir']['name'] != "") {
+				$config['upload_path']   = './assets/berkas/sk_terakhir/';
+				$config['allowed_types'] = 'pdf|doc|docx';
+				$config['max_size']      = 2000;
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
 
-			$config['upload_path']   = './assets/berkas/sk_terakhir/';
-			$config['allowed_types'] = 'pdf|doc|docx';
-			$config['max_size']      = 2000;
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-
-			if ($this->upload->do_upload('sk_terakhir')) {
-				$sk_terakhir = $this->upload->data('file_name');
-			} else {
-				echo $this->upload->display_errors();
+				if ($this->upload->do_upload('sk_terakhir')) {
+					$sk_terakhir = $this->upload->data('file_name');
+				} else {
+					echo $this->upload->display_errors();
+				}
 			}
-		}
 
-		if ($_FILES['sk_kgb']['name'] != "") {
-			$config['upload_path']   = './assets/berkas/sk_kgb/';
-			$config['allowed_types'] = 'pdf|doc|docx';
-			$config['max_size']      = 2000;
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
+			if ($_FILES['sk_kgb']['name'] != "") {
+				$config['upload_path']   = './assets/berkas/sk_kgb/';
+				$config['allowed_types'] = 'pdf|doc|docx';
+				$config['max_size']      = 2000;
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
 
-			if ($this->upload->do_upload('sk_kgb')) {
-				$sk_kgb = $this->upload->data('file_name');
-			} else {
-				echo $this->upload->display_errors();
+				if ($this->upload->do_upload('sk_kgb')) {
+					$sk_kgb = $this->upload->data('file_name');
+				} else {
+					echo $this->upload->display_errors();
+				}
 			}
+
+			$data = [
+				'nama' => $this->input->post('nama'),
+				'nik' => $this->input->post('nik'),
+				'tanggal' => $this->input->post('tanggal'),
+				'jenis_pengajuan' => $this->input->post('jenis_pengajuan'),
+				'sk_terakhir' => $sk_terakhir,
+				'sk_kgb' => $sk_kgb
+			];
+			//insert data into database table. 
+			$id = $this->session->userdata('id');
+			$data_pengajuan = $this->M_user->getPengajuanById($id);
+			if ($data_pengajuan['nik'] == $data['nik']) {
+			}
+			$this->db->insert('pengajuan', $data);
+			$this->session->set_flashdata('gaji', 'Berhasil');
+			redirect("User/pengajuan_user");
 		}
-
-		$data = [
-			'nama' => $this->input->post('nama'),
-			'nik' => $this->input->post('nik'),
-			'tanggal' => $this->input->post('tanggal'),
-			'jenis_pengajuan' => $this->input->post('jenis_pengajuan'),
-			'sk_terakhir' => $sk_terakhir,
-			'sk_kgb' => $sk_kgb
-		];
-		//insert data into database table. 
-		// if()
-		// {
-
-		// }
-		$this->db->insert('pengajuan', $data);
-		$this->session->set_flashdata('gaji', 'Dikirim');
-		redirect("User/pengajuan_gaji");
 	}
 
 	// public function pengajuan_reguler()
