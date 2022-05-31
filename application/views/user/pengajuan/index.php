@@ -6,16 +6,29 @@
             Pengajuan Naik Pangkat/Gaji
         </h1>
         <ol class="breadcrumb">
-            <a href="<?= base_url(); ?>pengajuan_reguler" class="btn btn-success"><i class="fa fa-file"></i> Pangkat Reguler</a>
+            <!-- <a href="<?= base_url(); ?>pengajuan_reguler" class="btn btn-success"><i class="fa fa-file"></i> Pangkat Reguler</a>
             <a href="<?= base_url(); ?>pengajuan_fungsional" class="btn btn-success"><i class="fa fa-file"></i> Pangkat Fungsional</a>
-            <a href="<?= base_url(); ?>pengajuan_structural" class="btn btn-success"><i class="fa fa-file"></i> Pangkat Structural</a>
-            <a href="<?= base_url(); ?>pengajuan_gaji" class="btn btn-success"><i class="fa fa-money"></i> Gaji</a>
+            <a href="<?= base_url(); ?>pengajuan_structural" class="btn btn-success"><i class="fa fa-file"></i> Pangkat Structural</a> -->
+            <a href="<?= base_url(); ?>pengajuan_gaji" class="btn btn-success"><i class="fa fa-plus"></i>  Ajukan Kenaikan Gaji</a>
         </ol>
     </section>
     <!-- Main content -->
     <section class="content" style="margin-top: 10px;">
         <div class="row mt-3">
             <div class="col-xs-12">
+				<?php if ($this->session->flashdata('error')) : ?>
+					<div class="alert alert-danger alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						Berkas <strong><?= $this->session->flashdata('error'); ?></strong> Sebelumnya
+					</div>
+				<?php unset($_SESSION['error']); endif; ?>
+
+				<?php if ($this->session->flashdata('gaji')) : ?>
+					<div class="alert alert-success alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						Berkas <strong><?= $this->session->flashdata('gaji'); ?></strong> Diajukan
+					</div>
+				<?php unset($_SESSION['gaji']); endif; ?>
             </div>
         </div>
         <div class="row">
@@ -27,10 +40,11 @@
                             <thead>
                                 <tr>
                                     <th width="10">#</th>
-                                    <th style="text-align: center;">NIP</th>
+                                    <th style="text-align: center;">NIK</th>
                                     <th style="text-align: center;">Nama</th>
                                     <th style="text-align: center;">Tanggal</th>
                                     <th class="text-center" width="auto">Jenis Pengajuan</th>
+                                    <th style="text-align: center;">Proses</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,13 +52,22 @@
                                 <?php foreach ($pengajuan as $p) : ?>
                                     <tr>
                                         <td><?= $i; ?></td>
-                                        <td><?= $p['nip']; ?></td>
+                                        <td><?= $p['nik']; ?></td>
                                         <td><?= $p['nama']; ?></td>
                                         <td><?= $p['tanggal']; ?></td>
                                         <td>
-                                            <?= $p['jenis_pengajuan']; ?>
+											<?= $p['jenis_pengajuan']; ?>
                                             <!-- <a href="<?= base_url(); ?>detailPengajuanUser/<?= $p['id_pengajuan']; ?>" class="btn btn-warning"><i class="fa fa-file"></i></a> -->
                                         </td>
+										<td>
+											<?php if($p['agreement'] == 'Diproses') :?>
+												<span class="label label-warning"><?= $p['agreement']; ?></span>
+											<?php elseif($p['agreement'] == 'Disetujui') :?>
+												<span class="label label-success"><?= $p['agreement']; ?></span>
+											<?php elseif($p['agreement'] == 'Ditolak') :?>
+												<span class="label label-danger"><?= $p['agreement']; ?></span>
+											<?php endif;?>
+										</td>
                                     </tr>
                                     <?php $i++; ?>
                                 <?php endforeach; ?>

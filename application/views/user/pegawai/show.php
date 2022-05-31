@@ -42,7 +42,7 @@
                     <tr>
                       <td width="100">NIK</td>
                       <td width="7">:</td>
-                      <td><?= $nik; ?></td>
+                      <td><?= $pegawai['nik']; ?></td>
                     </tr>
 
                     <tr>
@@ -50,13 +50,16 @@
                       <td>:</td>
                       <td><?= $pegawai['nama']; ?></td>
                     </tr>
-
+										<tr>
+											<td>Jabatan</td>
+											<td>:</td>
+											<td><?= $pegawai['jabatan']; ?></td>
+										</tr>
                     <tr>
                       <td>Jenis Kelamin</td>
                       <td>:</td>
                       <td><?= $pegawai['jenis_kelamin']; ?></td>
                     </tr>
-
                     <tr>
                       <td>Tempat Lahir</td>
                       <td>:</td>
@@ -68,30 +71,11 @@
                       <td>:</td>
                       <td><?= date_indo($pegawai['tgl_lahir']); ?></td>
                     </tr>
-                    <!-- <?php
-                    // tanggal lahir
-                    $tanggal = new DateTime($pegawai['tgl_lahir']);
-                    // tanggal hari ini
-                    $today = new DateTime('today');
-                    // tahun
-                    $y = $today->diff($tanggal)->y;
-                    // bulan
-                    $m = $today->diff($tanggal)->m;
-                    // hari
-                    $d = $today->diff($tanggal)->d;
-                    ?> -->
                     <tr>
-                      <td>Umur</td>
+                      <td>Masa Kerja</td>
                       <td>:</td>
-                      <td><?= $y . " tahun " . $m . " bulan " . $d . " hari"; ?></td>
+                      <td><?= getMasaKerja($pegawai['mulai_kerja']); ?></td>
                     </tr>
-
-                    <!-- <tr>
-                      <td>Golongan Darah</td>
-                      <td>:</td>
-                      <td><?= $pegawai['golongan_darah']; ?></td>
-                    </tr> -->
-
                     <tr>
                       <td>Agama</td>
                       <td>:</td>
@@ -109,17 +93,10 @@
                       <td>:</td>
                       <td><?= $pegawai['email']; ?></td>
                     </tr>
-
                     <tr>
                       <td>Alamat</td>
                       <td>:</td>
                       <td><?= $pegawai['alamat']; ?></td>
-                    </tr>
-
-                    <tr>
-                      <td>Keterangan</td>
-                      <td>:</td>
-                      <td><?= $pegawai['keterangan']; ?></td>
                     </tr>
                   </tbody>
                 </table>
@@ -131,7 +108,7 @@
                   <div class="form-group">
                     <label class="col-md-2 control-label">NIK</label>
                     <div class="col-md-8">
-                      <input type="text" readonly name="nik" value="<?= $nik; ?>" class="form-control" required>
+                      <input type="text" readonly name="nik" value="<?= $pegawai['nik']; ?>" class="form-control" required>
                     </div>
                   </div>
 
@@ -141,6 +118,17 @@
                       <input type="text" readonly name="nama" value="<?= $pegawai['nama']; ?>" class="form-control" required>
                     </div>
                   </div>
+
+									<div class="form-group">
+										<label class="col-md-2 control-label">Jabatan</label>
+										<div class="col-md-8">
+											<select class="form-control" name="jabatan_id" required>
+												<?php foreach($jabatan as $row) : ?>
+													<option value="<?= $row['id_jabatan'] ?>" <?= $row['id_jabatan'] == $pegawai['jabatan_id'] ? 'selected' : '' ?>><?= $row['nama'] ?></option>
+												<?php endforeach; ?>
+											</select>
+										</div>
+									</div>
 
                   <div class="form-group">
                     <label class="col-md-2 control-label">Jenis Kelamin</label>
@@ -227,12 +215,12 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label class="col-md-2 control-label">Keterangan</label>
                     <div class="col-md-8">
                       <input type="text" name="ket" value="<?= $pegawai['keterangan']; ?>" class="form-control">
                     </div>
-                  </div>
+                  </div> -->
                   <div class="form-group">
                     <div class="col-md-2"></div>
                     <div class="col-md-8">

@@ -59,6 +59,7 @@ class Pegawai extends CI_Controller
 		$data['agama'] = ['Islam', 'Protestan', 'Katholik', 'Hindu', 'Budha'];
 
 		$this->form_validation->set_rules('nama', 'Nama', 'required|xss_clean');
+		$this->form_validation->set_rules('jabatan_id', 'Jabatan', 'required|xss_clean');
 		$this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required|xss_clean');
 		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required|xss_clean');
 		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'required|xss_clean');

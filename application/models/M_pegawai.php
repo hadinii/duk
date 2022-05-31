@@ -68,6 +68,7 @@ class M_Pegawai extends CI_Model
     {
         $dataPegawai = [
             'nama' => $this->input->post('nama', true),
+			'jabatan_id' => $this->input->post('jabatan_id', true),
             'jenis_kelamin' => $this->input->post('jenis_kelamin', true),
             'tempat_lahir' => $this->input->post('tempat_lahir', true),
             'tgl_lahir' => $this->input->post('tgl_lahir', true),
