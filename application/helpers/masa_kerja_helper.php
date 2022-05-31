@@ -25,3 +25,10 @@ if (!function_exists('getMasaKerja')) {
 		//  return "{$y} tahun {$m} bulan {$d} hari;
 	}
 }
+
+if (!function_exists('getTanggalNaikGaji')) {
+	function getTanggalNaikGaji($date, $year) {
+		$date = date('Y-m-d', strtotime("+{$year} years", strtotime($date)));
+		return mediumdate_indo($date);
+	}
+}

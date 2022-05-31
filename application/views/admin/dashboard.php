@@ -19,7 +19,7 @@
       $bln = date('m');
       ?>
 
-      <?php foreach ($duk as $d) : ?>
+      <!-- <?php foreach ($duk as $d) : ?>
 
         <?php
         $tanggal1 = explode('-', $d['naik_pangkat_yad']);
@@ -38,14 +38,14 @@
           <?php $i1++; ?>
         <?php endif; ?>
 
-      <?php endforeach; ?>
+      <?php endforeach; ?> -->
 
       <div class="col-xs-6">
         <!-- small box -->
         <div class="small-box bg-green">
           <div class="inner">
-            <h3><?= $i; ?></h3>
-            <p>Naik Gaji Tahun <?= date("Y"); ?></p>
+            <h3><?= count($naik_gaji) ?></h3>
+            <p>Pegawai Naik Gaji</p>
           </div>
           <div class="icon">
             <i class="fa fa-calendar-check-o"></i>
@@ -74,7 +74,7 @@
       <div class="col-xs-12">
         <div class="box box-succes">
           <div class="box-header">
-            <h3 class="box-title">Pegawai Yang Akan Naik Gaji Tahun <?= date("Y"); ?></h3>
+            <h3 class="box-title">Pegawai Yang Akan Naik Gaji</h3>
           </div>
           <div class="box-body" style="overflow: auto;">
             <table id="example2" class="table table-bordered table-hover">
@@ -89,28 +89,20 @@
                 </tr>
               </thead>
               <tbody>
+								<!-- <?php var_dump($naik_gaji) ?> -->
                 <?php $i = 1; ?>
-                <?php foreach ($duk as $d) : ?>
-                  <?php
-                  $tanggal5 = explode('-', $d['naik_gaji_yad']);
-                  $y5 = $thn - $tanggal5[0];
-                  $m5 = $bln - $tanggal5[1];
-                  ?>
-                  <?php
-                  if ($y5 == 0 && $m5 <= 0) : ?>
+                <?php foreach ($naik_gaji as $row) : ?>
                     <tr>
                       <td><?= $i; ?></td>
-                      <td><?= $d['nip']; ?></td>
-                      <td><?= $d['nama']; ?></td>
-                      <td><?= $d['pangkat']; ?> (<?= $d['golongan']; ?>)</td>
-                      <td><?= mediumdate_indo($d['naik_gaji_yad']); ?></td>
+                      <td><?= $row['nik']; ?></td>
+                      <td><?= $row['nama']; ?></td>
+                      <td><?= $row['jabatan']; ?></td>
+                      <td><?= getTanggalNaikGaji($row['mulai_kerja'], $row['jenjang']['masa_kerja']); ?></td>
                       <td style="text-align: center;">
-                        <a href="<?= base_url(); ?>duk/data_duk/<?= $d['id_duk']; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                        <a href="<?= base_url(); ?>email/mail/<?= $d['id_duk'] ?>/<?= $d['nip'] ?>" class="btn btn-warning"><i class="fa fa-paper-plane"></i></a>
+                        <a href="<?= base_url(); ?>duk/data_duk/<?= $row['id_pegawai']; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                        <a href="<?= base_url(); ?>email/mail/<?= $row['id_pegawai'] ?>/<?= $row['nik'] ?>" class="btn btn-warning"><i class="fa fa-paper-plane"></i></a>
                       </td>
                     </tr>
-                    <?php $i++; ?>
-                  <?php endif; ?>
                 <?php endforeach; ?>
               </tbody>
             </table>

@@ -70,6 +70,8 @@ class M_Gaji extends CI_Model {
 			$this->db->where('id_gaji', $row);
 			$this->db->update('gaji',$data);
 		}
+		// TO DO: Delete unupdated gaji, create new gaji
+		// if gaji deleted, update pegawai where gaji_id = deleted_id
     }
 
     public function hapusGajiPegawai($id){
@@ -79,19 +81,31 @@ class M_Gaji extends CI_Model {
 
 	public function getNaikGaji()
 	{
-		$gaji = $this->getAllDataGaji();
-		$is_increment = array_filter($gaji, function($row){
-			return $row['is_increment'];
-		});
-		foreach($is_increment as $row){
-
-		}
-		$this->db->select("p.*, u.nik, j.nama as jabatan, j.is_increment, YEAR(NOW()) - YEAR(`p`.`mulai_kerja`)
-		- (DATE_FORMAT(NOW(), '%m%d') < DATE_FORMAT(`p`.`mulai_kerja`, '%m%d')) as masa_kerja")
+		$result = $this->db->select("p.*, u.nik, j.nama as jabatan, j.is_increment, 
+		YEAR(NOW()) - YEAR(`p`.`mulai_kerja`) - (DATE_FORMAT(NOW(), '%m%d') < DATE_FORMAT(`p`.`mulai_kerja`, '%m%d')) as masa_kerja, 
+		concat('[', group_concat(JSON_OBJECT('condition', g.condition, 'masa_kerja', g.masa_kerja, 'gaji_pokok', g.gaji_pokok) order by g.id_gaji separator ','), ']') as gaji,
+		CASE WHEN p.gaji_id IS NULL THEN j.gaji_default ELSE (SELECT gaji_pokok FROM gaji WHERE id_gaji = p.gaji_id) END as gaji_pokok")
 			->from('pegawai p')
 			->where('j.is_increment', 1)
-			->join('user us', 'p.user_id = u.id', 'LEFT')
-			->join('jabatan j', 'p.jabatan_id = j.id_jabatan')
+			->join('user u', 'p.user_id = u.id', 'LEFT')
+			->join('jabatan j', 'p.jabatan_id = j.id_jabatan', 'LEFT')
+			->join('gaji g', 'p.jabatan_id = g.jabatan_id', 'LEFT')
+			->group_by('p.id_pegawai')
 			->get()->result_array();
+		foreach($result as $i => $row){
+			$result[$i]['gaji'] = json_decode($row['gaji'], TRUE);
+			$naik_gaji = false;
+			foreach($result[$i]['gaji'] as $gaji){
+				if (version_compare($row['masa_kerja'], $gaji['masa_kerja'], "{$gaji['condition']}=") && ($gaji['gaji_pokok'] > $row['gaji_pokok'])){
+					$result[$i]['jenjang'] = $gaji;
+					$naik_gaji = true;
+					break;
+				}
+			}
+			if(!$naik_gaji){
+				unset($result[$i]);
+			}
+		}
+		return $result;
 	}
 }
