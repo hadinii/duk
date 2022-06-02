@@ -14,10 +14,10 @@
   <section class="content" style="margin-top: 10px;">
     <div class="row mt-3">
       <div class="col-xs-12">
-        <?php if ($this->session->flashdata('gaji')) : ?>
+        <?php if ($this->session->flashdata('notification')) : ?>
           <div class="alert alert-success alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            Data gaji <strong>berhasil</strong> <?= $this->session->flashdata('gaji'); ?>
+            Data gaji <strong>berhasil</strong> <?= $this->session->flashdata('notification'); ?>
           </div>
         <?php endif; ?>
       </div>
@@ -29,37 +29,25 @@
             <table id="example1" class="table table-bordered table-hover">
               <thead>
                 <tr>
+									<th width="10">#</th>
                   <th style="text-align: center;">Jabatan</th>
-                  <th style="text-align: center;">Masa Kerja</th>
                   <th style="text-align: center;">Gaji Pokok</th>
                   <th class="text-center" width="90">Menu</th>
                 </tr>
               </thead>
               <tbody>
+								<?php $i = 1; ?>
                 <?php foreach ($jabatan as $row) : ?>
-									<?php if($row['is_increment']) : ?>
-										<?php foreach($row['gaji'] as $rows) : ?>
-											<tr>
-												<td><?= $row['nama']; ?></td>
-												<td><?= "{$rows['condition']} {$rows['masa_kerja']} Tahun" ?></td>
-												<td>Rp <?= nominal($rows['gaji_pokok']) ?></td>
-												<td style="text-align: center;">
-													<a href="<?= base_url(); ?>detailGaji/<?= $row['id_jabatan']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-													<a href="<?= base_url(); ?>hapusGaji/<?= $row['id_jabatan']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-												</td>
-											</tr>
-										<?php endforeach; ?>
-									<?php else : ?>
+										<?php $numbers = array_column($row['gaji'], 'gaji_pokok'); array_push($numbers, $row['gaji_default']) ?>
 										<tr>
+											<td><?= $i++; ?></td>
 											<td><?= $row['nama']; ?></td>
-											<td><?= $row['is_increment'] ? var_dump($row['gaji']) : '-' ?></td>
-											<td>Rp <?= nominal($row['gaji_default']) ?></td>
+											<td>Rp <?= count($numbers) > 1 ? nominal(min($numbers))." - ".nominal(max($numbers)) : nominal(min($numbers)) ?></td>
 											<td style="text-align: center;">
-												<a href="<?= base_url(); ?>detailGaji/<?= $row['id_jabatan']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-												<a href="<?= base_url(); ?>hapusGaji/<?= $row['id_jabatan']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+												<a href="<?= base_url('gaji/'.$row['id_jabatan']); ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+												<a href="<?= base_url('destroy/'.$row['id_jabatan']); ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn btn-danger"><i class="fa fa-trash"></i></a>
 											</td>
 										</tr>
-									<?php endif; ?>
                 <?php endforeach; ?>
               </tbody>
             </table>

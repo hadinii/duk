@@ -59,7 +59,7 @@ class User extends CI_Controller
 			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_user->ubahDataPegawai();
-			$this->session->set_flashdata('pegawai', 'Diubah');
+			$this->session->set_flashdata('notification', 'Diubah');
 			redirect('user/data');
 		}
 	}
@@ -78,7 +78,7 @@ class User extends CI_Controller
 			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_user->ubahPasswordUser();
-			$this->session->set_flashdata('pegawai', 'Diubah');
+			$this->session->set_flashdata('notification', 'Diubah');
 			redirect('user/setting_user');
 		}
 	}
@@ -117,7 +117,7 @@ class User extends CI_Controller
 		$id = $this->session->userdata('username');
 		$pengajuan = $this->M_user->getPengajuanByNIK($id);
 		if ($pengajuan['agreement'] === 'Diproses') {
-			$this->session->set_flashdata('error', 'Sudah Diajukan ');
+			$this->session->set_flashdata('notification', 'Sudah Diajukan ');
 			redirect("User/pengajuan_user");
 		} else {
 			if ($_FILES['sk_terakhir']['name'] != "") {
@@ -163,7 +163,7 @@ class User extends CI_Controller
 			if ($data_pengajuan['nik'] == $data['nik']) {
 			}
 			$this->db->insert('pengajuan', $data);
-			$this->session->set_flashdata('gaji', 'Berhasil');
+			$this->session->set_flashdata('notification', 'Berhasil');
 			redirect("User/pengajuan_user");
 		}
 	}

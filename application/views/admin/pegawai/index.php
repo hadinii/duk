@@ -15,10 +15,10 @@
     <div class="row mt-3">
       <div class="col-xs-12">
 
-        <?php if ($this->session->flashdata('pegawai')) : ?>	
-          <div class="alert alert-<?= $this->session->flashdata('pegawai')['status'] ?> alert-dismissible" role="alert">
+        <?php if ($this->session->flashdata('notification')) : ?>	
+          <div class="alert alert-<?= $this->session->flashdata('notification')['status'] ?> alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <?= $this->session->flashdata('pegawai')['message']; ?>
+            <?= $this->session->flashdata('notification')['message']; ?>
           </div>
         <?php endif; ?>
 

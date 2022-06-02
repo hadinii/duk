@@ -12,11 +12,12 @@ class Dashboard extends CI_Controller
         }
 
         $this->load->model('M_gaji');
+        $this->load->model('M_pengajuan');
 		$this->load->helper('masa_kerja');
     }
     public function index()
     {
-        $data['tot_p'] = $this->db->count_all_results('pengajuan');
+        $data['pengajuan'] = $this->M_pengajuan->getAllPengajuan(0);
         $data['naik_gaji'] = $this->M_gaji->getNaikGaji();
         $data['sidebar'] = "#mn1";
         $this->load->view('layouts/header/admin');

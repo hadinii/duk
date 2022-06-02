@@ -16,19 +16,12 @@
     <section class="content" style="margin-top: 10px;">
         <div class="row mt-3">
             <div class="col-xs-12">
-				<?php if ($this->session->flashdata('error')) : ?>
-					<div class="alert alert-danger alert-dismissible" role="alert">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						Berkas <strong><?= $this->session->flashdata('error'); ?></strong> Sebelumnya
-					</div>
-				<?php unset($_SESSION['error']); endif; ?>
-
-				<?php if ($this->session->flashdata('gaji')) : ?>
+				<?php if ($this->session->flashdata('notification')) : ?>
 					<div class="alert alert-success alert-dismissible" role="alert">
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						Berkas <strong><?= $this->session->flashdata('gaji'); ?></strong> Diajukan
+						Berkas <strong><?= $this->session->flashdata('notification'); ?></strong> Diajukan
 					</div>
-				<?php unset($_SESSION['gaji']); endif; ?>
+				<?php unset($_SESSION['notification']); endif; ?>
             </div>
         </div>
         <div class="row">

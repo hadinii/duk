@@ -70,9 +70,9 @@
 
                     </form>
                   </div>
-                  <div class="col-md-6 text-center">
+                  <!-- <div class="col-md-6 text-center">
                     <img src="<?= base_url(); ?>assets/dist/img/icon-pn.png" class="img-responsive img-thumbnail">
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <!-- /.tab-pane -->

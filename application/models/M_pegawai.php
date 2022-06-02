@@ -10,7 +10,8 @@ class M_Pegawai extends CI_Model
         ->from('pegawai p')
         ->join('user u', 'p.user_id = u.id', 'LEFT')
 		->join('jabatan j', 'p.jabatan_id = j.id_jabatan', 'LEFT')
-		->join('gaji g', 'j.id_jabatan = g.jabatan_id', 'LEFT')
+		->join('gaji g', 'p.gaji_id = g.id_gaji', 'LEFT')
+		->group_by('p.id_pegawai')
         ->get()->result_array();
     }
 
@@ -44,14 +45,12 @@ class M_Pegawai extends CI_Model
     {
         $pegawai = $this->db->where('id_pegawai', $id)->get('pegawai')->row_array();
         $this->db->where('id_pegawai', $id)->delete('pegawai');
-
-        $this->db->where('id', $pegawai->user_id);
-        $this->db->delete('user');
-
 		
-	
-        // $this->db->where('nip', $nip);
-        // $this->db->delete('sk');
+        $this->db->where('id', $pegawai['user_id']);
+        $this->db->delete('user');
+		
+		$this->db->where('pegawai_id', $pegawai['id_pegawai']);
+        $this->db->delete('pengajuan');
     }
 
     public function getPegawaiById($id)
@@ -79,14 +78,6 @@ class M_Pegawai extends CI_Model
         ];
         $this->db->where('id_pegawai', $this->input->post('id'));
         $this->db->update('pegawai', $dataPegawai);
-
-        // $dataUser = [
-        //     'username' => $this->input->post('nip', true),
-        //     'password' => md5($this->input->post('nip', true)),
-        //     'account' => 'pegawai'
-        // ];
-        // $this->db->where('username', $this->input->post('nip1'));
-        // $this->db->update('user', $dataUser);
     }
 
     public function resetPass()
@@ -101,7 +92,6 @@ class M_Pegawai extends CI_Model
     public function ubahPassword()
     {
         $data = [
-            'username' => 'admin',
             'password' => md5($this->input->post('pb', true))
         ];
         $this->db->where('id', 1);
@@ -111,7 +101,7 @@ class M_Pegawai extends CI_Model
 
     public function ketua()
     {
-        return $this->db->get_where('admin', ['id_admin' => 1])->row_array();
+        return $this->db->get_where('user', ['id' => 1])->row_array();
     }
 
     public function resetKetua()

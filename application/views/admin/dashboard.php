@@ -58,7 +58,7 @@
         <!-- small box -->
         <div class="small-box bg-green">
           <div class="inner">
-            <h3><?= $tot_p; ?></h3>
+            <h3><?= count($pengajuan); ?></h3>
             <p>Pengajuan Kenaikan</p>
           </div>
           <div class="icon">
@@ -89,9 +89,9 @@
                 </tr>
               </thead>
               <tbody>
-								<!-- <?php var_dump($naik_gaji) ?> -->
                 <?php $i = 1; ?>
                 <?php foreach ($naik_gaji as $row) : ?>
+									<?php if(is_null($row['pengajuan']) || !$row['pengajuan']['is_accepted']) : ?>
                     <tr>
                       <td><?= $i; ?></td>
                       <td><?= $row['nik']; ?></td>
@@ -99,10 +99,11 @@
                       <td><?= $row['jabatan']; ?></td>
                       <td><?= getTanggalNaikGaji($row['mulai_kerja'], $row['jenjang']['masa_kerja']); ?></td>
                       <td style="text-align: center;">
-                        <a href="<?= base_url(); ?>duk/data_duk/<?= $row['id_pegawai']; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                        <a href="<?= base_url("/pengajuan/{$row['id_pegawai']}/{$row['jenjang']['id_gaji']}"); ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
                         <a href="<?= base_url(); ?>email/mail/<?= $row['id_pegawai'] ?>/<?= $row['nik'] ?>" class="btn btn-warning"><i class="fa fa-paper-plane"></i></a>
                       </td>
                     </tr>
+									<?php endif; ?>
                 <?php endforeach; ?>
               </tbody>
             </table>

@@ -11,10 +11,10 @@
   <section class="content" style="margin-top: 10px;">
     <div class="row mt-3">
       <div class="col-xs-12">
-        <?php if ($this->session->flashdata('duk')) : ?>
+        <?php if ($this->session->flashdata('notification')) : ?>
           <div class="alert alert-success alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            Data duk pegawai <strong>berhasil</strong> <?= $this->session->flashdata('duk'); ?>
+            Data duk pegawai <strong>berhasil</strong> <?= $this->session->flashdata('notification'); ?>
           </div>
         <?php endif; ?>
       </div>

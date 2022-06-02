@@ -23,14 +23,27 @@ class Pengajuan extends CI_Controller
         $this->load->view('layouts/footer', $data);
     }
 
+	public function accept($id)
+	{
+		$this->M_pengajuan->accept($id);
+		$this->session->set_flashdata('notification', [
+			'status' => 'success',
+			'message' => 'Pengajuan telah diterima'
+		]);
+        redirect('pengajuan');
+	}
+
     public function hapusDataPengajuan($id)
     {
         $this->M_pengajuan->hapusPengajuan($id);
-        $this->session->set_flashdata('pengajuan', 'Dihapus');
+        $this->session->set_flashdata('notification', [
+			'status' => 'success',
+			'message' => 'Pengajuan berhasil dihapus'
+		]);
         redirect('pengajuan');
     }
 
-    public function detailpengajuan($id)
+    public function show($id)
     {
         $data['pengajuan'] = $this->M_pengajuan->getPengajuanById($id);
         $data['sidebar'] = "#mn6";

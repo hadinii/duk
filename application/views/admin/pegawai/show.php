@@ -129,7 +129,7 @@
 									<div class="form-group">
 										<label class="col-md-2 control-label">Jabatan</label>
 										<div class="col-md-8">
-											<select class="form-control" name="jabatan_id" required>
+											<select class="form-control" name="jabatan_id" required <?= $pegawai['gaji_id'] ? 'disabled' : '' ?>>
 												<?php foreach($jabatan as $row) : ?>
 													<option value="<?= $row['id_jabatan'] ?>" <?= $row['id_jabatan'] == $pegawai['jabatan_id'] ? 'selected' : '' ?>><?= $row['nama'] ?></option>
 												<?php endforeach; ?>
@@ -223,7 +223,7 @@
                     <input type="hidden" value="<?= $pegawai['nik'] ?>" name="nik">
                     <br>
                     <button class="btn btn-success" type="submit"><i class="fa fa-key"></i> Reset</button>
-                    <span class="help-block">Reset Password menjadi NIP pegawai</span>
+                    <span class="help-block">Reset Password menjadi NIK pegawai</span>
                   </div>
                 </form>
               </div>

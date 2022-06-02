@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: May 29, 2022 at 10:35 AM
+-- Generation Time: Jun 02, 2022 at 02:55 PM
 -- Server version: 5.7.34
 -- PHP Version: 7.4.21
 
@@ -40,9 +40,9 @@ CREATE TABLE `gaji` (
 --
 
 INSERT INTO `gaji` (`id_gaji`, `jabatan_id`, `masa_kerja`, `condition`, `gaji_pokok`) VALUES
-(1, 19, '1', '<', 1000000),
-(2, 19, '3', '>', 4000000),
-(3, 1, '3', '>', 4000000);
+(1, 1, '3', '>', 1700000),
+(2, 1, '5', '>', 2000000),
+(3, 1, '10', '>', 2500000);
 
 -- --------------------------------------------------------
 
@@ -63,24 +63,22 @@ CREATE TABLE `jabatan` (
 --
 
 INSERT INTO `jabatan` (`id_jabatan`, `nama`, `keterangan`, `gaji_default`, `is_increment`) VALUES
-(1, 'Operator Komputer', NULL, 1200000, 1),
-(2, 'Petugas Jaga Harian', NULL, 1600000, 0),
-(3, 'Petugas Kebersihan Harian', NULL, 1600000, 0),
-(4, 'Petugas Kebersihan Harian (SANITIZER)', NULL, 1600000, 0),
-(5, 'Petugas Lapangan Teknis Peternakan', NULL, 2600000, 0),
-(6, 'Petugas Mekanik', NULL, 1200000, 0),
-(7, 'Petugas Pemelihara', NULL, 1200000, 0),
-(8, 'Petugas Penyedia Pakan Ternak', NULL, 1200000, 0),
-(9, 'Petugas Perawat Hewan', NULL, 1200000, 0),
-(10, 'Tenaga Akuntansi', NULL, 4000000, 0),
-(11, 'Tenaga Informasi dan Teknologi', NULL, 4000000, 0),
-(12, 'Tenaga Medis Peternakan', NULL, 2700000, 0),
-(13, 'Tenaga Paramedis Peternakan', NULL, 2200000, 0),
-(14, 'Tenaga Supir', NULL, 2000000, 0),
-(15, 'Tenaga Teknis Laboran', NULL, 2300000, 0),
-(16, 'Tenaga Teknisi Kegiatan', NULL, 2000000, 0),
-(19, 'Apakek', 'Test', 1000000, 1),
-(20, 'Mira', 'Test', 2000000, 0);
+(1, 'Operator Komputer', 'Operator Komputer', 1200000, 1),
+(2, 'Petugas Jaga Harian', 'Petugas Jaga Harian', 800000, 0),
+(3, 'Petugas Kebersihan Harian', 'Petugas Kebersihan Harian', 800000, 0),
+(4, 'Petugas Kebersihan Harian (SANITIZER)', 'Petugas Kebersihan Harian (SANITIZER)', 800000, 1),
+(5, 'Petugas Lapangan Teknis Peternakan', 'Petugas Lapangan Teknis Peternakan', 2600000, 0),
+(6, 'Petugas Mekanik', 'Petugas Mekanik', 800000, 0),
+(7, 'Petugas Pemelihara Ternak', 'Petugas Pemelihara Ternak', 700000, 0),
+(8, 'Petugas Penyedia Pakan Ternak', 'Petugas Penyedia Pakan Ternak', 700000, 0),
+(9, 'Petugas Perawat Hewan', 'Petugas Perawat Hewan', 700000, 0),
+(10, 'Tenaga Akuntansi', 'Tenaga Akuntansi', 4000000, 0),
+(11, 'Tenaga Informasi dan Teknologi', 'Tenaga Informasi dan Teknologi', 1700000, 0),
+(12, 'Tenaga Medis Peternakan', 'Tenaga Medis Peternakan', 2700000, 0),
+(13, 'Tenaga Paramedis Peternakan', 'Tenaga Paramedis Peternakan', 2200000, 0),
+(14, 'Tenaga Supir', 'Tenaga Supir', 2000000, 0),
+(15, 'Tenaga Teknis Laboran', 'Tenaga Teknis Laboran', 2300000, 0),
+(16, 'Tenaga Teknisi Kegiatan', 'Tenaga Teknisi Kegiatan', 800000, 0);
 
 -- --------------------------------------------------------
 
@@ -109,10 +107,8 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `user_id`, `nama`, `jabatan_id`, `gaji_id`, `mulai_kerja`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `agama`, `no_telp`, `email`, `alamat`) VALUES
-(2, 2, 'Tomas', 1, 3, '2022-05-27', 'Laki-laki', 'jogja', '2020-12-17', 'Islam', '0812331', 'irvansyaefullah07@gmail.com', 'aceh'),
-(3, 3, 'Hamam Ismail', 2, NULL, '2022-05-27', 'Laki-laki', 'Magelang', '1979-12-10', 'Islam', '08127657170', 'hamam.ismail@riau.go.id', 'jalan pemudi no 16'),
-(110, 4, 'Irvan ', 3, NULL, '2022-05-27', 'Laki-laki', 'Batam', '2000-05-07', 'Islam', '085374607574', 'irvansyaefullah07@gmail.com', 'Harapan Raya'),
-(111, 5, 'John Doe', 1, NULL, '2022-05-27', 'Laki-laki', 'Jakarta', '2000-05-27', 'Islam', '081371239875', 'umarsyarif1607@gmail.com', 'Pekanbaru');
+(1, 2, 'John Doe', 1, 1, '2019-03-14', 'Laki-laki', 'Jakarta', '2000-03-14', 'Islam', '082369770021', 'reza@gmail.com', 'Pekanbaru'),
+(2, 3, 'Jane Doe', 11, NULL, '2022-03-14', 'Perempuan', 'Jakarta', '2000-03-14', 'Islam', '082369770021', 'jonedoe@gmail.com', 'Pekanbaru');
 
 -- --------------------------------------------------------
 
@@ -122,30 +118,25 @@ INSERT INTO `pegawai` (`id_pegawai`, `user_id`, `nama`, `jabatan_id`, `gaji_id`,
 
 CREATE TABLE `pengajuan` (
   `id_pengajuan` int(30) NOT NULL,
-  `nip` varchar(100) NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `tanggal` date NOT NULL,
-  `jenis_pengajuan` varchar(75) NOT NULL,
-  `sk_cpns` varchar(100) DEFAULT NULL,
-  `sk_pns` varchar(100) DEFAULT NULL,
-  `sk_terakhir` varchar(100) DEFAULT NULL,
-  `skp` varchar(100) DEFAULT NULL,
-  `skp2` varchar(100) DEFAULT NULL,
-  `ijazah_terakhir` varchar(100) DEFAULT NULL,
-  `sk_jterakhir` varchar(100) DEFAULT NULL,
-  `sk_p` varchar(100) DEFAULT NULL,
-  `sk_js` varchar(100) DEFAULT NULL,
-  `sk_jf` varchar(100) DEFAULT NULL,
-  `pak` varchar(100) DEFAULT NULL,
-  `sk_kgb` varchar(100) DEFAULT NULL
+  `pegawai_id` int(11) NOT NULL,
+  `gaji_id` int(11) NOT NULL,
+  `spjtm` varchar(100) DEFAULT NULL,
+  `spmk` varchar(100) DEFAULT NULL,
+  `spk` varchar(100) DEFAULT NULL,
+  `sppjl` varchar(100) DEFAULT NULL,
+  `bahpl` varchar(100) DEFAULT NULL,
+  `baktnb` varchar(100) DEFAULT NULL,
+  `lampiran_ba` varchar(100) DEFAULT NULL,
+  `baedp` varchar(100) DEFAULT NULL,
+  `sdp` varchar(100) DEFAULT NULL,
+  `undangan` varchar(100) DEFAULT NULL,
+  `ijazah` varchar(100) DEFAULT NULL,
+  `cv` varchar(100) DEFAULT NULL,
+  `transkrip` varchar(100) DEFAULT NULL,
+  `sertifikat_keahlian` varchar(100) DEFAULT NULL,
+  `is_accepted` tinyint(4) NOT NULL DEFAULT '0',
+  `created_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `pengajuan`
---
-
-INSERT INTO `pengajuan` (`id_pengajuan`, `nip`, `nama`, `tanggal`, `jenis_pengajuan`, `sk_cpns`, `sk_pns`, `sk_terakhir`, `skp`, `skp2`, `ijazah_terakhir`, `sk_jterakhir`, `sk_p`, `sk_js`, `sk_jf`, `pak`, `sk_kgb`) VALUES
-(61, '12345', 'Irvan ', '2022-01-24', 'Kenaikan Gaji', NULL, NULL, 'applsci-09-04062-v4.pdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'x-bert-extreme-multi-label-text-classification-using-bidirectional-encoder-representations-from-tran');
 
 -- --------------------------------------------------------
 
@@ -166,10 +157,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `nik`, `password`, `is_admin`) VALUES
 (1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 1),
-(2, '196805191991121001', 'd2c133c5537ab6d97460c707b91e6b66', 0),
-(3, '197912102011021001', '3c4e1a2b20b1f22cb15b3f365140548c', 0),
-(4, '197912102011021002', '3ea6923fc0ec122c51ba000fe6d58aad', 0),
-(5, '197912102011021003', '2f8013f5462cbe1d4d0728b0ff0ee44e', 0);
+(2, '1471081607990041', '92a7f40823080149ad5886da73f44e9b', 0),
+(3, '1471081607990042', 'cd05e8abcdcbdef620aa250643f37d88', 0);
 
 --
 -- Indexes for dumped tables
@@ -219,25 +208,25 @@ ALTER TABLE `gaji`
 -- AUTO_INCREMENT for table `jabatan`
 --
 ALTER TABLE `jabatan`
-  MODIFY `id_jabatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_jabatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `pegawai`
 --
 ALTER TABLE `pegawai`
-  MODIFY `id_pegawai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id_pegawai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pengajuan`
 --
 ALTER TABLE `pengajuan`
-  MODIFY `id_pengajuan` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id_pengajuan` int(30) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

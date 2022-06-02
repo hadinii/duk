@@ -60,7 +60,7 @@ class Duk extends CI_Controller
 			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_duk->updateDataDuk();
-			$this->session->set_flashdata('duk', 'Diperbarui');
+			$this->session->set_flashdata('notification', 'Diperbarui');
 			redirect('duk');
 		}
 	}

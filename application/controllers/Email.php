@@ -39,7 +39,7 @@ class Email extends CI_Controller
 
             $this->_sendEmail();
 
-            $this->session->set_flashdata('email', 'Dikirim');
+            $this->session->set_flashdata('notification', 'Dikirim');
             redirect('home');
         }
     }
@@ -99,7 +99,7 @@ class Email extends CI_Controller
 
             $this->_sendEmail();
 
-            $this->session->set_flashdata('email', 'Dikirim');
+            $this->session->set_flashdata('notification', 'Dikirim');
             redirect('home');
         }
     }

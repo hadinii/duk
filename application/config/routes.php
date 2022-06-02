@@ -53,36 +53,24 @@ $route['default_controller'] = 'dashboard';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['logout'] = 'login/logout';
-
-$route['pegawai'] = 'pegawai';
-$route['duk'] = 'duk';
-$route['gaji'] = 'gaji';
 $route['setting'] = 'pegawai/setting';
-$route['data_duk/(:num)'] = 'duk/data_duk/$1';
-$route['pengajuan'] = 'pengajuan';
 
-//routes tambah
-$route['tambah_gaji'] = 'gaji/tambah';
+// Pegawai
+$route['pegawai'] = 'pegawai';
 $route['tambah_pegawai'] = 'pegawai/tambah';
-
-//routes hapus
-$route['hapusPegawai/(:num)'] = 'pegawai/hapusPegawai/$1';
-$route['hapusGaji/(:num)'] = 'gaji/hapusDataGaji/$1';
-$route['hapusPengajuan/(:num)'] = 'pengajuan/hapusDataPengajuan/$1';
-
-//routes detail
-$route['detailGaji/(:num)'] = 'gaji/detailDataGaji/$1';
 $route['detailPegawai/(:num)'] = 'pegawai/detailPegawai/$1';
-$route['detailpengajuan/(:num)'] = 'pengajuan/detailPengajuan/$1';
-// $route['detailPengajuanUser/(:num)'] = 'user/detailpengajuan_user/$1';
+$route['hapusPegawai/(:num)'] = 'pegawai/hapusPegawai/$1';
 
-//router pengajuan
-$route['pengajuan_reguler'] = 'user/pengajuan_reguler';
-$route['pengajuan_fungsional'] = 'user/pengajuan_fungsional';
-$route['pengajuan_structural'] = 'user/pengajuan_structural';
-$route['pengajuan_gaji'] = 'user/pengajuan_gaji';
+// Gaji
+$route['gaji'] = 'gaji';
+$route['gaji/store/(:num)'] = 'gaji/store/$1';
+$route['tambah_gaji'] = 'gaji/create';
+$route['gaji/(:num)'] = 'gaji/show/$1';
+$route['gaji/destroy/(:num)'] = 'gaji/destroy/$1';
 
-//routes export
-// $route['export_pegawai'] = 'pegawai/export';
-// $route['export_duk'] = 'duk/export';
-// $route['export_gaji'] = 'gaji/export';
+// Pengajuan
+$route['pengajuan'] = 'pengajuan';
+$route['pengajuan/(:num)/(:num)'] = 'gaji/naikGaji/$1/$1';
+$route['pengajuan/accept/(:num)'] = 'pengajuan/accept/$1';
+$route['pengajuan/(:num)'] = 'pengajuan/show/$1';
+$route['hapusPengajuan/(:num)'] = 'pengajuan/hapusDataPengajuan/$1';

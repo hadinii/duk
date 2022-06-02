@@ -37,13 +37,13 @@ class Pegawai extends CI_Controller
 		$this->form_validation->set_rules('alamat', 'Alamat', 'xss_clean');
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn2";
-			$data['jabatan'] = $this->M_jabatan->getAll();
+			$data['jabatan'] = $this->M_jabatan->index();
 			$this->load->view('layouts/header/admin');
 			$this->load->view('admin/pegawai/create', $data);
 			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_pegawai->tambahDataPegawai();
-			$this->session->set_flashdata('pegawai', [
+			$this->session->set_flashdata('notification', [
 				'status' => 'success',
 				'message' => 'Berhasil menambah data pegawai'
 			]);
@@ -70,13 +70,13 @@ class Pegawai extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn2";
-			$data['jabatan'] = $this->M_jabatan->getAll();
+			$data['jabatan'] = $this->M_jabatan->index();
 			$this->load->view('layouts/header/admin');
 			$this->load->view('admin/pegawai/show', $data);
 			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_pegawai->ubahDataPegawai();
-			$this->session->set_flashdata('pegawai', [
+			$this->session->set_flashdata('notification', [
 				'status' => 'success',
 				'message' => 'Berhasil mengubah data pegawai'
 			]);
@@ -87,7 +87,7 @@ class Pegawai extends CI_Controller
 	public function hapusPegawai($id)
 	{
 		$this->M_pegawai->hapusDataPegawai($id);
-		$this->session->set_flashdata('pegawai', [
+		$this->session->set_flashdata('notification', [
 			'status' => 'success',
 			'message' => 'Berhasil menghapus data pegawai'
 		]);
@@ -98,14 +98,14 @@ class Pegawai extends CI_Controller
 	{
 		$this->form_validation->set_rules('nik', 'NIK', 'required|xss_clean|numeric');
 		if ($this->form_validation->run() == FALSE) {
-			$this->session->set_flashdata('pegawai', [
+			$this->session->set_flashdata('notification', [
 				'status' => 'danger',
 				'message' => 'Gagal mereset password'
 			]);
 			redirect('pegawai');
 		} else {
 			$this->M_pegawai->resetPass();
-			$this->session->set_flashdata('pegawai', [
+			$this->session->set_flashdata('notification', [
 				'status' => 'success',
 				'message' => 'Berhasil mereset password'
 			]);
@@ -125,7 +125,7 @@ class Pegawai extends CI_Controller
 			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_pegawai->ubahPassword();
-			$this->session->set_flashdata('pegawai', 'Diubah');
+			$this->session->set_flashdata('notification', 'Diubah');
 			redirect('setting');
 		}
 	}
@@ -142,7 +142,7 @@ class Pegawai extends CI_Controller
 			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_pegawai->resetKetua();
-			$this->session->set_flashdata('ketua', 'Diubah');
+			$this->session->set_flashdata('notification', 'Diubah');
 			redirect('setting');
 		}
 	}

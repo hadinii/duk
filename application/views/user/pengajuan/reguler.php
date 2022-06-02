@@ -19,10 +19,10 @@
                         <!-- <h3 class="box-title"><i class="fa fa-file"></i> Form Pengajuan Kenaikan Pangakat Reguler</h3> -->
                     </div>
                     <div class="col-md-12">
-                        <?php if ($this->session->flashdata('reguler')) : ?>
+                        <?php if ($this->session->flashdata('notification')) : ?>
                             <div class="alert alert-success alert-dismissible" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                Berkas <strong>berhasil</strong> <?= $this->session->flashdata('reguler'); ?>
+                                Berkas <strong>berhasil</strong> <?= $this->session->flashdata('notification'); ?>
                             </div>
                         <?php endif; ?>
                     </div>

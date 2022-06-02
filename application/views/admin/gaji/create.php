@@ -23,7 +23,7 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label">Jabatan</label>
 							<div class="col-md-8">
-								<input type="text" name="nama" class="form-control" required>
+								<input type="text" name="jabatan" class="form-control" required>
 							</div>
 						</div>
 						
@@ -37,7 +37,7 @@
 						<div class="form-group" id="gaji-pokok">
 							<label class="col-md-2 control-label">Gaji Default</label>
 							<div class="col-md-8">
-								<input type="number" name="gaji_default" class="form-control">
+								<input type="number" name="gaji_default" class="form-control" required>
 							</div>
 						</div>
 

@@ -2,26 +2,19 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_Gaji extends CI_Model {
-    public function tambahDataGaji(){
-        $data=[
-            'nama' => $this->input->post('nama',true),
-            'keterangan' => $this->input->post('keterangan',true),
-            'gaji_default' => $this->input->post('gaji_default',true),
-            'is_increment' => $this->input->post('is_increment',true) == "on",
-        ];
-        $this->db->insert('jabatan', $data);
-		$insert_id = $this->db->insert_id();
-		
-		$condition = $this->input->post('condition',true);
-		$masa_kerja = $this->input->post('masa_kerja',true);
-		$gaji_pokok = $this->input->post('gaji_pokok',true);
-		foreach($condition as $i => $row) {
-			$data = [
-				'jabatan_id' => $insert_id,
-				'condition' => $row,
-				'masa_kerja' => $masa_kerja[$i],
-				'gaji_pokok' => $gaji_pokok[$i]
-			];
+
+    public function store($id_jabatan){
+		$data = [
+			'jabatan_id' => $id_jabatan,
+			'condition' => $this->input->post('condition',true),
+			'masa_kerja' => $this->input->post('masa_kerja',true),
+			'gaji_pokok' => $this->input->post('gaji_pokok',true)
+		];
+		$id_gaji = $this->input->post('id_gaji',true);
+		if($id_gaji){
+			$this->db->where('id_gaji', $id_gaji);
+			$this->db->update('gaji',$data);
+		}else{
 			$this->db->insert('gaji', $data);
 		}
     }
@@ -36,15 +29,11 @@ class M_Gaji extends CI_Model {
 		}
 		return $result;
     }
-    
-    public function getDataGajiById($id){
-		$result = $this->db->get_where('jabatan', ['id_jabatan' => $id])->row_array();
-		$this->db->select('*')
-			->from('gaji g')
-			->where('g.jabatan_id', $id);
-		$result['gaji'] = $this->db->get()->result_array();
-		return $result;
-    }
+
+	public function getGajiById($id)
+	{
+		return $this->db->get_where('gaji', ['id_gaji' => $id])->row_array();
+	}
 
     public function updateDataGaji(){
         $data=[
@@ -74,16 +63,31 @@ class M_Gaji extends CI_Model {
 		// if gaji deleted, update pegawai where gaji_id = deleted_id
     }
 
-    public function hapusGajiPegawai($id){
-        $this->db->where('id_gaji', $id);
+    public function delete($id){
+        $gaji = $this->db->get_where('gaji', ['id_gaji' => $id])->row_array();
+		$this->db->where('id_gaji', $id);
         $this->db->delete('gaji');
+
+		// update all pegawai where gaji_id = deleted
+		$pegawai = $this->db->select('id_pegawai')
+					->from('pegawai')
+					->where('gaji_id', $gaji['id_gaji'])
+					->get()->result_array();
+		foreach($pegawai as $row) {
+			$data = [
+				'gaji_id' => null
+			];
+			$this->db->where('id_pegawai', $row['id_pegawai']);
+			$this->db->update('pegawai', $data);
+		}
+		return $gaji['jabatan_id'];
     }
 
 	public function getNaikGaji()
 	{
 		$result = $this->db->select("p.*, u.nik, j.nama as jabatan, j.is_increment, 
 		YEAR(NOW()) - YEAR(`p`.`mulai_kerja`) - (DATE_FORMAT(NOW(), '%m%d') < DATE_FORMAT(`p`.`mulai_kerja`, '%m%d')) as masa_kerja, 
-		concat('[', group_concat(JSON_OBJECT('condition', g.condition, 'masa_kerja', g.masa_kerja, 'gaji_pokok', g.gaji_pokok) order by g.id_gaji separator ','), ']') as gaji,
+		concat('[', group_concat(JSON_OBJECT('id_gaji', g.id_gaji, 'condition', g.condition, 'masa_kerja', g.masa_kerja, 'gaji_pokok', g.gaji_pokok) order by g.id_gaji separator ','), ']') as gaji,
 		CASE WHEN p.gaji_id IS NULL THEN j.gaji_default ELSE (SELECT gaji_pokok FROM gaji WHERE id_gaji = p.gaji_id) END as gaji_pokok")
 			->from('pegawai p')
 			->where('j.is_increment', 1)
@@ -104,7 +108,9 @@ class M_Gaji extends CI_Model {
 			}
 			if(!$naik_gaji){
 				unset($result[$i]);
+				continue;
 			}
+			$result[$i]['pengajuan'] = $this->db->get_where('pengajuan', ['pegawai_id' => $row['id_pegawai'], 'gaji_id' => $result[$i]['jenjang']['id_gaji']])->row_array();
 		}
 		return $result;
 	}

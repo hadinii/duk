@@ -1,51 +1,62 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            Data Pengajuan Pengawai
-        </h1>
-        <ol class="breadcrumb">
-        </ol>
-    </section>
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Pengajuan Naik Gaji
+    </h1>
+    <ol class="breadcrumb">
 
-    <!-- Main content -->
-    <section class="content" style="margin-top: 10px;">
-        <div class="row">
-            <div class="col-xs-12">
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content" style="margin-top: 10px;">
+    <?php if (validation_errors()) : ?>
+      <div class="alert alert-danger" role="alert">
+        <?= validation_errors(); ?>
+      </div>
+    <?php endif; ?>
+	<?php if ($this->session->flashdata('notification')) : ?>
+		<div class="alert alert-<?= $this->session->flashdata('notification')['status'] ?> alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<?= $this->session->flashdata('notification')['message']; ?>
+		</div>
+	<?php endif; ?>
+    <div class="row">
+      <div class="col-md-12">
+			<?php if($pengajuan) : ?>
 				<div class="box box-success">
                     <div class="box-header">
 						<h3 class="box-title">Pegawai</h3>
                     </div>
 					<form action="<?= site_url('pengajuan/accept/'.$pengajuan['id_pengajuan']) ?>" method="post" class="form-horizontal">
 						<div class="box-body">
-							<input type="hidden" name="id_pegawai" value="<?= $pengajuan['id_pegawai'] ?>">
-							<input type="hidden" name="id_gaji" value="<?= $pengajuan['gaji_id'] ?>">
+							<input type="hidden" name="id_pegawai" value="<?= $pegawai['id_pegawai'] ?>">
+							<input type="hidden" name="id_gaji" value="<?= $gaji['id_gaji'] ?>">
 							<div class="form-group">
 								<label class="col-md-2 control-label">NIK</label>
 								<div class="col-md-8">
-									<input type="text" name="nik" class="form-control" value="<?= $pengajuan['nik'] ?>" readonly>
+									<input type="text" name="nik" class="form-control" value="<?= $pegawai['nik'] ?>" readonly>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-2 control-label">Nama</label>
 								<div class="col-md-8">
-									<input type="text" name="nama" class="form-control" value="<?= $pengajuan['nama'] ?>" readonly>
+									<input type="text" name="nama" class="form-control" value="<?= $pegawai['nama'] ?>" readonly>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-md-2 control-label">Jabatan</label>
 								<div class="col-md-8">
-									<input type="text" name="jabatan" class="form-control" value="<?= $pengajuan['jabatan'] ?>" readonly>
+									<input type="text" name="jabatan" class="form-control" value="<?= $pegawai['jabatan'] ?>" readonly>
 								</div>
 							</div>
-							<?php if(!$pengajuan['is_accepted']) : ?>
 							<div class="form-group">
 								<div class="col-md-10">
 									<button type="submit" class="btn btn-success" style="float: right;"> <i class="fa fa-save"></i> Terima Pengajuan</button>
 								</div>
 							</div>
-							<?php endif; ?>
 						</div>
 					</form>
 				</div>
@@ -238,12 +249,71 @@
                     </div>
                     <!-- /.box-body -->
                 </div>
-                <!-- /.box -->
-            </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-    </section>
-    <!-- /.content -->
+		  	<?php else : ?> 
+				<form action="" method="post" class="form-horizontal">
+					<div class="col-md-6">
+						<div class="box box-success">
+							<div class="box-header with-border">
+								<h3 class="box-title">Pegawai</h3>
+							</div>
+							<div class="box-body">
+								<input type="hidden" name="id_pegawai" value="<?= $pegawai['id_pegawai'] ?>">
+								<div class="form-group">
+									<label class="col-md-3 control-label">NIK</label>
+									<div class="col-md-8">
+										<input type="text" name="nik" class="form-control" value="<?= $pegawai['nik'] ?>" readonly>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">Nama</label>
+									<div class="col-md-8">
+										<input type="text" name="nama" class="form-control" value="<?= $pegawai['nama'] ?>" readonly>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">Jabatan</label>
+									<div class="col-md-8">
+										<input type="text" name="jabatan" class="form-control" value="<?= $pegawai['jabatan'] ?>" readonly>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="box box-success">
+							<div class="box-header with-border">
+								<h3 class="box-title">Kenaikan Gaji</h3>
+							</div>
+							<div class="box-body">
+								<input type="hidden" name="id_gaji" value="<?= $gaji['id_gaji'] ?>">
+								<div class="form-group">
+									<label class="col-md-3 control-label">Gaji Pokok</label>
+									<div class="col-md-8">
+										<input type="text" name="gaji_pokok" class="form-control" value="<?= $gaji['gaji_pokok'] ?>" readonly>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">Masa Kerja</label>
+									<div class="col-md-8">
+										<input type="text" name="masa_kerja" class="form-control" value="<?= "{$gaji['condition']} {$gaji['masa_kerja']} Tahun" ?>" readonly>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-11">
+										<button type="submit" class="btn btn-success" style="float: right;"> <i class="fa fa-save"></i> Buat Pengajuan</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+		  	<?php endif; ?>
+        <!-- /.nav-tabs-custom -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->

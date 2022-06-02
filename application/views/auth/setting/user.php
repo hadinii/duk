@@ -16,16 +16,16 @@
               <?= validation_errors(); ?>
             </div>
           <?php endif; ?>
-          <?php if ($this->session->flashdata('pegawai')) : ?>
+          <?php if ($this->session->flashdata('notification')) : ?>
             <div class="alert alert-success alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              Password <strong>berhasil</strong> <?= $this->session->flashdata('pegawai'); ?>
+              Password <strong>berhasil</strong> <?= $this->session->flashdata('notification'); ?>
             </div>
           <?php endif; ?>
-          <?php if ($this->session->flashdata('ketua')) : ?>
+          <?php if ($this->session->flashdata('notification')) : ?>
             <div class="alert alert-success alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              Data Ketua PN Kendari <strong>berhasil</strong> <?= $this->session->flashdata('ketua'); ?>
+              Data Ketua PN Kendari <strong>berhasil</strong> <?= $this->session->flashdata('notification'); ?>
             </div>
           <?php endif; ?>
           <div class="nav-tabs-custom">
