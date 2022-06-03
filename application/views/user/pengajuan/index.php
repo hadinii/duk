@@ -9,7 +9,7 @@
             <!-- <a href="<?= base_url(); ?>pengajuan_reguler" class="btn btn-success"><i class="fa fa-file"></i> Pangkat Reguler</a>
             <a href="<?= base_url(); ?>pengajuan_fungsional" class="btn btn-success"><i class="fa fa-file"></i> Pangkat Fungsional</a>
             <a href="<?= base_url(); ?>pengajuan_structural" class="btn btn-success"><i class="fa fa-file"></i> Pangkat Structural</a> -->
-            <a href="<?= base_url(); ?>pengajuan_gaji" class="btn btn-success"><i class="fa fa-plus"></i>  Ajukan Kenaikan Gaji</a>
+            <a href="<?= base_url(); ?>user/pengajuan_gaji" class="btn btn-success"><i class="fa fa-plus"></i>  Ajukan Kenaikan Gaji</a>
         </ol>
     </section>
     <!-- Main content -->
@@ -36,8 +36,7 @@
                                     <th style="text-align: center;">NIK</th>
                                     <th style="text-align: center;">Nama</th>
                                     <th style="text-align: center;">Tanggal</th>
-                                    <th class="text-center" width="auto">Jenis Pengajuan</th>
-                                    <th style="text-align: center;">Proses</th>
+                                    <th style="text-align: center;">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,18 +46,12 @@
                                         <td><?= $i; ?></td>
                                         <td><?= $p['nik']; ?></td>
                                         <td><?= $p['nama']; ?></td>
-                                        <td><?= $p['tanggal']; ?></td>
+                                        <td><?= $p['created_at']; ?></td>
                                         <td>
-											<?= $p['jenis_pengajuan']; ?>
-                                            <!-- <a href="<?= base_url(); ?>detailPengajuanUser/<?= $p['id_pengajuan']; ?>" class="btn btn-warning"><i class="fa fa-file"></i></a> -->
-                                        </td>
-										<td>
-											<?php if($p['agreement'] == 'Diproses') :?>
-												<span class="label label-warning"><?= $p['agreement']; ?></span>
-											<?php elseif($p['agreement'] == 'Disetujui') :?>
-												<span class="label label-success"><?= $p['agreement']; ?></span>
-											<?php elseif($p['agreement'] == 'Ditolak') :?>
-												<span class="label label-danger"><?= $p['agreement']; ?></span>
+											<?php if($p['is_accepted'] == 0) :?>
+												<span class="label label-warning"><?= $p['is_accepted'] = 'Belum Diterima'; ?></span>
+											<?php else :?>
+												<span class="label label-success"><?= $p['is_accepted'] = 'Diterima'; ?></span>
 											<?php endif;?>
 										</td>
                                     </tr>

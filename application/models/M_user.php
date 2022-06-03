@@ -19,6 +19,11 @@ class M_user extends CI_Model
         ->get()->row_array();
 	}
 
+	public function GetGajiById($id)
+	{
+		return $this->db->get_where('gaji', ['id_gaji' => $id])->row_array();
+	}
+
     public function getPegawaiById($id)
     {
 		// $this->db->select('*, pegawai.nama as pnama, jabatan.nama as jnama');
@@ -35,22 +40,45 @@ class M_user extends CI_Model
 			->get()->row_array();
     }
 
-    public function getAllPengajuan()
+    public function getAllPengajuanById($id, $status = null)
     {
-        return $this->db->get('pengajuan')->result_array();
+        // return $this->db->get('pengajuan')->result_array();
+		$this->db->select('p.*, pw.nama, pw.user_id, u.nik')
+			->from('pengajuan p')
+			->join('pegawai pw', 'p.pegawai_id = pw.id_pegawai', 'LEFT')
+			->join('user u', 'pw.user_id = u.id', 'LEFT')
+			->where('pw.user_id', $id);
+		if(is_null($status))
+		{
+			$this->db->where('is_accepted',$status);
+		}
+		return $this->db->get()->result_array();
     }
 
     public function getPengajuanById($id)
     {
-        return $this->db->get_where('pengajuan', ['id_pengajuan' => $id])->row_array();
+        return $this->db->select('p.*, pw.id_pegawai, pw.nama, u.nik, j.nama as jabatan')
+		->from('pengajuan p')
+		->join('pegawai pw', 'p.pegawai_id = pw.id_pegawai', 'LEFT')
+		->join('user u', 'pw.user_id = u.id', 'LEFT')
+		->join('jabatan j', 'pw.jabatan_id = j.id_jabatan', 'LEFT')
+		->where('id_pengajuan', $id)
+		->get()->result_array();
+		// return $this->db->get_where('pengajuan', ['id_pengajuan' => $id])->row_array();
     }
 
-	public function getPengajuanByNIK($id)
+	public function getPengajuanByPegawai($id_pegawai, $status = null)
 	{
-		return $this->db->select('agreement')
-		->from('pengajuan p')
-		->where('p.nik', $id)
-		->get()->row_array();
+		$this->db->select('p.*, pw.nama, u.nik')
+			->from('pengajuan p')
+			->join('pegawai pw', 'p.pegawai_id = pw.id_pegawai', 'LEFT')
+			->join('user u', 'pw.user_id = u.id', 'LEFT')
+			->where('pegawai_id', $id_pegawai);
+		if(!is_null($status))
+		{
+			$this->db->where('is_accepted',$status);
+		}
+		return $this->db->get()->result_array();
 	}
 
 

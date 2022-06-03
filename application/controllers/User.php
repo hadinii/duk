@@ -11,6 +11,7 @@ class User extends CI_Controller
 		}
 		$this->load->model('M_user');
 		$this->load->model('M_jabatan');
+		$this->load->model('M_pengajuan');
 		$this->load->helper('nominal');
 		$this->load->helper('masa_kerja');
 		$this->load->library('upload');
@@ -31,8 +32,6 @@ class User extends CI_Controller
 	public function data()
 	{
 		$id = $this->session->userdata('id');
-		// $data['nik'] = $this->session->userdata('username');
-		// $data['client'] = [];
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
 		$data['gol_darah'] = ['-', 'A', 'B', 'AB', 'O'];
 		$data['jk'] = ['Laki-laki', 'Perempuan'];
@@ -53,7 +52,7 @@ class User extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn2";
-			$data['jabatan'] = $this->M_jabatan->getAll();
+			$data['jabatan'] = $this->M_jabatan->index();
 			$this->load->view('layouts/header/user', $data);
 			$this->load->view('user/pegawai/show', $data);
 			$this->load->view('layouts/footer', $data);
@@ -87,8 +86,7 @@ class User extends CI_Controller
 	{
 		$id = $this->session->userdata('id');
 		$data['pegawai'] = $this->M_user->getPegawaiById($id);
-		// $data['pengajuan'] = $this->M_user->dataPengajuanUser($id);
-		$data['pengajuan'] = $this->M_user->getAllPengajuan();
+		$data['pengajuan'] = $this->M_user->getPengajuanById($id);
 
 		$data['sidebar'] = "#mn4";
 		$this->load->view('layouts/header/user', $data);
@@ -108,552 +106,275 @@ class User extends CI_Controller
 
 	public function insert_gaji()
 	{
-		// $this->form_validation->set_rules('nip', 'NIP', 'required|xss_clean|numeric');
-		// $this->form_validation->set_rules('nama', 'Nama', 'required|xss_clean');
-		// $this->form_validation->set_rules('tanggal', 'Golongan', 'required|xss_clean');
-		// $this->form_validation->set_rules('jenis_pengajuan', 'Jenis Pengajuan', 'required|xss_clean');
-		$this->form_validation->set_rules('sk_terakhir', 'SK Terakhir', 'required|xss_clean');
-		$this->form_validation->set_rules('sk_kgb', 'SK Kenaikan Gaji Berkala', 'required|xss_clean');
-		$id = $this->session->userdata('username');
-		$pengajuan = $this->M_user->getPengajuanByNIK($id);
-		if ($pengajuan['agreement'] === 'Diproses') {
+		$id = $this->session->userdata('id');
+		$pegawai =$this->M_user->getPegawaiById($id);
+		$pengajuan = $this->M_user->getPengajuanByPegawai($pegawai['id_pegawai']);
+		// $pengajuan = $this->M_user->getAllPengajuanById($id);
+
+		$this->form_validation->set_rules('spjtm', 'Surat Pernyataan Tanggung Jawab Mutlak', 'required|xss_clean');
+		$this->form_validation->set_rules('spmk', 'Surat Perintah Mulai Kerja', 'required|xss_clean');
+		$this->form_validation->set_rules('spk', 'Surat Perintah Kerja', 'required|xss_clean');
+		$this->form_validation->set_rules('sppjl', 'Surat Penunjukan Penyedia Jasa Lainnya', 'required|xss_clean');
+		$this->form_validation->set_rules('bahpl', 'Berita Acara Hasil Pengadaan Langsung', 'required|xss_clean');
+		$this->form_validation->set_rules('baktnb', 'Berita Acara Klarifikasi Teknis Dan Negosiasi Biaya', 'required|xss_clean');
+		$this->form_validation->set_rules('lampiran_ba ', 'Lampiran Berita Acara', 'required|xss_clean');
+		$this->form_validation->set_rules('baedp', 'Berita Acara Evaluasi Dokumen Penawaran', 'required|xss_clean');
+		$this->form_validation->set_rules('sdp', 'Staff Development Program', 'required|xss_clean');
+		$this->form_validation->set_rules('undangan', 'Undangan', 'required|xss_clean');
+		$this->form_validation->set_rules('ijazah', 'Ijazah', 'required|xss_clean');
+		$this->form_validation->set_rules('cv', 'cv', 'required|xss_clean');
+		$this->form_validation->set_rules('transkrip', 'Transkrip', 'required|xss_clean');
+		$this->form_validation->set_rules('sertifikat_keahlian', 'Sertifikat Keahlian', 'required|xss_clean');
+		
+		if(is_null($pengajuan['is_accepted'])){
+			var_dump('yes');
+			die();
+		}else{
+			var_dump('no');
+			die();
+		}
+
+		if($pengajuan['is_accepted' === 0]) {
 			$this->session->set_flashdata('notification', 'Sudah Diajukan ');
 			redirect("User/pengajuan_user");
-		} else {
-			if ($_FILES['sk_terakhir']['name'] != "") {
+		} else{
+			if ($_FILES['spjtm']['name'] != "") {
 
-				$config['upload_path']   = './assets/berkas/sk_terakhir/';
-				$config['allowed_types'] = 'pdf|doc|docx';
+				$config['upload_path']   = './assets/pengajuan/';
+				$config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
 				$config['max_size']      = 2000;
+				$config['file_name']     = "Surat Pernyataan Tanggung Jawab Mutlak (SPJTM)";
 				$this->load->library('upload', $config);
 				$this->upload->initialize($config);
 
-				if ($this->upload->do_upload('sk_terakhir')) {
-					$sk_terakhir = $this->upload->data('file_name');
+				if ($this->upload->do_upload('spjtm')) {
+					$spjtm = $this->upload->data('file_name');
 				} else {
 					echo $this->upload->display_errors();
 				}
 			}
 
-			if ($_FILES['sk_kgb']['name'] != "") {
-				$config['upload_path']   = './assets/berkas/sk_kgb/';
-				$config['allowed_types'] = 'pdf|doc|docx';
+			if ($_FILES['spmk']['name'] != "") {
+				$config['upload_path']   = './assets/pengajuan/';
+				$config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
 				$config['max_size']      = 2000;
+				$config['file_name']     = "Surat Perintah Mulai Kerja (SPMK)";
 				$this->load->library('upload', $config);
 				$this->upload->initialize($config);
 
-				if ($this->upload->do_upload('sk_kgb')) {
-					$sk_kgb = $this->upload->data('file_name');
+				if ($this->upload->do_upload('spmk')) {
+					$spmk = $this->upload->data('file_name');
+				} else {
+					echo $this->upload->display_errors();
+				}
+			}
+
+			if ($_FILES['spk']['name'] != "") {
+				$config['upload_path']   = './assets/pengajuan/';
+				$config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
+				$config['max_size']      = 2000;
+				$config['file_name']     = "Surat Perintah Kerja (SPK)";
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+
+				if ($this->upload->do_upload('spk')) {
+					$spk = $this->upload->data('file_name');
+				} else {
+					echo $this->upload->display_errors();
+				}
+			}
+
+			if ($_FILES['sppjl']['name'] != "") {
+				$config['upload_path']   = './assets/pengajuan/';
+				$config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
+				$config['max_size']      = 2000;
+				$config['file_name']     = "Surat Penunjukan Penyedia Jasa Lainnya";
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+
+				if ($this->upload->do_upload('sppjl')) {
+					$sppjl = $this->upload->data('file_name');
+				} else {
+					echo $this->upload->display_errors();
+				}
+			}
+
+			if ($_FILES['bahpl']['name'] != "") {
+				$config['upload_path']   = './assets/pengajuan/';
+				$config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
+				$config['max_size']      = 2000;
+				$config['file_name']     = "Berita Acara Hasil Pengadaan Langsung";
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+
+				if ($this->upload->do_upload('bahpl')) {
+					$bahpl = $this->upload->data('file_name');
+				} else {
+					echo $this->upload->display_errors();
+				}
+			}
+
+			if ($_FILES['baktnb']['name'] != "") {
+				$config['upload_path']   = './assets/pengajuan/';
+				$config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
+				$config['max_size']      = 2000;
+				$config['file_name']     = "Berita Acara Klarifikasi Teknis Dan Negosiasi Biaya";
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+
+				if ($this->upload->do_upload('baktnb')) {
+					$baktnb = $this->upload->data('file_name');
+				} else {
+					echo $this->upload->display_errors();
+				}
+			}
+
+			if ($_FILES['lampiran_ba']['name'] != "") {
+				$config['upload_path']   = './assets/pengajuan/';
+				$config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
+				$config['max_size']      = 2000;
+				$config['file_name']     = "Lampiran Berita Acara";
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+
+				if ($this->upload->do_upload('lampiran_ba')) {
+					$lampiran_ba = $this->upload->data('file_name');
+				} else {
+					echo $this->upload->display_errors();
+				}
+			}
+
+			if ($_FILES['baedp']['name'] != "") {
+				$config['upload_path']   = './assets/pengajuan/';
+				$config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
+				$config['max_size']      = 2000;
+				$config['file_name']     = "Berita Acara Evaluasi Dokumen Penawaran (BAEDP)";
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+
+				if ($this->upload->do_upload('baedp')) {
+					$baedp = $this->upload->data('file_name');
+				} else {
+					echo $this->upload->display_errors();
+				}
+			}
+
+			if ($_FILES['sdp']['name'] != "") {
+				$config['upload_path']   = './assets/pengajuan/';
+				$config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
+				$config['max_size']      = 2000;
+				$config['file_name']     = "Staff Development Program (SDP)";
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+
+				if ($this->upload->do_upload('sdp')) {
+					$sdp = $this->upload->data('file_name');
+				} else {
+					echo $this->upload->display_errors();
+				}
+			}
+
+			if ($_FILES['undangan']['name'] != "") {
+				$config['upload_path']   = './assets/pengajuan/';
+				$config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
+				$config['max_size']      = 2000;
+				$config['file_name']     = "Undangan";
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+
+				if ($this->upload->do_upload('undangan')) {
+					$undangan = $this->upload->data('file_name');
+				} else {
+					echo $this->upload->display_errors();
+				}
+			}
+
+			if ($_FILES['ijazah']['name'] != "") {
+				$config['upload_path']   = './assets/pengajuan/';
+				$config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
+				$config['max_size']      = 2000;
+				$config['file_name']     = "Ijazah";
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+
+				if ($this->upload->do_upload('ijazah')) {
+					$ijazah = $this->upload->data('file_name');
+				} else {
+					echo $this->upload->display_errors();
+				}
+			}
+
+			if ($_FILES['cv']['name'] != "") {
+				$config['upload_path']   = './assets/pengajuan/';
+				$config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
+				$config['max_size']      = 2000;
+				$config['file_name']     = "Curriculum Vitae (CV)";
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+
+				if ($this->upload->do_upload('cv')) {
+					$cv = $this->upload->data('file_name');
+				} else {
+					echo $this->upload->display_errors();
+				}
+			}
+
+			if ($_FILES['transkrip']['name'] != "") {
+				$config['upload_path']   = './assets/pengajuan/';
+				$config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
+				$config['max_size']      = 2000;
+				$config['file_name']     = "Transkrip";
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+
+				if ($this->upload->do_upload('transkrip')) {
+					$transkrip = $this->upload->data('file_name');
+				} else {
+					echo $this->upload->display_errors();
+				}
+			}
+
+			if ($_FILES['sertifikat_keahlian']['name'] != "") {
+				$config['upload_path']   = './assets/pengajuan/';
+				$config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
+				$config['max_size']      = 2000;
+				$config['file_name']     = "Sertifikat Keahlian";
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+
+				if ($this->upload->do_upload('sertifikat_keahlian')) {
+					$sertifikat_keahlian = $this->upload->data('file_name');
 				} else {
 					echo $this->upload->display_errors();
 				}
 			}
 
 			$data = [
-				'nama' => $this->input->post('nama'),
-				'nik' => $this->input->post('nik'),
-				'tanggal' => $this->input->post('tanggal'),
-				'jenis_pengajuan' => $this->input->post('jenis_pengajuan'),
-				'sk_terakhir' => $sk_terakhir,
-				'sk_kgb' => $sk_kgb
+				'pegawai_id' => $id,
+				'spjtm' => $spjtm,
+				'spmk' => $spmk,
+				'spk' => $spk,
+				'sppjl' => $sppjl,
+				'bahpl' => $bahpl,
+				'baktnb' => $baktnb,
+				'lampiran_ba' => $lampiran_ba,
+				'baedp' => $baedp,
+				'sdp' => $sdp,
+				'undangan' => $undangan,
+				'ijazah' => $ijazah,
+				'cv' => $cv,
+				'transkrip' => $transkrip,
+				'sertifikat_keahlian' => $sertifikat_keahlian,
+				'created_at' => date('y-m-d')
 			];
 			//insert data into database table. 
-			$id = $this->session->userdata('id');
-			$data_pengajuan = $this->M_user->getPengajuanById($id);
-			if ($data_pengajuan['nik'] == $data['nik']) {
-			}
 			$this->db->insert('pengajuan', $data);
 			$this->session->set_flashdata('notification', 'Berhasil');
 			redirect("User/pengajuan_user");
+
+			// $data_pengajuan = $this->M_user->getPengajuanById($id);
+			// // if ($data_pengajuan['nik'] == $data['nik']) {
+			// // }			
 		}
 	}
-
-	// public function pengajuan_reguler()
-	// {
-	// 	$id = $this->session->userdata('id');
-	// 	$data['nik'] = $this->session->userdata('username');
-	// 	$data['client'] = [];
-	// 	$data['pegawai'] = $this->M_user->getPegawaiById($id);
-
-	// 	$data['sidebar'] = "#mn4";
-	// 	$this->load->view('layouts/header/user', $data);
-	// 	$this->load->view('user/pengajuan/reguler', $data);
-	// 	$this->load->view('layouts/footer', $data);
-	// }
-
-	// public function insert_reguler()
-	// {
-
-	// 	if (isset($_POST['submit'])) {
-
-	// 		$this->form_validation->set_rules('nip', 'NIP', 'required|xss_clean|numeric');
-	// 		$this->form_validation->set_rules('nama', 'Nama', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('tanggal', 'Golongan', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('jenis_pengajuan', 'Jenis Pengajuan', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('sk_cpns', 'SK CPNS', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('sk_pns', 'SK PNS', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('sk_terakhir', 'SK Terakhir', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('skp', 'Sasaran Kinerja Pegawai 1', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('skp2', 'Sasaran Kinerja Pegawai 2', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('ijazah_terakhir', 'Ijazah Terakhir dan Transkip Nilai', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('sk_jterakhir', 'SK Jabatan', 'required|xss_clean');
-
-	// 		if ($_FILES['sk_cpns']['name']) {
-
-	// 			$config['upload_path']   = './assets/berkas/sk_cpns/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('sk_cpns')) {
-	// 				$sk_cpns = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['sk_pns']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/sk_pns/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('sk_pns')) {
-	// 				$sk_pns = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['sk_terakhir']['name']) {
-
-	// 			$config['upload_path']   = './assets/berkas/sk_terakhir/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('sk_terakhir')) {
-	// 				$sk_terakhir = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['skp']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/skp/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('skp')) {
-	// 				$skp = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['skp2']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/skp2/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('skp2')) {
-	// 				$skp2 = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['ijazah_terakhir']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/ijazah/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('ijazah_terakhir')) {
-	// 				$ijazah_terakhir = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['sk_jterakhir']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/sk_jabatan/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('sk_jterakhir')) {
-	// 				$sk_jterakhir = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		$data = [
-	// 			'nama' => $this->input->post('nama'),
-	// 			'nip' => $this->input->post('nip'),
-	// 			'tanggal' => $this->input->post('tanggal'),
-	// 			'jenis_pengajuan' => $this->input->post('jenis_pengajuan'),
-	// 			'sk_cpns' => $sk_cpns,
-	// 			'sk_pns' => $sk_pns,
-	// 			'sk_terakhir' => $sk_terakhir,
-	// 			'skp' => $skp,
-	// 			'skp2' => $skp2,
-	// 			'ijazah_terakhir' => $ijazah_terakhir,
-	// 			'sk_jterakhir' => $sk_jterakhir
-	// 		];
-	// 		//insert data into database table.  
-	// 		$this->db->insert('pengajuan', $data);
-	// 		$this->session->set_flashdata('reguler', 'Dikirim');
-	// 		redirect("User/pengajuan_reguler");
-	// 	}
-	// }
-
-
-	// public function pengajuan_fungsional()
-	// {
-	// 	$id = $this->session->userdata('id');
-	// 	$data['nik'] = $this->session->userdata('username');
-	// 	$data['client'] = [];
-	// 	$data['pegawai'] = $this->M_user->getPegawaiById($id);
-
-	// 	$data['sidebar'] = "#mn4";
-	// 	$this->load->view('layouts/header/user', $data);
-	// 	$this->load->view('user/pengajuan/fungsional', $data);
-	// 	$this->load->view('layouts/footer', $data);
-	// }
-
-	// public function insert_fungsional()
-	// {
-
-	// 	if (isset($_POST['submit'])) {
-
-	// 		$this->form_validation->set_rules('nip', 'NIP', 'required|xss_clean|numeric');
-	// 		$this->form_validation->set_rules('nama', 'Nama', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('tanggal', 'Golongan', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('jenis_pengajuan', 'Jenis Pengajuan', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('sk_cpns', 'SK CPNS', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('sk_pns', 'SK PNS', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('sk_terakhir', 'SK Terakhir', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('skp', 'Sasaran Kinerja Pegawai 1', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('skp2', 'Sasaran Kinerja Pegawai 2', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('sk_jf', 'SK Jabatan Fungsional', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('pak', 'PAK', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('ijazah_terakhir', 'Ijazah Terakhir dan Transkip Nilai', 'required|xss_clean');
-
-
-	// 		if ($_FILES['sk_cpns']['name']) {
-
-	// 			$config['upload_path']   = './assets/berkas/sk_cpns/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('sk_cpns')) {
-	// 				$sk_cpns = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['sk_pns']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/sk_pns/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('sk_pns')) {
-	// 				$sk_pns = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['sk_terakhir']['name']) {
-
-	// 			$config['upload_path']   = './assets/berkas/sk_terakhir/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('sk_terakhir')) {
-	// 				$sk_terakhir = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['skp']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/skp/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('skp')) {
-	// 				$skp = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['skp2']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/skp2/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('skp2')) {
-	// 				$skp2 = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['sk_jf']['name']) {
-
-	// 			$config['upload_path']   = './assets/berkas/sk_jabatan_fungsional/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('sk_jf')) {
-	// 				$sk_jf = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['pak']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/pak/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('pak')) {
-	// 				$pak = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['ijazah_terakhir']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/ijazah/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('ijazah_terakhir')) {
-	// 				$ijazah_terakhir = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		$data = [
-	// 			'nama' => $this->input->post('nama'),
-	// 			'nip' => $this->input->post('nip'),
-	// 			'tanggal' => $this->input->post('tanggal'),
-	// 			'jenis_pengajuan' => $this->input->post('jenis_pengajuan'),
-	// 			'sk_cpns' => $sk_cpns,
-	// 			'sk_pns' => $sk_pns,
-	// 			'sk_terakhir' => $sk_terakhir,
-	// 			'skp' => $skp,
-	// 			'skp2' => $skp2,
-	// 			'sk_jf' => $sk_jf,
-	// 			'pak' => $pak,
-	// 			'ijazah_terakhir' => $ijazah_terakhir
-	// 		];
-	// 		//insert data into database table.  
-	// 		$this->db->insert('pengajuan', $data);
-	// 		$this->session->set_flashdata('fungsional', 'Dikirim');
-	// 		redirect("User/pengajuan_fungsional");
-	// 	}
-	// }
-
-
-	// public function pengajuan_structural()
-	// {
-	// 	$id = $this->session->userdata('id');
-	// 	$data['nik'] = $this->session->userdata('username');
-	// 	$data['client'] = [];
-	// 	$data['pegawai'] = $this->M_user->getPegawaiById($id);
-
-	// 	$data['sidebar'] = "#mn4";
-	// 	$this->load->view('layouts/header/user', $data);
-	// 	$this->load->view('user/pengajuan/structural', $data);
-	// 	$this->load->view('layouts/footer', $data);
-	// }
-
-	// public function insert_structural()
-	// {
-
-	// 	if (isset($_POST['submit'])) {
-
-	// 		$this->form_validation->set_rules('nip', 'NIP', 'required|xss_clean|numeric');
-	// 		$this->form_validation->set_rules('nama', 'Nama', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('tanggal', 'Golongan', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('jenis_pengajuan', 'Jenis Pengajuan', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('sk_cpns', 'SK CPNS', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('sk_pns', 'SK PNS', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('sk_terakhir', 'SK Terakhir', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('sk_p', 'SK Pelantikan', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('skp', 'Sasaran Kinerja Pegawai 1', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('skp2', 'Sasaran Kinerja Pegawai 2', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('ijazah_terakhir', 'Ijazah Terakhir dan Transkip Nilai', 'required|xss_clean');
-	// 		$this->form_validation->set_rules('sk_js', 'SK Jabatan Fungsional', 'required|xss_clean');
-
-	// 		if ($_FILES['sk_cpns']['name']) {
-
-	// 			$config['upload_path']   = './assets/berkas/sk_cpns/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('sk_cpns')) {
-	// 				$sk_cpns = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['sk_pns']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/sk_pns/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('sk_pns')) {
-	// 				$sk_pns = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['sk_terakhir']['name']) {
-
-	// 			$config['upload_path']   = './assets/berkas/sk_terakhir/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('sk_terakhir')) {
-	// 				$sk_terakhir = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-
-	// 		if ($_FILES['sk_p']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/sk_pelantikan/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('sk_p')) {
-	// 				$sk_p = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['skp']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/skp/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('skp')) {
-	// 				$skp = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['skp2']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/skp2/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('skp2')) {
-	// 				$skp2 = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['ijazah_terakhir']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/ijazah/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('ijazah_terakhir')) {
-	// 				$ijazah_terakhir = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-	// 		if ($_FILES['sk_js']['name']) {
-	// 			$config['upload_path']   = './assets/berkas/sk_jabatan_structural/';
-	// 			$config['allowed_types'] = 'pdf|jpg|png|doc|docx';
-	// 			$config['max_size']      = 2000;
-	// 			$this->load->library('upload', $config);
-	// 			$this->upload->initialize($config);
-
-	// 			if ($this->upload->do_upload('sk_js')) {
-	// 				$sk_js = $this->upload->data('file_name');
-	// 			} else {
-	// 				echo $this->upload->display_errors();
-	// 			}
-	// 		}
-
-
-	// 		$data = [
-	// 			'nama' => $this->input->post('nama'),
-	// 			'nip' => $this->input->post('nip'),
-	// 			'tanggal' => $this->input->post('tanggal'),
-	// 			'jenis_pengajuan' => $this->input->post('jenis_pengajuan'),
-	// 			'sk_cpns' => $sk_cpns,
-	// 			'sk_pns' => $sk_pns,
-	// 			'sk_terakhir' => $sk_terakhir,
-	// 			'sk_p' => $sk_p,
-	// 			'skp' => $skp,
-	// 			'skp2' => $skp2,
-	// 			'ijazah_terakhir' => $ijazah_terakhir,
-	// 			'sk_js' => $sk_js
-	// 		];
-	// 		//insert data into database table.  
-	// 		$this->db->insert('pengajuan', $data);
-	// 		$this->session->set_flashdata('structural', 'Dikirim');
-	// 		redirect("User/pengajuan_structural");
-	// 	}
-	// }
-
 }
