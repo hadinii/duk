@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Pengajuan Naik Pangkat/Gaji
+            Pengajuan Naik Gaji
         </h1>
         <ol class="breadcrumb">
             <!-- <a href="<?= base_url(); ?>pengajuan_reguler" class="btn btn-success"><i class="fa fa-file"></i> Pangkat Reguler</a>

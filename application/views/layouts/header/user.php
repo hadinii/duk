@@ -152,7 +152,7 @@
 
           <li id="mn4">
             <a href="<?= base_url(); ?>user/pengajuan_user">
-              <i class="fa fa-file"></i> <span>Pengajuan Naik Pangkat/Gaji</span>
+              <i class="fa fa-file"></i> <span>Pengajuan Naik Gaji</span>
             </a>
           </li>
 

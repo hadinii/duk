@@ -39,6 +39,16 @@ class M_user extends CI_Model
 			->join('jabatan j', 'p.jabatan_id = j.id_jabatan', 'LEFT')
 			->get()->row_array();
     }
+    
+	public function getPegawaiByUserId($id)
+    {
+		return $this->db->select('p.*, u.nik, j.nama as jabatan')
+			->from('pegawai p')
+			->join('user u', 'p.user_id = u.id', 'LEFT')
+			->join('jabatan j', 'p.jabatan_id = j.id_jabatan', 'LEFT')
+			->where('u.id', $id)
+			->get()->row_array();
+    }
 
     public function getAllPengajuanById($id, $status = null)
     {

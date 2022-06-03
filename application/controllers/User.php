@@ -23,7 +23,7 @@ class User extends CI_Controller
 	{
 		$id = $this->session->userdata('id');
 		$data['sidebar'] = "#mn1";
-		$data['pegawai'] = $this->M_user->getPegawaiById($id);
+		$data['pegawai'] = $this->M_user->getPegawaiByUserId($id);
 		$this->load->view('layouts/header/user', $data);
 		$this->load->view('user/dashboard', $data);
 		$this->load->view('layouts/footer', $data);
@@ -32,7 +32,7 @@ class User extends CI_Controller
 	public function data()
 	{
 		$id = $this->session->userdata('id');
-		$data['pegawai'] = $this->M_user->getPegawaiById($id);
+		$data['pegawai'] = $this->M_user->getPegawaiByUserId($id);
 		$data['gol_darah'] = ['-', 'A', 'B', 'AB', 'O'];
 		$data['jk'] = ['Laki-laki', 'Perempuan'];
 		$data['agama'] = ['Islam', 'Protestan', 'Katholik', 'Hindu', 'Budha'];
