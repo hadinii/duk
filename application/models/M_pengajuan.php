@@ -24,12 +24,17 @@ class M_pengajuan extends CI_Model
 
 	public function createPengajuan()
 	{
+		$id_pegawai = $this->input->post('id_pegawai', true);
 		$data = [
-			'pegawai_id' => $this->input->post('id_pegawai', true),
+			'pegawai_id' => $id_pegawai,
 			'gaji_id' => $this->input->post('id_gaji', true),
 			'created_at' => date('Y-m-d')
 		];
 		$this->db->insert('pengajuan', $data);
+
+		$user = $this->db->get_where('pegawai', ['id_pegawai' => $id_pegawai])->row_array();
+
+		return $user;
 	}
 
 	public function accept($id)

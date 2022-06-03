@@ -38,8 +38,6 @@ class Gaji extends CI_Controller
             $this->load->view('layouts/footer', $data);
         } else {
 			$jabatan = $this->M_jabatan->store();
-			// var_dump($jabatan);
-			// die();
             $this->session->set_flashdata('notification', 'Ditambah');
             redirect($jabatan['is_increment'] ? 'gaji/'.$jabatan['id_jabatan'] : 'gaji');
         }
@@ -92,7 +90,8 @@ class Gaji extends CI_Controller
 				$this->load->view('layouts/footer', $data);
 			}
 		} else {
-			$this->M_pengajuan->createPengajuan();
+			$pegawai = $this->M_pengajuan->createPengajuan();
+			$this->_sendMail($pegawai);
 			$this->session->set_flashdata('notification', 'Berhasil membuat pengajuan!');
 			redirect("pengajuan/{$id_pegawai}/{$id_gaji}");
 		}
@@ -104,4 +103,33 @@ class Gaji extends CI_Controller
         $this->session->set_flashdata('notification', 'Berhasil menghapus data gaji');
         redirect('gaji/'.$id_jabatan);
     }
+
+	public function _sendMail($pegawai)
+	{
+		var_dump($pegawai);
+		$config = [
+			'protocol'  => 'smtp',
+			'smtp_host' => 'smtp.gmail.com',
+			'smtp_user' => 'hidayatyusril694@gmail.com',
+			'smtp_pass' => 'horqvmuftrswhlfz',
+			'smtp_port' =>  587,
+			'smtp_crypto' => 'tls',
+			'mailtype'  => 'text',
+			'charset'   => 'utf-8',
+			'newline'   => "\r\n"
+		];
+
+		$this->load->library('email', $config);
+		$this->email->initialize($config);
+		$this->email->from('disnakkeswan.riau@gmail.com', 'Dinas Pertenakan dan Kesehatan Hewan Provinsi Riau');
+		$this->email->to($pegawai['email']);
+		$this->email->subject('Kenaikan Gaji');
+		$this->email->message('Segera Urus Kenaikan Gaji!
+		*Upload file di sistem DUK');
+
+		if (!$this->email->send()) {
+			echo $this->email->print_debugger();
+			die;
+		}
+	}
 }
