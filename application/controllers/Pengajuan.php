@@ -9,7 +9,6 @@ class Pengajuan extends CI_Controller
         if (!$this->session->userdata('is_admin')) {
             redirect('login');
         }
-        $this->load->model('M_duk');
         $this->load->model('M_pegawai');
         $this->load->model('M_pengajuan');
     }
