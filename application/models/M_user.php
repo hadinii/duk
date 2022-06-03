@@ -72,23 +72,21 @@ class M_user extends CI_Model
 		->join('pegawai pw', 'p.pegawai_id = pw.id_pegawai', 'LEFT')
 		->join('user u', 'pw.user_id = u.id', 'LEFT')
 		->join('jabatan j', 'pw.jabatan_id = j.id_jabatan', 'LEFT')
-		->where('id_pengajuan', $id)
+		->where('p.pegawai_id', $id)
 		->get()->result_array();
 		// return $this->db->get_where('pengajuan', ['id_pengajuan' => $id])->row_array();
     }
 
-	public function getPengajuanByPegawai($id_pegawai, $status = null)
+	public function getStatsPengajuanByPegawai($id_pegawai, $status = null)
 	{
-		$this->db->select('p.*, pw.nama, u.nik')
+		$this->db->select('is_accepted')
 			->from('pengajuan p')
-			->join('pegawai pw', 'p.pegawai_id = pw.id_pegawai', 'LEFT')
-			->join('user u', 'pw.user_id = u.id', 'LEFT')
 			->where('pegawai_id', $id_pegawai);
 		if(!is_null($status))
 		{
 			$this->db->where('is_accepted',$status);
 		}
-		return $this->db->get()->result_array();
+		return $this->db->get()->row_array();
 	}
 
 
