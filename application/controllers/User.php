@@ -108,8 +108,8 @@ class User extends CI_Controller
 	{
 		$id = $this->session->userdata('id');
 		$pegawai =$this->M_user->getPegawaiById($id);
-		$pengajuan = $this->M_user->getPengajuanByPegawai($pegawai['id_pegawai']);
-		// $pengajuan = $this->M_user->getAllPengajuanById($id);
+		$is_accepted = $this->M_user->getStatsPengajuanByPegawai($pegawai['id_pegawai']);
+		$pengajuan = $this->M_user->getAllPengajuanById($pegawai['id_pegawai']);
 
 		$this->form_validation->set_rules('spjtm', 'Surat Pernyataan Tanggung Jawab Mutlak', 'required|xss_clean');
 		$this->form_validation->set_rules('spmk', 'Surat Perintah Mulai Kerja', 'required|xss_clean');
@@ -125,19 +125,8 @@ class User extends CI_Controller
 		$this->form_validation->set_rules('cv', 'cv', 'required|xss_clean');
 		$this->form_validation->set_rules('transkrip', 'Transkrip', 'required|xss_clean');
 		$this->form_validation->set_rules('sertifikat_keahlian', 'Sertifikat Keahlian', 'required|xss_clean');
-		
-		if(is_null($pengajuan['is_accepted'])){
-			var_dump('yes');
-			die();
-		}else{
-			var_dump('no');
-			die();
-		}
 
-		if($pengajuan['is_accepted' === 0]) {
-			$this->session->set_flashdata('notification', 'Sudah Diajukan ');
-			redirect("User/pengajuan_user");
-		} else{
+		if(is_null($is_accepted) || $is_accepted === 1) {
 			if ($_FILES['spjtm']['name'] != "") {
 
 				$config['upload_path']   = './assets/pengajuan/';
@@ -375,6 +364,9 @@ class User extends CI_Controller
 			// $data_pengajuan = $this->M_user->getPengajuanById($id);
 			// // if ($data_pengajuan['nik'] == $data['nik']) {
 			// // }			
-		}
+		}else{
+			$this->session->set_flashdata('notification', 'Sudah Diajukan ');
+			redirect("User/pengajuan_user");
+		} 
 	}
 }
