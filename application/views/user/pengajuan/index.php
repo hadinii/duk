@@ -9,7 +9,7 @@
             <!-- <a href="<?= base_url(); ?>pengajuan_reguler" class="btn btn-success"><i class="fa fa-file"></i> Pangkat Reguler</a>
             <a href="<?= base_url(); ?>pengajuan_fungsional" class="btn btn-success"><i class="fa fa-file"></i> Pangkat Fungsional</a>
             <a href="<?= base_url(); ?>pengajuan_structural" class="btn btn-success"><i class="fa fa-file"></i> Pangkat Structural</a> -->
-            <a href="<?= base_url(); ?>user/pengajuan_gaji" class="btn btn-success"><i class="fa fa-plus"></i>  Ajukan Kenaikan Gaji</a>
+            <!-- <a href="<?= base_url(); ?>user/pengajuan_gaji" class="btn btn-success"><i class="fa fa-plus"></i>  Ajukan Kenaikan Gaji</a> -->
         </ol>
     </section>
     <!-- Main content -->
@@ -37,6 +37,7 @@
                                     <th style="text-align: center;">Nama</th>
                                     <th style="text-align: center;">Tanggal</th>
                                     <th style="text-align: center;">Status</th>
+                                    <th style="text-align: center;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,6 +54,11 @@
 											<?php else :?>
 												<span class="label label-success"><?= $p['is_accepted'] = 'Diterima'; ?></span>
 											<?php endif;?>
+										</td>
+										<td style="text-align: center;">
+											<?php if(!$p['is_accepted']) : ?>
+												<a href="<?= base_url('user/pengajuan_gaji/'.$p['id_pengajuan']); ?>" class="btn btn-success"><i class="fa fa-save"></i>  Lengkapi Berkas</a>
+											<?php endif; ?>
 										</td>
                                     </tr>
                                     <?php $i++; ?>

@@ -57,10 +57,10 @@ class M_user extends CI_Model
 			->from('pengajuan p')
 			->join('pegawai pw', 'p.pegawai_id = pw.id_pegawai', 'LEFT')
 			->join('user u', 'pw.user_id = u.id', 'LEFT')
-			->where('pw.user_id', $id);
-		if(is_null($status))
+			->where('p.pegawai_id', $id);
+		if(!is_null($status))
 		{
-			$this->db->where('is_accepted',$status);
+			$this->db->where('is_accepted', $status);
 		}
 		return $this->db->get()->result_array();
     }
@@ -72,8 +72,8 @@ class M_user extends CI_Model
 		->join('pegawai pw', 'p.pegawai_id = pw.id_pegawai', 'LEFT')
 		->join('user u', 'pw.user_id = u.id', 'LEFT')
 		->join('jabatan j', 'pw.jabatan_id = j.id_jabatan', 'LEFT')
-		->where('p.pegawai_id', $id)
-		->get()->result_array();
+		->where('p.id_pengajuan', $id)
+		->get()->row_array();
 		// return $this->db->get_where('pengajuan', ['id_pengajuan' => $id])->row_array();
     }
 
@@ -132,10 +132,9 @@ class M_user extends CI_Model
     public function ubahPasswordUser()
     {
         $data = [
-            'username' => $this->session->userdata('username'),
             'password' => md5($this->input->post('pb', true))
         ];
-        $this->db->where('username', $this->session->userdata('username'));
+        $this->db->where('id', $this->session->userdata('id'));
         $this->db->update('user', $data);
     }
 }
