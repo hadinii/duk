@@ -58,7 +58,8 @@ class User extends CI_Controller
 		} else {
 			$this->M_user->ubahDataPegawai();
 			$this->session->set_flashdata('notification', [
-				'status' => 'Berhasil mengubah data pegawai'
+				'status' => 'succes',
+				'message' => 'Berhasil mengubah data pegawai'
 			]);
 			redirect('user/data');
 		}
