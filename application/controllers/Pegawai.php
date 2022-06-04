@@ -125,24 +125,10 @@ class Pegawai extends CI_Controller
 			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_pegawai->ubahPassword();
-			$this->session->set_flashdata('notification', 'Diubah');
-			redirect('setting');
-		}
-	}
-
-	public function upKetua()
-	{
-		$data['ketua'] = $this->M_pegawai->ketua();
-		$this->form_validation->set_rules('namaK', 'Nama Admin', 'required|xss_clean');
-		$this->form_validation->set_rules('nipK', 'NIP Admin', 'required|xss_clean|max_length[18]');
-		if ($this->form_validation->run() == FALSE) {
-			$data['sidebar'] = "#mn5";
-			$this->load->view('layouts/header/admin');
-			$this->load->view('auth/setting/admin', $data);
-			$this->load->view('layouts/footer', $data);
-		} else {
-			$this->M_pegawai->resetKetua();
-			$this->session->set_flashdata('notification', 'Diubah');
+			$this->session->set_flashdata('notification', [
+				'status' => 'success',
+				'message' => 'Password berhasil diubah!'
+			]);
 			redirect('setting');
 		}
 	}

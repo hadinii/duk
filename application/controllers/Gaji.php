@@ -38,7 +38,10 @@ class Gaji extends CI_Controller
             $this->load->view('layouts/footer', $data);
         } else {
 			$jabatan = $this->M_jabatan->store();
-            $this->session->set_flashdata('notification', 'Ditambah');
+            $this->session->set_flashdata('notification', [
+				'status' => 'success',
+				'message' => 'Berhasil menambahkan data gaji'
+			]);
             redirect($jabatan['is_increment'] ? 'gaji/'.$jabatan['id_jabatan'] : 'gaji');
         }
     }
@@ -50,7 +53,10 @@ class Gaji extends CI_Controller
         $this->form_validation->set_rules('gaji_pokok', 'Gaji Pokok', 'required|xss_clean|numeric');
 		if ($this->form_validation->run()) {
 			$this->M_gaji->store($id_jabatan);
-            $this->session->set_flashdata('notification', 'Berhasil menambah data gaji');
+            $this->session->set_flashdata('notification', [
+				'status' => 'success',
+				'message' => 'Berhasil menambahkan data gaji'
+			]);
             redirect('gaji/'.$id_jabatan);
         }
 	}
@@ -70,7 +76,10 @@ class Gaji extends CI_Controller
             $this->load->view('layouts/footer', $data);
         } else {
             $this->M_jabatan->update($id_jabatan);
-            $this->session->set_flashdata('notification', 'Diperbarui');
+            $this->session->set_flashdata('notification', [
+				'status' => 'success',
+				'message' => 'Berhasil mengubah data gaji'
+			]);
             redirect('gaji/'.$id_jabatan);
         }
     }
@@ -90,23 +99,29 @@ class Gaji extends CI_Controller
 				$this->load->view('layouts/footer', $data);
 			}
 		} else {
-			$pegawai = $this->M_pengajuan->createPengajuan();
-			$this->_sendMail($pegawai);
-			$this->session->set_flashdata('notification', 'Berhasil membuat pengajuan!');
-			redirect("pengajuan/{$id_pegawai}/{$id_gaji}");
+			$pengajuan = $this->M_pengajuan->createPengajuan();	
+			$this->_sendMail($pengajuan['email']);
+			$this->session->set_flashdata('notification', [
+				'status' => 'success',
+				'message' => 'Email pengurusan kenaikan gaji telah terkirim'
+			]);
+			redirect('pengajuan');
 		}
 	}
 
     public function destroy($id)
     {
         $id_jabatan = $this->M_gaji->delete($id);
-        $this->session->set_flashdata('notification', 'Berhasil menghapus data gaji');
+        $this->session->set_flashdata('notification', [
+			'status' => 'success',
+			'message' => 'Berhasil menghapus data gaji'
+		]);
         redirect('gaji/'.$id_jabatan);
     }
 
-	public function _sendMail($pegawai)
+	public function _sendMail($email)
 	{
-		var_dump($pegawai);
+		var_dump($email);
 		$config = [
 			'protocol'  => 'smtp',
 			'smtp_host' => 'smtp.gmail.com',
@@ -122,7 +137,7 @@ class Gaji extends CI_Controller
 		$this->load->library('email', $config);
 		$this->email->initialize($config);
 		$this->email->from('disnakkeswan.riau@gmail.com', 'Dinas Pertenakan dan Kesehatan Hewan Provinsi Riau');
-		$this->email->to($pegawai['email']);
+		$this->email->to($email);
 		$this->email->subject('Kenaikan Gaji');
 		$this->email->message('Segera Urus Kenaikan Gaji!
 		*Upload file di sistem DUK');

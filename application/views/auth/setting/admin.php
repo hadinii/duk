@@ -16,6 +16,12 @@
               <?= validation_errors(); ?>
             </div>
           <?php endif; ?>
+					<?php if ($this->session->flashdata('notification')) : ?>	
+						<div class="alert alert-<?= $this->session->flashdata('notification')['status'] ?> alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<?= $this->session->flashdata('notification')['message']; ?>
+						</div>
+					<?php endif; ?>
           <div class="nav-tabs-custom">
             <div class="tab-content">
               <div class="active tab-pane" id="settings">
@@ -45,35 +51,6 @@
                     </div>
                   </div>
                 </form>
-              </div>
-              <!-- /.tab-pane -->
-
-              <div class="tab-pane" id="pejabat">
-                <div class="row">
-                  <div class="col-md-6">
-                    <form method="post" action="<?= base_url(); ?>pegawai/upKetua">
-
-                      <div class="form-group">
-                        <label>Ketua Pengadilan Negeri Kendari</label>
-                        <input type="text" class="form-control" name="namaK" value="<?= $ketua['nama']; ?>" required>
-                      </div>
-
-                      <div class="form-group">
-                        <label>NIP</label>
-                        <input type="text" class="form-control" name="nipK" value="<?= $ketua['nip']; ?>" required>
-                      </div>
-
-                      <div class="form-group">
-
-                        <button type="submit" class="btn btn-block btn-primary"><i class="fa fa-save"></i> Simpan Perubahan </button>
-                      </div>
-
-                    </form>
-                  </div>
-                  <!-- <div class="col-md-6 text-center">
-                    <img src="<?= base_url(); ?>assets/dist/img/icon-pn.png" class="img-responsive img-thumbnail">
-                  </div> -->
-                </div>
               </div>
               <!-- /.tab-pane -->
 

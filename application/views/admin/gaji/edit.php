@@ -13,8 +13,13 @@
   <section class="content" style="margin-top: 10px;">
     <div class="row">
       	<div class="col-xs-12">
+		  	<?php if ($this->session->flashdata('notification')) : ?>	
+				<div class="alert alert-<?= $this->session->flashdata('notification')['status'] ?> alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<?= $this->session->flashdata('notification')['message']; ?>
+				</div>
+			<?php endif; ?>
 			<form class="form-horizontal" method="post" action="">
-				<!-- <?php var_dump($gaji) ?> -->
 				<div class="col-md-<?= $gaji['is_increment'] ? '6' : '12'?>">
 					<div class="box box-success">
 						<div class="box-header with-border">

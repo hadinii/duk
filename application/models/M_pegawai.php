@@ -103,14 +103,4 @@ class M_Pegawai extends CI_Model
     {
         return $this->db->get_where('user', ['id' => 1])->row_array();
     }
-
-    public function resetKetua()
-    {
-        $data = [
-            'nama' => $this->input->post('namaK', true),
-            'nip' => $this->input->post('nipK', true)
-        ];
-        $this->db->where('id_admin', 1);
-        $this->db->update('admin', $data);
-    }
 }

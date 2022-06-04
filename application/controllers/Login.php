@@ -34,7 +34,10 @@ class Login extends CI_Controller {
                 redirect('user');
             }
         }else{
-            echo $this->session->set_flashdata('notification','Username or Password is Wrong');
+            echo $this->session->set_flashdata('notification',[
+				'status' => 'danger',
+				'message' => 'Username or Password is Wrong'
+			]);
             redirect('login');
         }
         

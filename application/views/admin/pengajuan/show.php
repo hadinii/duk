@@ -12,6 +12,12 @@
     <!-- Main content -->
     <section class="content" style="margin-top: 10px;">
         <div class="row">
+			<?php if ($this->session->flashdata('notification')) : ?>	
+				<div class="alert alert-<?= $this->session->flashdata('notification')['status'] ?> alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<?= $this->session->flashdata('notification')['message']; ?>
+				</div>
+			<?php endif; ?>
             <div class="col-xs-12">
 				<div class="box box-success">
                     <div class="box-header">
@@ -66,7 +72,7 @@
                                         <?php if (!empty($pengajuan['spjtm'])) { ?>
                                             <a href="<?= site_url("./assets/pengajuan/{$pengajuan['id_pengajuan']}/{$pengajuan['spjtm']}") ?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-download-alt"></a>
                                         <?php } else { ?>
-                                            <p style="color: red;"> <b>Tidak ada</b> </p>
+                                            <p style="color: red;"> <b>Belum Upload</b> </p>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -79,7 +85,7 @@
                                         <?php if (!empty($pengajuan['spmk'])) { ?>
                                             <a href="<?= site_url("./assets/pengajuan/{$pengajuan['id_pengajuan']}/{$pengajuan['spmk']}") ?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-download-alt"></a>
                                         <?php } else { ?>
-                                            <p style="color: red;"> <b>Tidak ada</b> </p>
+                                            <p style="color: red;"> <b>Belum Upload</b> </p>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -92,7 +98,7 @@
                                         <?php if (!empty($pengajuan['spk'])) { ?>
                                             <a href="<?= site_url("./assets/pengajuan/{$pengajuan['id_pengajuan']}/{$pengajuan['spk']}") ?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-download-alt"></a>
                                         <?php } else { ?>
-                                            <p style="color: red;"> <b>Tidak ada</b> </p>
+                                            <p style="color: red;"> <b>Belum Upload</b> </p>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -104,7 +110,7 @@
                                     <td><?php if (!empty($pengajuan['sppjl'])) { ?>
                                             <a href="<?= site_url("./assets/pengajuan/{$pengajuan['id_pengajuan']}/{$pengajuan['sppjl']}") ?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-download-alt"></a>
                                         <?php } else { ?>
-                                            <p style="color: red;"> <b>Tidak ada</b> </p>
+                                            <p style="color: red;"> <b>Belum Upload</b> </p>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -116,7 +122,7 @@
                                     <td><?php if (!empty($pengajuan['bahpl'])) { ?>
                                             <a href="<?= site_url("./assets/pengajuan/{$pengajuan['id_pengajuan']}/{$pengajuan['bahpl']}") ?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-download-alt"></a>
                                         <?php } else { ?>
-                                            <p style="color: red;"> <b>Tidak ada</b> </p>
+                                            <p style="color: red;"> <b>Belum Upload</b> </p>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -128,7 +134,7 @@
                                     <td><?php if (!empty($pengajuan['baktnb'])) { ?>
                                             <a href="<?= site_url("./assets/pengajuan/{$pengajuan['id_pengajuan']}/{$pengajuan['baktnb']}") ?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-download-alt"></a>
                                         <?php } else { ?>
-                                            <p style="color: red;"> <b>Tidak ada</b> </p>
+                                            <p style="color: red;"> <b>Belum Upload</b> </p>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -141,7 +147,7 @@
                                         <?php if (!empty($pengajuan['lampiran_ba'])) { ?>
                                             <a href="<?= site_url("./assets/pengajuan/{$pengajuan['id_pengajuan']}/{$pengajuan['lampiran_ba']}") ?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-download-alt"></a>
                                         <?php } else { ?>
-                                            <p style="color: red;"> <b>Tidak ada</b> </p>
+                                            <p style="color: red;"> <b>Belum Upload</b> </p>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -154,7 +160,7 @@
                                         <?php if (!empty($pengajuan['baedp'])) { ?>
                                             <a href="<?= site_url("./assets/pengajuan/{$pengajuan['id_pengajuan']}/{$pengajuan['baedp']}") ?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-download-alt"></a>
                                         <?php } else { ?>
-                                            <p style="color: red;"> <b>Tidak ada</b> </p>
+                                            <p style="color: red;"> <b>Belum Upload</b> </p>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -167,7 +173,7 @@
                                         <?php if (!empty($pengajuan['sdp'])) { ?>
                                             <a href="<?= site_url("./assets/pengajuan/{$pengajuan['id_pengajuan']}/{$pengajuan['sdp']}") ?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-download-alt"></a>
                                         <?php } else { ?>
-                                            <p style="color: red;"> <b>Tidak ada</b> </p>
+                                            <p style="color: red;"> <b>Belum Upload</b> </p>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -180,7 +186,7 @@
                                         <?php if (!empty($pengajuan['undangan'])) { ?>
                                             <a href="<?= site_url("./assets/pengajuan/{$pengajuan['id_pengajuan']}/{$pengajuan['undangan']}") ?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-download-alt"></a>
                                         <?php } else { ?>
-                                            <p style="color: red;"> <b>Tidak ada</b> </p>
+                                            <p style="color: red;"> <b>Belum Upload</b> </p>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -192,7 +198,7 @@
                                     <td><?php if (!empty($pengajuan['ijazah'])) { ?>
                                             <a href="<?= site_url("./assets/pengajuan/{$pengajuan['id_pengajuan']}/{$pengajuan['ijazah']}") ?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-download-alt"></a>
                                         <?php } else { ?>
-                                            <p style="color: red;"> <b>Tidak ada</b> </p>
+                                            <p style="color: red;"> <b>Belum Upload</b> </p>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -204,7 +210,7 @@
                                     <td><?php if (!empty($pengajuan['cv'])) { ?>
                                             <a href="<?= site_url("./assets/pengajuan/{$pengajuan['id_pengajuan']}/{$pengajuan['cv']}") ?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-download-alt"></a>
                                         <?php } else { ?>
-                                            <p style="color: red;"> <b>Tidak ada</b> </p>
+                                            <p style="color: red;"> <b>Belum Upload</b> </p>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -216,7 +222,7 @@
                                     <td><?php if (!empty($pengajuan['transkrip'])) { ?>
                                             <a href="<?= site_url("./assets/pengajuan/{$pengajuan['id_pengajuan']}/{$pengajuan['transkrip']}") ?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-download-alt"></a>
                                         <?php } else { ?>
-                                            <p style="color: red;"> <b>Tidak ada</b> </p>
+                                            <p style="color: red;"> <b>Belum Upload</b> </p>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -228,7 +234,7 @@
                                     <td><?php if (!empty($pengajuan['sertifikat_keahlian'])) { ?>
                                             <a href="<?= site_url("./assets/pengajuan/{$pengajuan['id_pengajuan']}/{$pengajuan['sertifikat_keahlian']}") ?>" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-download-alt"></a>
                                         <?php } else { ?>
-                                            <p style="color: red;"> <b>Tidak ada</b> </p>
+                                            <p style="color: red;"> <b>Belum Upload</b> </p>
                                         <?php } ?>
                                     </td>
                                 </tr>

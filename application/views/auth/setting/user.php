@@ -16,12 +16,12 @@
               <?= validation_errors(); ?>
             </div>
           <?php endif; ?>
-          <?php if ($this->session->flashdata('notification')) : ?>
-            <div class="alert alert-success alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <?= $this->session->flashdata('notification'); ?>
-            </div>
-          <?php endif; ?>
+          <?php if ($this->session->flashdata('notification')) : ?>	
+						<div class="alert alert-<?= $this->session->flashdata('notification')['status'] ?> alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<?= $this->session->flashdata('notification')['message']; ?>
+						</div>
+					<?php endif; ?>
           <div class="nav-tabs-custom">
             <div class="tab-content">
               <div class="active tab-pane" id="settings">

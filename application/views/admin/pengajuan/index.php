@@ -19,12 +19,12 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <?php if ($this->session->flashdata('notification')) : ?>
-                    <div class="alert alert-<?= $this->session->flashdata('notification')['status']; ?> alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <?= $this->session->flashdata('notification')['message']; ?>
-                    </div>
-                <?php endif; ?>
+			<?php if ($this->session->flashdata('notification')) : ?>	
+				<div class="alert alert-<?= $this->session->flashdata('notification')['status'] ?> alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<?= $this->session->flashdata('notification')['message']; ?>
+				</div>
+			<?php endif; ?>
                 <div class="box box-success">
                     <div class="box-body" style="overflow: auto;">
                         <table id="example1" class="table table-bordered table-hover">
@@ -46,10 +46,18 @@
                                         <td><?= $p['nik']; ?></td>
                                         <td><?= $p['nama']; ?></td>
                                         <td><?= $p['created_at']; ?></td>
-                                        <td><?= $p['is_accepted'] ? 'Diterima' : 'Belum Diterima'; ?></td>
+                                        <td>
+											<?php if(!$p['is_accepted']) :?>
+												<span class="label label-warning"><?= $p['is_accepted'] = 'Belum Diterima'; ?></span>
+											<?php else :?>
+												<span class="label label-success"><?= $p['is_accepted'] = 'Diterima'; ?></span>
+											<?php endif;?>
+										</td>
                                         <td style="text-align: center;">
                                             <a href="<?= base_url('pengajuan/'.$p['id_pengajuan']); ?>" class="btn btn-warning"><i class="fa fa-file"></i></a>
-                                            <a href="<?= base_url(); ?>hapusPengajuan/<?= $p['id_pengajuan']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+											<?php if(!$p['is_accepted']) :?>
+												<a href="<?= base_url(); ?>hapusPengajuan/<?= $p['id_pengajuan']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+											<?php endif;?>
                                         </td>
                                     </tr>
                                     <?php $i++; ?>

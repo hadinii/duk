@@ -12,34 +12,6 @@
     <!-- Small boxes (Stat box) -->
     <div class="row">
 
-      <?php
-      $i = 0;
-      $i1 = 0;
-      $thn = date('Y');
-      $bln = date('m');
-      ?>
-
-      <!-- <?php foreach ($duk as $d) : ?>
-
-        <?php
-        $tanggal1 = explode('-', $d['naik_pangkat_yad']);
-        $tanggal2 = explode('-', $d['naik_gaji_yad']);
-        $y = $thn - $tanggal1[0];
-        $m = $bln - $tanggal1[1];
-        $y1 = $thn - $tanggal2[0];
-        $m1 = $bln - $tanggal2[1];
-        ?>
-
-        <?php if ($y == 0 && $m <= 0) : ?>
-          <?php $i++; ?>
-        <?php endif; ?>
-
-        <?php if ($y1 == 0 && $m1 <= 0) : ?>
-          <?php $i1++; ?>
-        <?php endif; ?>
-
-      <?php endforeach; ?> -->
-
       <div class="col-xs-6">
         <!-- small box -->
         <div class="small-box bg-green">
@@ -93,14 +65,13 @@
                 <?php foreach ($naik_gaji as $row) : ?>
 									<?php if(is_null($row['pengajuan']) || !$row['pengajuan']['is_accepted']) : ?>
                     <tr>
-                      <td><?= $i; ?></td>
+                      <td><?= $i++; ?></td>
                       <td><?= $row['nik']; ?></td>
                       <td><?= $row['nama']; ?></td>
                       <td><?= $row['jabatan']; ?></td>
                       <td><?= getTanggalNaikGaji($row['mulai_kerja'], $row['jenjang']['masa_kerja']); ?></td>
                       <td style="text-align: center;">
                         <a href="<?= base_url("/pengajuan/{$row['id_pegawai']}/{$row['jenjang']['id_gaji']}"); ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                        <a href="<?= base_url(); ?>email/mail/<?= $row['id_pegawai'] ?>/<?= $row['nik'] ?>" class="btn btn-warning"><i class="fa fa-paper-plane"></i></a>
                       </td>
                     </tr>
 									<?php endif; ?>

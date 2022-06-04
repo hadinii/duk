@@ -58,7 +58,9 @@ class User extends CI_Controller
 			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_user->ubahDataPegawai();
-			$this->session->set_flashdata('notification', 'Diubah');
+			$this->session->set_flashdata('notification', [
+				'status' => 'Berhasil mengubah data pegawai'
+			]);
 			redirect('user/data');
 		}
 	}
@@ -77,7 +79,10 @@ class User extends CI_Controller
 			$this->load->view('layouts/footer', $data);
 		} else {
 			$this->M_user->ubahPasswordUser();
-			$this->session->set_flashdata('notification', 'Password berhasil diubah');
+			$this->session->set_flashdata('notification', [
+				'status' => 'success',
+				'message' => 'Password berhasil diubah'
+			]);
 			redirect('user/setting_user');
 		}
 	}
@@ -357,7 +362,10 @@ class User extends CI_Controller
 		//update data into database table. 
 		$this->db->where('id_pengajuan', $id_pengajuan);
 		$this->db->update('pengajuan', array_filter($data));
-		$this->session->set_flashdata('notification', 'Berhasil');
+		$this->session->set_flashdata('notification', [
+			'status' => 'success',
+			'message' => 'Berhasil mengupload berkas'
+		]);
 		redirect('User/pengajuan_user');
 	}
 }
