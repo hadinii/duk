@@ -50,9 +50,9 @@
                                         <td><?= $p['created_at']; ?></td>
                                         <td>
 											<?php if($p['is_accepted'] == 0) :?>
-												<span class="label label-warning"><?= $p['is_accepted'] = 'Belum Diterima'; ?></span>
+												<span class="label label-warning">Belum Diterima</span>
 											<?php else :?>
-												<span class="label label-success"><?= $p['is_accepted'] = 'Diterima'; ?></span>
+												<span class="label label-success">Diterima</span>
 											<?php endif;?>
 										</td>
 										<td style="text-align: center;">
