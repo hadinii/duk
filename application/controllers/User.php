@@ -131,7 +131,6 @@ class User extends CI_Controller
 			mkdir('assets/pengajuan/' . $id_pengajuan, 0700, TRUE);
 		}
 		if (isset($_FILES['spjtm']) && $_FILES['spjtm']['name']) {
-			var_dump($_FILES);
 			$config['upload_path']   = './assets/pengajuan/'.$id_pengajuan;
 			$config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
 			$config['max_size']      = 2000;
