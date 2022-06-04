@@ -39,7 +39,6 @@ class User extends CI_Controller
 
 		// $this->form_validation->set_rules('nik', 'NIK', 'required|xss_clean|numeric|max_length[18]');
 		// $this->form_validation->set_rules('nama', 'Nama', 'required|xss_clean');
-		$this->form_validation->set_rules('jabatan_id', 'Jabatan', 'required|xss_clean');
 		$this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required|xss_clean');
 		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required|xss_clean');
 		$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'required|xss_clean');
