@@ -42,8 +42,9 @@
                 </tr>
               </thead>
               <tbody>
-                <?php $i = 1; ?>
+                <?php $i = 1; $total_gaji = 0; ?>
                 <?php foreach ($pegawai as $row) : ?>
+									<?php $row['gaji'] = $row['gaji_id'] ? $row['gaji_pokok'] : $row['gaji_default']; ?>
                   <tr>
                     <td><?= $i; ?></td>
                     <td><?= $row['nik']; ?></td>
@@ -51,18 +52,21 @@
                     <td><?= $row['jabatan']; ?></td>
                     <td><?= $row['jenis_kelamin']; ?></td>	
                     <td><?= getMasaKerja($row['mulai_kerja']); ?></td>
-                    <td>Rp.<?= $row['gaji_id'] ? nominal($row['gaji_pokok']) : nominal($row['gaji_default']); ?></td>
+                    <td>Rp.<?= nominal($row['gaji']) ?></td>
                     <td style="text-align: center;">
                       <a href="<?= base_url(); ?>detailPegawai/<?= $row['id_pegawai']; ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                       <a href="<?= base_url(); ?>hapusPegawai/<?= $row['id_pegawai']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                     </td>
                   </tr>
-                  <?php $i++; ?>
+                  <?php $i++; $total_gaji += $row['gaji'] ?>
                 <?php endforeach; ?>
               </tbody>
             </table>
           </div>
           <!-- /.box-body -->
+					<div class="box-footer">
+						<p>Total Gaji : Rp.<?= nominal($total_gaji) ?></p>
+					</div>
         </div>
         <!-- /.box -->
       </div>
