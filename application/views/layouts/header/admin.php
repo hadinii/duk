@@ -24,6 +24,7 @@
 	<link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/admin/css/util.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="<?= base_url(); ?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="<?= base_url(); ?>assets/bower_components/datatables.net-bs/css/buttons.dataTables.min.css">
 
   <!-- Morris chart -->
   <link rel="stylesheet" href="<?= base_url(); ?>assets/bower_components/morris.js/morris.css">

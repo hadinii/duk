@@ -30,17 +30,6 @@ class M_Gaji extends CI_Model {
 		return $result;
     }
 
-	public function getTotalGaji()
-	{
-		return $this->db->select('p.nama, CASE WHEN p.gaji_id IS NULL THEN j.gaji_default ELSE (SELECT gaji_pokok FROM gaji WHERE id_gaji = p.gaji_id) END as total_gaji')
-			->from('pegawai p')
-			->join('jabatan j', 'p.jabatan_id = j.id_jabatan', 'LEFT')
-			->join('gaji g', 'p.jabatan_id = g.jabatan_id', 'LEFT')
-			->group_by('p.id_pegawai')
-			->get()
-			->result_array();
-	}
-
 	public function getGajiById($id)
 	{
 		return $this->db->get_where('gaji', ['id_gaji' => $id])->row_array();
@@ -70,8 +59,6 @@ class M_Gaji extends CI_Model {
 			$this->db->where('id_gaji', $row);
 			$this->db->update('gaji',$data);
 		}
-		// TO DO: Delete unupdated gaji, create new gaji
-		// if gaji deleted, update pegawai where gaji_id = deleted_id
     }
 
     public function delete($id){

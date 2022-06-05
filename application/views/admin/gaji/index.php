@@ -45,7 +45,7 @@
 											<td>Rp <?= count($numbers) > 1 ? nominal(min($numbers))." - ".nominal(max($numbers)) : nominal(min($numbers)) ?></td>
 											<td style="text-align: center;">
 												<a href="<?= base_url('gaji/'.$row['id_jabatan']); ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-												<a href="<?= base_url('destroy/'.$row['id_jabatan']); ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+												<a href="<?= base_url('gaji/destroy-jabatan/'.$row['id_jabatan']); ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');" class="btn btn-danger"><i class="fa fa-trash"></i></a>
 											</td>
 										</tr>
                 <?php endforeach; ?>

@@ -49,7 +49,7 @@
             <h3 class="box-title">Pegawai Yang Akan Naik Gaji</h3>
           </div>
           <div class="box-body" style="overflow: auto;">
-            <table id="example2" class="table table-bordered table-hover">
+            <table id="example1" class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <th width="10">#</th>

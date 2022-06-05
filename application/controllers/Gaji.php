@@ -119,6 +119,16 @@ class Gaji extends CI_Controller
         redirect('gaji/'.$id_jabatan);
     }
 
+    public function destroyJabatan($id)
+    {
+        $status = $this->M_jabatan->delete($id);
+        $this->session->set_flashdata('notification', [
+			'status' => $status ? 'success' : 'danger',
+			'message' => $status ? 'Berhasil menghapus data jabatan' : 'Tidak dapat menghpaus jabatan tersebut'
+		]);
+        redirect('gaji');
+    }
+
 	public function _sendMail($email)
 	{
 		var_dump($email);

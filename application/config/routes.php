@@ -67,6 +67,7 @@ $route['gaji/store/(:num)'] = 'gaji/store/$1';
 $route['tambah_gaji'] = 'gaji/create';
 $route['gaji/(:num)'] = 'gaji/show/$1';
 $route['gaji/destroy/(:num)'] = 'gaji/destroy/$1';
+$route['gaji/destroy-jabatan/(:num)'] = 'gaji/destroyJabatan/$1';
 
 // Pengajuan
 $route['pengajuan'] = 'pengajuan';

@@ -28,7 +28,7 @@
       <div class="col-xs-12">
         <div class="box box-success">
           <div class="box-body" style="overflow: auto;">
-            <table id="example1" class="table table-bordered table-hover">
+            <table id="example2" class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <th width="10">#</th>
