@@ -63,22 +63,25 @@ class M_Gaji extends CI_Model {
 
     public function delete($id){
         $gaji = $this->db->get_where('gaji', ['id_gaji' => $id])->row_array();
-		$this->db->where('id_gaji', $id);
-        $this->db->delete('gaji');
-
-		// update all pegawai where gaji_id = deleted
 		$pegawai = $this->db->select('id_pegawai')
 					->from('pegawai')
 					->where('gaji_id', $gaji['id_gaji'])
 					->get()->result_array();
-		foreach($pegawai as $row) {
-			$data = [
-				'gaji_id' => null
-			];
-			$this->db->where('id_pegawai', $row['id_pegawai']);
-			$this->db->update('pegawai', $data);
+		if(!count($pegawai)){
+			$this->db->where('id_gaji', $id);
+			$this->db->delete('gaji');
+			return $gaji['jabatan_id'];
 		}
-		return $gaji['jabatan_id'];
+		return false;
+
+		// foreach($pegawai as $row) {
+		// 	$data = [
+		// 		'gaji_id' => null
+		// 	];
+		// 	$this->db->where('id_pegawai', $row['id_pegawai']);
+		// 	$this->db->update('pegawai', $data);
+		// }
+		// return $gaji['jabatan_id'];
     }
 
 	public function getNaikGaji()

@@ -69,7 +69,7 @@ class Gaji extends CI_Controller
         $this->form_validation->set_rules('is_increment', 'required|xss_clean');
         if ($this->form_validation->run() == FALSE) {
 			$data['sidebar'] = "#mn3";
-			$data['scripts'] = ['jabatan-edit.js'];
+			$data['scripts'] = ['jabatan-show.js'];
 			$data['gaji'] = $this->M_jabatan->show($id_jabatan);
             $this->load->view('layouts/header/admin');
             $this->load->view('admin/gaji/edit', $data);
@@ -113,10 +113,10 @@ class Gaji extends CI_Controller
     {
         $id_jabatan = $this->M_gaji->delete($id);
         $this->session->set_flashdata('notification', [
-			'status' => 'success',
-			'message' => 'Berhasil menghapus data gaji'
+			'status' => $id_jabatan ? 'success' : 'danger',
+			'message' => $id_jabatan ? 'Berhasil menghapus data gaji' : 'Tidak dapat menghapus gaji tersebut'
 		]);
-        redirect('gaji/'.$id_jabatan);
+        redirect($id_jabatan ? 'gaji/'.$id_jabatan : 'gaji');
     }
 
     public function destroyJabatan($id)
@@ -124,7 +124,7 @@ class Gaji extends CI_Controller
         $status = $this->M_jabatan->delete($id);
         $this->session->set_flashdata('notification', [
 			'status' => $status ? 'success' : 'danger',
-			'message' => $status ? 'Berhasil menghapus data jabatan' : 'Tidak dapat menghpaus jabatan tersebut'
+			'message' => $status ? 'Berhasil menghapus data jabatan' : 'Tidak dapat menghapus jabatan tersebut'
 		]);
         redirect('gaji');
     }

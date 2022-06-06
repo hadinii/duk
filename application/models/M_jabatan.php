@@ -52,7 +52,7 @@ class M_Jabatan extends CI_Model {
 		$jabatan = $this->db->get_where('jabatan', ['id_jabatan' => $id])->row_array();
 		$pegawai = $this->db->get_where('pegawai', ['jabatan_id' => $id])->result_array();
 		$gaji = $this->db->get_where('gaji', ['jabatan_id' => $id])->result_array();
-		if(!count($pegawai) || !count($gaji)){
+		if(!count($pegawai) && !count($gaji)){
 			$this->db->where('id_jabatan', $id)->delete('jabatan');
 			return true;
 		}

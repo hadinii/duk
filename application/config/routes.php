@@ -71,7 +71,7 @@ $route['gaji/destroy-jabatan/(:num)'] = 'gaji/destroyJabatan/$1';
 
 // Pengajuan
 $route['pengajuan'] = 'pengajuan';
-$route['pengajuan/(:num)/(:num)'] = 'gaji/naikGaji/$1/$1';
+$route['pengajuan/(:num)/(:num)'] = 'gaji/naikGaji/$1/$2';
 $route['pengajuan/accept/(:num)'] = 'pengajuan/accept/$1';
 $route['pengajuan/(:num)'] = 'pengajuan/show/$1';
 $route['hapusPengajuan/(:num)'] = 'pengajuan/hapusDataPengajuan/$1';
