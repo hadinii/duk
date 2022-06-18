@@ -30,14 +30,14 @@
               <div class="form-group">
                 <label class="col-md-2 control-label">NIK</label>
                 <div class="col-md-8">
-                  <input type="text" name="nik" class="form-control" required>
+                  <input type="text" name="nik" class="form-control" required autocomplete="off">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-md-2 control-label">Nama</label>
                 <div class="col-md-8">
-                  <input type="text" name="nama" class="form-control" required>
+                  <input type="text" name="nama" class="form-control" required autocomplete="off">
                 </div>
               </div>
 
@@ -48,7 +48,7 @@
 										<div class="input-group-addon">
 											<i class="fa fa-calendar"></i>
 										</div>
-										<input type="text" name="mulai_kerja" class="form-control pull-right" id="datepicker" required>
+										<input type="text" name="mulai_kerja" class="form-control pull-right" id="datepicker" required autocomplete="off">
 									</div>
 								</div>
 							</div>
@@ -56,7 +56,7 @@
 							<div class="form-group">
 								<label class="col-md-2 control-label">Jabatan</label>
 								<div class="col-md-8">
-									<select class="form-control" name="jabatan_id" required>
+									<select class="form-control" name="jabatan_id" required autocomplete="off">
 										<?php foreach($jabatan as $row) : ?>
 											<option value="<?= $row['id_jabatan'] ?>"><?= $row['nama'] ?></option>
 										<?php endforeach; ?>
@@ -67,7 +67,7 @@
               <div class="form-group">
                 <label class="col-md-2 control-label">Jenis Kelamin</label>
                 <div class="col-md-8">
-                  <select class="form-control" name="jenis_kelamin" required>
+                  <select class="form-control" name="jenis_kelamin" required autocomplete="off">
                     <option value="Laki-laki">Laki-laki</option>
                     <option value="Perempuan">Perempuan</option>
                   </select>
@@ -77,7 +77,7 @@
               <div class="form-group">
                 <label class="col-md-2 control-label">Tempat Lahir</label>
                 <div class="col-md-8">
-                  <input type="text" name="tempat_lahir" class="form-control" required>
+                  <input type="text" name="tempat_lahir" class="form-control" required autocomplete="off">
                 </div>
               </div>
 
@@ -88,28 +88,15 @@
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text" name="tgl_lahir" class="form-control pull-right" id="datepicker" required>
+                    <input type="text" name="tgl_lahir" class="form-control pull-right" id="datepicker" required autocomplete="off">
                   </div>
                 </div>
               </div>
 
-              <!-- <div class="form-group">
-                <label class="col-md-2 control-label">Golongan Darah</label>
-                <div class="col-md-8">
-                  <select class="form-control" name="gol_darah" required>
-                    <option value="-">-</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="AB">AB</option>
-                    <option value="O">O</option>
-                  </select>
-                </div>
-              </div> -->
-
               <div class="form-group">
                 <label class="col-md-2 control-label">Agama</label>
                 <div class="col-md-8">
-                  <select class="form-control" name="agama" required>
+                  <select class="form-control" name="agama" required autocomplete="off">
                     <option value="Islam">Islam</option>
                     <option value="Protestan">Protestan</option>
                     <option value="Katholik">Katholik</option>
@@ -122,21 +109,21 @@
               <div class="form-group">
                 <label class="col-md-2 control-label">No. Telepon</label>
                 <div class="col-md-8">
-                  <input type="text" name="no_telp" class="form-control" required>
+                  <input type="text" name="no_telp" class="form-control" required autocomplete="off">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-md-2 control-label">Email</label>
                 <div class="col-md-8">
-                  <input type="email" name="email" class="form-control" required>
+                  <input type="email" name="email" class="form-control" required autocomplete="off">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-md-2 control-label">Alamat</label>
                 <div class="col-md-8">
-                  <textarea name="alamat" class="form-control" required></textarea>
+                  <textarea name="alamat" class="form-control" required autocomplete="off"></textarea>
                 </div>
               </div>
 

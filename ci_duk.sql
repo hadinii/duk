@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Jun 02, 2022 at 02:55 PM
+-- Generation Time: Jun 11, 2022 at 01:43 PM
 -- Server version: 5.7.34
 -- PHP Version: 7.4.21
 
@@ -40,9 +40,7 @@ CREATE TABLE `gaji` (
 --
 
 INSERT INTO `gaji` (`id_gaji`, `jabatan_id`, `masa_kerja`, `condition`, `gaji_pokok`) VALUES
-(1, 1, '3', '>', 1700000),
-(2, 1, '5', '>', 2000000),
-(3, 1, '10', '>', 2500000);
+(3, 1, '3', '>', 1700000);
 
 -- --------------------------------------------------------
 
@@ -77,8 +75,7 @@ INSERT INTO `jabatan` (`id_jabatan`, `nama`, `keterangan`, `gaji_default`, `is_i
 (12, 'Tenaga Medis Peternakan', 'Tenaga Medis Peternakan', 2700000, 0),
 (13, 'Tenaga Paramedis Peternakan', 'Tenaga Paramedis Peternakan', 2200000, 0),
 (14, 'Tenaga Supir', 'Tenaga Supir', 2000000, 0),
-(15, 'Tenaga Teknis Laboran', 'Tenaga Teknis Laboran', 2300000, 0),
-(16, 'Tenaga Teknisi Kegiatan', 'Tenaga Teknisi Kegiatan', 800000, 0);
+(15, 'Tenaga Teknis Laboran', 'Tenaga Teknis Laboran', 2300000, 0);
 
 -- --------------------------------------------------------
 
@@ -107,8 +104,9 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `user_id`, `nama`, `jabatan_id`, `gaji_id`, `mulai_kerja`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `agama`, `no_telp`, `email`, `alamat`) VALUES
-(1, 2, 'John Doe', 1, 1, '2019-03-14', 'Laki-laki', 'Jakarta', '2000-03-14', 'Islam', '082369770021', 'reza@gmail.com', 'Pekanbaru'),
-(2, 3, 'Jane Doe', 11, NULL, '2022-03-14', 'Perempuan', 'Jakarta', '2000-03-14', 'Islam', '082369770021', 'jonedoe@gmail.com', 'Pekanbaru');
+(1, 2, 'John Doe', 1, 3, '2019-03-14', 'Laki-laki', 'Jakarta', '2000-03-14', 'Islam', '082369770021', 'umarsyarif1607@gmail.com', 'Pekanbaru'),
+(2, 3, 'Jane Doe', 11, NULL, '2022-03-14', 'Perempuan', 'Jakarta', '2000-03-14', 'Islam', '082369770021', 'jonedoe@gmail.com', 'Pekanbaru'),
+(3, 4, 'Mira', 1, NULL, '2019-03-14', 'Perempuan', 'Jakarta', '2000-03-14', 'Islam', '082369770021', '11750115076@students.uin-suska.ac.id', 'Pekanbaru');
 
 -- --------------------------------------------------------
 
@@ -138,6 +136,13 @@ CREATE TABLE `pengajuan` (
   `created_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `pengajuan`
+--
+
+INSERT INTO `pengajuan` (`id_pengajuan`, `pegawai_id`, `gaji_id`, `spjtm`, `spmk`, `spk`, `sppjl`, `bahpl`, `baktnb`, `lampiran_ba`, `baedp`, `sdp`, `undangan`, `ijazah`, `cv`, `transkrip`, `sertifikat_keahlian`, `is_accepted`, `created_at`) VALUES
+(11, 3, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2022-06-06');
+
 -- --------------------------------------------------------
 
 --
@@ -158,7 +163,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `nik`, `password`, `is_admin`) VALUES
 (1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 1),
 (2, '1471081607990041', '92a7f40823080149ad5886da73f44e9b', 0),
-(3, '1471081607990042', 'cd05e8abcdcbdef620aa250643f37d88', 0);
+(3, '1471081607990042', 'cd05e8abcdcbdef620aa250643f37d88', 0),
+(4, '1471081607990043', 'b383156de1fd9e6f8a80eaa24a306d2f', 0);
 
 --
 -- Indexes for dumped tables
@@ -208,25 +214,25 @@ ALTER TABLE `gaji`
 -- AUTO_INCREMENT for table `jabatan`
 --
 ALTER TABLE `jabatan`
-  MODIFY `id_jabatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_jabatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `pegawai`
 --
 ALTER TABLE `pegawai`
-  MODIFY `id_pegawai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_pegawai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pengajuan`
 --
 ALTER TABLE `pengajuan`
-  MODIFY `id_pengajuan` int(30) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pengajuan` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
